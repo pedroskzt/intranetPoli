@@ -2,12 +2,12 @@
 {% load static %}
 {% block content %}
     <section class="container" id="id_assinatura">
-        <table>
+        <table style="font-family: sans-serif">
             <tr>
                 <td style="color:#26a6ff">
-                    {{ form.nome.value }}<br>
-                    {{ form.departamento.value }}<br>
-                    {{ form.fone.value }} - Ramal: {{ form.ramal.value }}<br>
+                    <strong>{{ assinatura.nome }}</strong><br>
+                    {{ assinatura.departamento }}<br>
+                    {{ assinatura.fone }} - Ramal: {{ assinatura.ramal }}<br>
                     <a href="https://www.polipecas.com.br" target="_blank"
                        style="color:#000388">www.polipecas.com.br</a><br>
                     <small>Esta mensagem é confidencial e privilegiada. Caso Você não seja o destinatário, não está
@@ -30,7 +30,7 @@
             let assinatura = document.getElementById("id_assinatura").innerHTML
             assinatura = inicio_HTML + assinatura + fim_HTML
             console.log(assinatura)
-            let nome = "{{ form.nome.value}}"
+            let nome = "{{ assinatura.nome}}"
             nome = nome.replaceAll(' ', '')
             download(assinatura, nome, "html")
 
