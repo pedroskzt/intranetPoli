@@ -11,7 +11,6 @@ def pesquisar_assinatura(request):
         lista_assinaturas = list()
         for assinatura in query:
             lista_assinaturas.append(assinatura.nome)
-        print(lista_assinaturas)
         return JsonResponse(data=lista_assinaturas, safe=False)
 
     # if request.method == 'GET':
