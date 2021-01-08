@@ -47,9 +47,11 @@
 <script>
     $("#pesquisar_assinatura").autocomplete({
         source: "{% url 'pesquisar_assinatura' %}",
-        minLength: 3
+        minLength: 3,
+        appendTo: "#search-form"
     })
 </script>
+
 <!-- Bloco de Scripts -->
 {% block scripts %}
 {% endblock %}
