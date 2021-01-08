@@ -45,7 +45,7 @@
         crossorigin="anonymous"></script>
 <script src="{% static 'js/jquery-ui-1.12.1.js' %}"></script>
 <script>
-    $("#id_assinatura").autocomplete({
+    $("#pesquisar_assinatura").autocomplete({
         source: "{% url 'pesquisar_assinatura' %}",
         minLength: 3
     })
