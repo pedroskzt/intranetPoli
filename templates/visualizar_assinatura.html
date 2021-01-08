@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <section class="container" id="id_assinatura">
+        <table>
+            <tr>
+                <td style="color:#26a6ff">
+                    {{ form.nome.value }}<br>
+                    {{ form.departamento.value }}<br>
+                    {{ form.fone.value }} - Ramal: {{ form.ramal.value }}<br>
+                    <a href="https://www.polipecas.com.br" target="_blank"
+                       style="color:#000388">www.polipecas.com.br</a><br>
+                    <small>Esta mensagem é confidencial e privilegiada. Caso Você não seja o destinatário, não está
+                        autorizado a reproduzir divulgar a terceiros o conteúdo e deve apagá-la.</small><br><br>
+                    <a href="https://www.polipecas.com.br" target="_blank">
+                        <img src="https://www.polipecas.com.br/images/logo/logo.png" alt="Logo.png"
+                             moz-do-not-send="false" border="0">
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </section>
+    <section class="container mt-5">
+        <a class="btn btn-primary" href="#" id="donwload-link" onclick="myFunction()">Baixar Assinatura</a>
+    </section>
+    <script>
+        function myFunction() {
+            const inicio_HTML = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"></head><body>'
+            const fim_HTML = '</body></html>'
+            let assinatura = document.getElementById("id_assinatura").innerHTML
+            assinatura = inicio_HTML + assinatura + fim_HTML
+            console.log(assinatura)
+            let nome = "{{ form.nome.value}}"
+            nome = nome.replaceAll(' ', '')
+            download(assinatura, nome, "html")
+
+        }
+
+        function download(assinatura, nome_do_arquivo, tipo_de_arquivo) {
+            const link = document.getElementById("donwload-link");
+            const arquivo = new Blob([assinatura], {type: tipo_de_arquivo});
+            const nome_arquivo_com_extensao = nome_do_arquivo + "." + tipo_de_arquivo;
+            link.href = URL.createObjectURL(arquivo);
+            link.download = nome_arquivo_com_extensao
+        }
+    </script>
+{% endblock %}

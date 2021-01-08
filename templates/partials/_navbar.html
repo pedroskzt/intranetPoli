@@ -1,0 +1,44 @@
+{% load static %}
+<section>
+    <nav class="navbar navbar-expand-lg navbar-custom navbar-light sticky-top" role="navigation">
+        <a class="navbar-brand" href="{% url 'index' %}">
+            <img src="{% static 'img/core-img/logo.png' %}" alt="Polipeças">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon my-toggler"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="nav nav-pills">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle {{ pagina_guias }}" href="#" id="dropDrownGuias" role="button"
+                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Guia de Instalação</a>
+                    <div class="dropdown-menu" aria-labelledby="dropDrownGuias">
+                        <a class="dropdown-item {{ guia_zimbra }}" href="{% url 'guia_zimbra' %}">Zimbra</a>
+                        <a class="dropdown-item {{ guia_thunderbird }}"
+                           href="{% url 'guia_thunderbird' %}">Thunderbird</a>
+                        <a class="dropdown-item {{ guia_outlook }}" href="{% url 'guia_outlook' %}">Outlook</a>
+                    </div>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link {{ pagina_criar }}" href="{% url 'criar_assinatura' %}">Criar Assinatura de
+                        Email</a>
+                </li>
+                <li class="nav-item">
+                    <form class="d-flex has-search mt-1">
+                        <button type="submit" class="search-button">
+                            <i class="fas fa-search ps-2" aria-hidden="true"></i>
+                        </button>
+
+                        <div class="form-control autocomplete">
+                            <input id="id_assinatura" class="form-control form-control-sm" type="search" placeholder="Search"
+                                   aria-label="Search" id="pesquisa_assinatura">
+                        </div>
+                    </form>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+</section>
+
