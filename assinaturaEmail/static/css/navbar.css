@@ -35,7 +35,7 @@
 }
 
 .has-search input.form-control[type=search] {
-    width: 6em;
+    width: 7em;
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
 }
@@ -43,7 +43,7 @@
 .has-search input.form-control[type=search]:focus:not([readonly]) {
     border-bottom: 1px solid var(--logoLetra);
     box-shadow: 0 0 0 1px var(--logoLetra);
-    width: 20em;
+    width: 25em;
 }
 
 .has-search .fas {
