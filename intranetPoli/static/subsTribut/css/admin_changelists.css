@@ -1,0 +1,5 @@
+#changelist table input::-webkit-outer-spin-button,
+#changelist table input::-webkit-inner-spin-button
+{
+    display: none;
+}
