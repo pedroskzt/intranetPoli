@@ -1,0 +1,12 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    display: none
+}
+
+.money{
+    color: var(--logoLetra);
+}
+.ipi{
+    color: var(--logoLetra);
+}
+
