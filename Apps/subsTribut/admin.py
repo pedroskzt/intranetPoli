@@ -8,7 +8,7 @@ from Apps.subsTribut.models.tributos import Tributos
 class ListandoTributos(admin.ModelAdmin):
     class Media:
         css = {
-            'all': ('css/admin_changelists.css',)
+            'all': ('subsTribut/css/admin_changelists.css',)
         }
 
     list_display = ('id', 'origem', 'destino', 'mva', 'mvaimp', 'aliq', 'mvaaliq', 'basered', 'ssimples')
