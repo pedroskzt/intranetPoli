@@ -156,3 +156,5 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
     messages.SUCCESS: 'success',
 }
+
+SCRIPT_PATH = 'assinaturas'
