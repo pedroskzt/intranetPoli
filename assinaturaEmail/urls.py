@@ -19,7 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', include('assinaturas.urls')),
-    path('', include('guias.urls')),
-    path('admin/', admin.site.urls),
+    path(f'{settings.SCRIPT_PATH}/', include('assinaturas.urls')),
+    path(f'{settings.SCRIPT_PATH}/', include('guias.urls')),
+    path(f'{settings.SCRIPT_PATH}/admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
