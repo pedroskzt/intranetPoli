@@ -44,9 +44,9 @@ def get_secret(configuracao, secrets=_secrets):
 SECRET_KEY = get_secret('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True if get_secret("DEBUG") == 'True' else False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = get_secret("HOSTS")
 
 # Application definition
 
@@ -157,4 +157,4 @@ MESSAGE_TAGS = {
     messages.SUCCESS: 'success',
 }
 
-SCRIPT_PATH = 'assinaturas'
+SCRIPT_PATH = get_secret("SCRIPT_PATH")
