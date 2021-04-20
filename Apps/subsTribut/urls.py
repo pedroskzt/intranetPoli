@@ -3,8 +3,10 @@
 """
 from django.contrib import admin
 from django.urls import path
-from Apps.subsTribut.views.calcular_imposto import calcular_imposto
+from Apps.subsTribut.views.calcular_imposto import CalcularView
 
 urlpatterns = [
-    path('', calcular_imposto, name='calcular_imposto')
+    path('', CalcularView.as_view(), name='home'),
+    path('', CalcularView.as_view(), name='calcular_imposto_individual'),
+    path('numr_negociacao', CalcularView.as_view(), name='calcular_neg_vw'),
 ]
