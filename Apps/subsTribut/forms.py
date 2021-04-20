@@ -24,6 +24,9 @@ class CalculoForms(forms.Form):
     ipi_item_n = forms.DecimalField(label='% IPI',
                                     max_digits=19,
                                     decimal_places=5)
+    base_red_n = forms.BooleanField(label='Base Reduzida',
+                                  help_text='Base de ICMS de Origem é reduzida?',
+                                  required=False)
 
     # Importados
     quantidade_i = forms.IntegerField(label='Quantidade',
@@ -35,6 +38,11 @@ class CalculoForms(forms.Form):
                                     max_digits=19,
                                     decimal_places=5)
 
+    base_red_i = forms.BooleanField(label='Base Reduzida',
+                                  help_text='Base de ICMS de Origem é reduzida?',
+                                  required=False)
+
+    # Gerais
     valor_frete = forms.DecimalField(label='Valor do Frete',
                                      help_text="Valor do Frete",
                                      max_digits=19,
@@ -43,16 +51,13 @@ class CalculoForms(forms.Form):
                                          max_digits=19,
                                          decimal_places=5)
 
-    cst = forms.ChoiceField(label='CST de Origem',
-                            help_text='ICMS Normal (Não Calcula ST) ICMS ST (Calcula Base e Valor ST)',
-                            choices=CST_CHOICES,
-                            widget=forms.RadioSelect(attrs={'class': 'form-check-input'}))
+    # cst = forms.ChoiceField(label='CST de Origem',
+    #                         help_text='ICMS Normal (Não Calcula ST) ICMS ST (Calcula Base e Valor ST)',
+    #                         choices=CST_CHOICES,
+    #                         widget=forms.RadioSelect(attrs={'class': 'form-check-input'}))
     super_simples = forms.BooleanField(label='Super Simples',
                                        help_text="Cliente é Super Simples?",
                                        required=False)
-    base_red = forms.BooleanField(label='Base Reduzida',
-                                  help_text='Base de ICMS de Origem é reduzida?',
-                                  required=False)
     consumidor_final = forms.BooleanField(label='Consumidor Final',
                                           help_text='Cliente é consumidor final?',
                                           required=False)
