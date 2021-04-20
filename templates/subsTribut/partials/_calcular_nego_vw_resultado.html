@@ -1,0 +1,239 @@
+{% load static %}
+{% load tags %}
+
+<div class="row mt-2">
+    <div class="col-4">
+        <label for="numero-negociacao" class="form-label">Número da Negociação</label>
+        <input type="number" class="form-control" id="numero-negociacao" name="numr_negociacao"
+               value="{{ form.numr_negociacao }}" readonly>
+    </div>
+    <div class="col">
+        <label for="cliente-id" class="form-label">Cliente</label>
+        <input type="text" class="form-control" id="cliente-id"
+               value="{{ form.pol_intra_nego_vw.DESC_SIGLA }} - {{ form.pol_intra_nego_vw.NOME_RAZAO_SOCIAL }}"
+               readonly>
+    </div>
+    <div>
+        <a href="{% url 'home' %}" class="btn btn-primary button-color mt-2">Voltar</a>
+    </div>
+</div>
+
+<div class="mt-4">
+    <div class="row">
+        <div class="col-6 border rounded-3 mb-2 me-4" id="informacoes-negociacao-id">
+            <div class="row">
+                <h5>Informações da Negociação</h5>
+                <div class="col mb-2">
+                    <label class="form-label"
+                           for="origem-id">Origem</label>
+                    <input type=text class="form-control" id="origem-id"
+                           value="{{ form.pol_intra_nego_vw.NOME_UF_EMPRESA }}"
+                           readonly>
+
+                    <label class="form-label"
+                           for="destino-id">Destino</label>
+                    <input type=text class="form-control" id="destino-id"
+                           value="{{ form.pol_intra_nego_vw.NOME_UF_CLIENTE }}"
+                           readonly>
+                </div> <!-- Origem e Destino -->
+                <div class="col mb-2">
+                    <div class="col">
+                        <label class="form-label"
+                               for="frete-id">Valor do Frete</label>
+                        <input type="text" class="form-control" id="frete-id"
+                               value="{{ form.pol_intra_nego_vw.VALR_FRETE }}"
+                               readonly>
+                    </div>
+                    <div class="col">
+                        <label class="form-label"
+                               for="acessoria-id">Despesa Acessória</label>
+                        <input type="text" class="form-control" id="acessoria-id"
+                               value="{{ form.pol_intra_nego_vw.VALR_DESP_ACESSORIA }}"
+                               readonly>
+                    </div>
+                </div> <!-- Frete e Acessória -->
+                <div class="col mt-4 mb-2" id="checkbox-01">
+                    <div class="col  form-check form-switch">
+                        {% if form.pol_intra_nego_vw.INDR_CONSUMIDOR_FINAL %}
+                            <input class="form-check-input" type="checkbox" value="" id=consumidor-final-id checked
+                                   onclick="return false;">
+                        {% else %}
+                            <input class="form-check-input" type="checkbox" value="" id=consumidor-final-id
+                                   onclick="return false;">
+                        {% endif %}
+                        <label class="form-check-label"
+                               for="consumidor-final-id">Consumidor final</label>
+                    </div>
+                </div> <!-- Consumidor Final -->
+            </div>
+        </div>
+        <div class="col-5 border rounded-3 mb-2 me-4" id="resultado-calculo-id">
+            <div class="row justify-content-center">
+                <div class="col-auto mb-2">
+                    {% if form.pol_intra_nego_vw.VALR_TOTAL_IMPOSTO %}
+                        {% if form.pol_intra_nego_vw.INDR_CONSUMIDOR_FINAL %}
+                            <h2>Valor do DIFAL</h2>
+                        {% else %}
+                            <h2>Valor do ST</h2>
+                        {% endif %}
+                        <input type=text class="form-control" id="resultado-id"
+                               value="R$ {{ form.pol_intra_nego_vw.VALR_TOTAL_IMPOSTO|floatformat:2 }}"
+                               readonly>
+                    {% else %}
+                        <h2> Isento de Imposto </h2>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row border rounded-3 mt-4 mb-2" id="itens-nota">
+        <div class="mt-2">
+            <table class="table table-hover table-light table-responsive table-striped caption-top" id="table-itens-id">
+                <caption class="titulo">Lista de Itens</caption>
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Código</th>
+                    <th scope="col">Produto</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">Valor do Produto</th>
+                    <th scope="col">Valor do Frete</th>
+                    <th scope="col">Valor das Despesas</th>
+                    <th scope="col">Valor do Imposto</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in form.pol_intra_item_nego_vw %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ item.CODG_PRODUTO }}</td>
+                        <td>{{ item.DESC_PRODUTO }}</td>
+                        {% if item.INDR_IMPORTADO %}
+                            <td>Importado</td>
+                        {% else %}
+                            <td>Nacional</td>
+                        {% endif %}
+                        <td>{{ item.QTDE_ITENS|floatformat:0 }}</td>
+                        <td>R$ {{ item.VALR_ITEM|floatformat:2 }}</td>
+                        <td>R$ {{ item.VALR_FRETE }}</td>
+                        <td>R$ {{ item.VALR_DESPESAS }}</td>
+                        {% if form.pol_intra_nego_vw.VALR_TOTAL_IMPOSTO %}
+                            {% if form.pol_intra_nego_vw.INDR_CONSUMIDOR_FINAL and form.pol_intra_nego_vw.INDR_INSCRICAO == 0 %}
+                                <td role="button" data-bs-toggle="modal" data-bs-target="#modal-cons-final-id"
+                                    id="imposto-item-{{ forloop.counter }}-id">
+                                    R$ {{ item.VALR_IMPOSTO|floatformat:2 }}
+                                </td>
+                                <div id="modal-revenda-id" class="modal fade bs-example-modal-lg" tabindex="-1"
+                                     role="dialog" aria-labelledby="classInfo" aria-hidden="true">
+                                    <div class="modal-dialog modal-sm modal-lg modal-xl">
+                                        <div class="modal-content modal-detalhe-imposto">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Detalhes do
+                                                    Cálculo</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Fechar"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table class="table table-hover table-striped table-light table-responsive">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col">MVA</th>
+                                                        <th scope="col">Alíquota ICMS</th>
+                                                        <th scope="col">Alíquota Interna</th>
+                                                        <th scope="col">Desconto</th>
+                                                        <th scope="col">Base ICMS</th>
+                                                        <th scope="col">Valor do ICMS</th>
+                                                        <th scope="col">Valor Bruto Difal</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>{{ item.mva|formatar_porcentagem:"2" }}</td>
+                                                        <td>{{ item.aliquota_ICMS|formatar_porcentagem:"2" }}</td>
+                                                        <td>{{ item.aliquota_interna|formatar_porcentagem:"2" }}</td>
+                                                        <td>R$ {{ item.VALR_DESC_UNITARIO|floatformat:2 }}</td>
+                                                        <td>R$ {{ item.valor_base_ICMS|floatformat:2 }}</td>
+                                                        <td>R$ {{ item.valor_ICMS|floatformat:2 }}</td>
+                                                        <td>R$ {{ item.valor_bruto_difal|floatformat:2 }}</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">
+                                                    Fechar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% elif form.pol_intra_nego_vw.INDR_CONSUMIDOR_FINAL == 0 %}
+                                <td role="button" data-bs-toggle="modal" data-bs-target="#modal-revenda-id">
+                                    R$ {{ item.VALR_IMPOSTO|floatformat:2 }}
+                                    <div id="modal-revenda-id" class="modal fade bs-example-modal-lg" tabindex="-1"
+                                         role="dialog" aria-labelledby="classInfo" aria-hidden="true">
+                                        <div class="modal-dialog modal-sm modal-lg modal-xl">
+                                            <div class="modal-content modal-detalhe-imposto">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Detalhes do
+                                                        Cálculo</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Fechar"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <table class="table table-hover table-striped table-light table-responsive">
+                                                        <thead>
+                                                        <tr>
+                                                            <th scope="col">MVA</th>
+                                                            <th scope="col">Alíquota ICMS</th>
+                                                            <th scope="col">Alíquota Interna</th>
+                                                            <th scope="col">Desconto</th>
+                                                            <th scope="col">Base ICMS</th>
+                                                            <th scope="col">Valor do ICMS</th>
+                                                            <th scope="col">Base ST</th>
+                                                            <th scope="col">Valor Bruto ST</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>{{ item.mva|formatar_porcentagem:"2" }}</td>
+                                                            <td>{{ item.aliquota_ICMS|formatar_porcentagem:"2" }}</td>
+                                                            <td>{{ item.aliquota_interna|formatar_porcentagem:"2" }}</td>
+                                                            <td>R$ {{ item.VALR_DESC_UNITARIO|floatformat:2 }}</td>
+                                                            <td>R$ {{ item.valor_base_ICMS|floatformat:2 }}</td>
+                                                            <td>R$ {{ item.valor_ICMS|floatformat:2 }}</td>
+                                                            <td>R$ {{ item.valor_base_ST|floatformat:2 }}</td>
+                                                            <td>R$ {{ item.valor_bruto_ST|floatformat:2 }}</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">
+                                                        Fechar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                            {% else %}
+                                <td>Isento de ST</td>
+                            {% endif %}
+                        {% else %}
+                            <td>Isento de ST</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

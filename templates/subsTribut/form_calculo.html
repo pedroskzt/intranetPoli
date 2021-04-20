@@ -8,132 +8,39 @@
 {% endblock %}
 {% block content %}
     <section class="container mt-2">
-        <form action="{% url 'calcular_imposto' %}" method="POST">
-            {% csrf_token %}
-            <div class="row border rounded-3 mt-2 mb-2" id="origem-destino">
-                <div class="col ">
-                    <label class="form-label" for="{{ form.origem.id_for_label }}">{{ form.origem.label }}</label>
-                    {{ form.origem|add_class:'form-select' }}
-                </div>
-                <div class="col mb-2">
-                    <label class="form-label" for="{{ form.destino.id_for_label }}">{{ form.destino.label }}</label>
-                    {{ form.destino|add_class:'form-select' }}
-                </div>
+        <h1>Cálculo de ST e DIFAL</h1>
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-calculo-nego-vw-tab" data-bs-toggle="tab"
+                        data-bs-target="#nav-calculo-nego-vw" type="button" role="tab"
+                        aria-controls="nav-calculo-nego-vw" aria-selected="true">Calcular por Negociação
+                </button>
+                {#                <button class="nav-link" id="nav-calculo-individual-tab" data-bs-toggle="tab"#}
+                {#                        data-bs-target="#nav-calculo-individual" type="button" role="tab"#}
+                {#                        aria-controls="nav-calculo-individual" aria-selected="true">Calcular Item Individual#}
+                {#                </button>#}
             </div>
-            <div class="row mt-4" id="itens-nota">
-                <div class="col me-5" id="itens-nacional">
-                    <h5>Itens Nacionais</h5>
-                    <div class="border-bottom rounded-3 row mt-2">
-                        <div class="col-sm-3">
-                            <!-- Quantidade -->
-                            <label for="{{ form.quantidade_n.id_for_label }}">{{ form.quantidade_n.label }}</label>
-                            {{ form.quantidade_n|add_class:'form-control' }}
-                        </div>
-                        <div class="col-sm-3">
-                            <!-- Valor Unitário -->
-                            <label for="{{ form.valor_unitario_n.id_for_label }}">{{ form.valor_unitario_n.label }}</label>
-                            {{ form.valor_unitario_n|add_class:'form-control money' }}
-                        </div>
-                        <div class="col-sm-3">
-                            <!-- IPI -->
-                            <label for="{{ form.ipi_item_n.id_for_label }}">{{ form.ipi_item_n.label }}</label>
-                            {{ form.ipi_item_n|add_class:'form-control ipi mb-2' }}
-                        </div>
-                    </div>
-                </div>
-                <div class="col" id="itens-importados">
-                    <h5>Itens Importados</h5>
-                    <div class="border-bottom rounded-3 row mt-2">
-                        <div class="col-sm-3">
-                            <!-- Quantidade -->
-                            <label for="{{ form.quantidade_i.id_for_label }}">{{ form.quantidade_i.label }}</label>
-                            {{ form.quantidade_i|add_class:'form-control' }}
-                        </div>
-                        <div class="col-sm-3">
-                            <!-- Valor Unitário -->
-                            <label for="{{ form.valor_unitario_i.id_for_label }}">{{ form.valor_unitario_i.label }}</label>
-                            {{ form.valor_unitario_i|add_class:'form-control money' }}
-                        </div>
-                        <div class="col-sm-3">
-                            <!-- IPI -->
-                            <label for="{{ form.ipi_item_i.id_for_label }}">{{ form.ipi_item_i.label }}</label>
-                            {{ form.ipi_item_i|add_class:'form-control ipi mb-2' }}
-                        </div>
-                    </div>
-                </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-calculo-nego-vw" role="tabpanel"
+                 aria-labelledby="nav-calculo-nego-vw-tab">
+                {% include 'partials/_alertas.html' %}
+                {% if form.numr_negociacao is None %}
+                    {% include 'subsTribut/partials/_calcular_nego_vw.html' %}
+                {% else %}
+                    {% include 'subsTribut/partials/_calcular_nego_vw_resultado.html' %}
+
+                {% endif %}
             </div>
-            <div class="row mt-4" id="opcoes-resultados">
-                <div class="col border rounded-3 me-5" id="opcoes">
-                    <h5>Informações Extras</h5>
-                    <div class="row ms-4" id="checkbox-01">
-                        <div class="form-check form-check-inline col mt-2 tooltip-custom">
-                            {{ form.super_simples|add_class:'form-check-input' }}
-                            <label class="form-check-label"
-                                   for="{{ form.super_simples.id_for_label }}">{{ form.super_simples.label }}</label>
-                            <span class="tooltiptext">{{ form.super_simples.help_text }}</span>
-                        </div>
-                        <div class="form-check form-check-inline col mt-2 tooltip-custom">
-                            {{ form.base_red|add_class:'form-check-input' }}
-                            <label class="form-check-label"
-                                   for="{{ form.base_red.id_for_label }}">{{ form.base_red.label }}</label>
-                            <span class="tooltiptext">{{ form.base_red.help_text }}</span>
-
-                        </div>
-                    </div>
-                    <div class="row ms-4" id="checkbox-02">
-                        <div class="form-check form-check-inline col mt-2 tooltip-custom">
-                            {{ form.consumidor_final|add_class:'form-check-input' }}
-                            <label class="form-check-label"
-                                   for="{{ form.consumidor_final.id_for_label }}">{{ form.consumidor_final.label }}</label>
-                            <span class="tooltiptext">{{ form.consumidor_final.help_text }}</span>
-
-                        </div>
-                        <div class="form-check form-check-inline col mt-2 tooltip-custom">
-                            {{ form.estado_sp|add_class:'form-check-input' }}
-                            <label class="form-check-label"
-                                   for="{{ form.estado_sp.id_for_label }}">{{ form.estado_sp.label }}</label>
-                            <span class="tooltiptext">{{ form.estado_sp.help_text }}</span>
-
-                        </div>
-                    </div>
-                    <div class="row" id="valores-extras">
-                        <div class="col-4 mt-2">
-                            <label for="{{ form.valor_frete.id_for_label }}">{{ form.valor_frete.label }}</label>
-                            {{ form.valor_frete|add_class:'form-control money' }}
-                        </div>
-                        <div class="col-4 mt-2">
-                            <label for="{{ form.valor_acessoria.id_for_label }}">{{ form.valor_acessoria.label }}</label>
-                            {{ form.valor_acessoria|add_class:'form-control money' }}
-                        </div>
-                        <div class="form-check form-check-inline col mt-4 mb-2 tooltip-custom">
-                            {% for radio in form.cst %}
-                                <label class="form-check-label"
-                                       for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
-                                {{ radio.tag }}
-                            {% endfor %}
-                            <span class="tooltiptext">{{ form.cst.help_text }}</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col border rounded-3" id="resultados">
-                    <h5>Resultados</h5>
-
-                </div>
-            </div>
-            <div class="row" id="submit">
-                <input type="submit" value="Calcular" class="btn btn-success mt-3">
-            </div>
-        </form>
+            {#            <div class="tab-pane fade" id="nav-calculo-individual" role="tabpanel"#}
+            {#                 aria-labelledby="nav-calculo-individual-tab">#}
+            {#                {% include 'subsTribut/partials/_calcular_individual.html' %}#}
+            {#            </div>#}
+        </div>
     </section>
 {% endblock %}
+
 {% block scripts %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"
-            integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw=="
-            crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function () {
-            $('.money').mask('##0.00', {placeholder: "R$ 0,00"});
-            $('.ipi').mask('##0.00', {placeholder: "0,00%"});
-        });
-    </script>
+
 {% endblock %}
+
