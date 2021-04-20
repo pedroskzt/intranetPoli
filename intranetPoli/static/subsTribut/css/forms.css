@@ -3,10 +3,43 @@ input::-webkit-inner-spin-button {
     display: none
 }
 
-.money{
-    color: var(--logoLetra);
-}
-.ipi{
+.money {
     color: var(--logoLetra);
 }
 
+.ipi {
+    color: var(--logoLetra);
+}
+
+.delete-button {
+    background-color: transparent;
+    border-width: 0;
+}
+
+.icon {
+    width: 25%;
+
+}
+
+.form-switch .baseRed {
+    font-size: 25px;
+    margin-left: -1.5em;
+}
+
+.baseRed-label {
+    margin-left: -2.5em;
+}
+
+.modal-detalhe-imposto {
+    background-color: var(--background);
+    color: #ffffff;
+}
+
+.button-color {
+    background-color: var(--logoLetra);
+    border-color: var(--logoLetra);
+}
+
+#resultado-id {
+    font-size: 2em;
+}
