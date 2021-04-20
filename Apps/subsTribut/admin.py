@@ -11,8 +11,8 @@ class ListandoTributos(admin.ModelAdmin):
             'all': ('subsTribut/css/admin_changelists.css',)
         }
 
-    list_display = ('id', 'origem', 'destino', 'mva', 'mvaimp', 'aliq', 'mvaaliq', 'basered', 'ssimples')
-    list_editable = ('mva', 'mvaimp', 'aliq', 'mvaaliq', 'basered', 'ssimples')
+    list_display = ('id', 'origem', 'destino', 'mva', 'mvaimp', 'mvaaliq', 'basered', 'ssimples')
+    list_editable = ('mva', 'mvaimp', 'mvaaliq', 'basered', 'ssimples')
     list_filter = ('origem',)
     ordering = ('origem', 'destino')
 
