@@ -14,7 +14,6 @@ class Tributos(models.Model):
     destino = models.CharField(max_length=2, choices=ESTADOS)
     mva = models.DecimalField(max_digits=19, decimal_places=5)
     mvaimp = models.DecimalField(max_digits=19, decimal_places=5)
-    aliq = models.DecimalField(max_digits=19, decimal_places=5)
     mvaaliq = models.DecimalField(max_digits=19, decimal_places=5)
     basered = models.DecimalField(max_digits=19, decimal_places=5)
     ssimples = models.DecimalField(max_digits=19, decimal_places=5)
