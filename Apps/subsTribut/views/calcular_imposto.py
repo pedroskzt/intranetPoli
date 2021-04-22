@@ -65,6 +65,7 @@ class CalcularView(View):
         if _campo_vazio(request.GET.get('numr_negociacao')) is not True:
             form['numr_negociacao'] = request.GET.get('numr_negociacao')
             form['pol_intra_nego_vw'] = _get_pol_intra_nego_vw(form['numr_negociacao'])
+            print(form['pol_intra_nego_vw'])
             if _negociacao_nao_encontrada(form['pol_intra_nego_vw']):
                 messages.error(request, 'Número de negociação não encontrado. Verifique.')
                 form['numr_negociacao'] = None
@@ -116,8 +117,7 @@ class CalcularView(View):
                 item['valor_base_ICMS'] = valor_item_bruto + float(item['VALR_FRETE']) + float(item['VALR_DESPESAS'])
                 item['valor_ICMS'] = item['valor_base_ICMS'] * item['aliquota_ICMS']
                 item['valor_base_ST'] = (item['valor_base_ICMS'] * item['mva']) + item['valor_base_ICMS']
-                print(negociacao['INDR_INSCRICAO'])
-                if negociacao['INDR_CONSUMIDOR_FINAL'] and negociacao['INDR_INSCRICAO'] == 0:
+                if negociacao['INDR_CONSUMIDOR_FINAL'] and negociacao['NUMR_INSC_ESTADUAL'] is None:
                     '''
                     Condição: Consumidor final e Não possui Inscrição Estadual
                     '''

@@ -72,9 +72,9 @@
                 <div class="col-auto mb-2">
                     {% if form.pol_intra_nego_vw.VALR_TOTAL_IMPOSTO %}
                         {% if form.pol_intra_nego_vw.INDR_CONSUMIDOR_FINAL %}
-                            <h2>Valor do DIFAL</h2>
+                            <label for="resultado-id" class="form-label" id="label-resultado-id">Valor do DIFAL</label>
                         {% else %}
-                            <h2>Valor do ST</h2>
+                            <label for="resultado-id" class="form-label" id="label-resultado-id">Valor do ST</label>
                         {% endif %}
                         <input type=text class="form-control" id="resultado-id"
                                value="R$ {{ form.pol_intra_nego_vw.VALR_TOTAL_IMPOSTO|floatformat:2 }}"
@@ -121,12 +121,10 @@
                         <td>R$ {{ item.VALR_FRETE }}</td>
                         <td>R$ {{ item.VALR_DESPESAS }}</td>
                         {% if form.pol_intra_nego_vw.VALR_TOTAL_IMPOSTO %}
-                            {% if form.pol_intra_nego_vw.INDR_CONSUMIDOR_FINAL and form.pol_intra_nego_vw.INDR_INSCRICAO == 0 %}
-                                <td role="button" data-bs-toggle="modal" data-bs-target="#modal-cons-final-id"
-                                    id="imposto-item-{{ forloop.counter }}-id">
+                            {% if form.pol_intra_nego_vw.INDR_CONSUMIDOR_FINAL and form.pol_intra_nego_vw.NUMR_INSC_ESTADUAL is None %}
+                                <td role="button" data-bs-toggle="modal" data-bs-target="#modal-cons-final-id">
                                     R$ {{ item.VALR_IMPOSTO|floatformat:2 }}
-                                </td>
-                                <div id="modal-revenda-id" class="modal fade bs-example-modal-lg" tabindex="-1"
+                                <div id="modal-cons-final-id" class="modal fade bs-example-modal-lg" tabindex="-1"
                                      role="dialog" aria-labelledby="classInfo" aria-hidden="true">
                                     <div class="modal-dialog modal-sm modal-lg modal-xl">
                                         <div class="modal-content modal-detalhe-imposto">
@@ -171,6 +169,8 @@
                                         </div>
                                     </div>
                                 </div>
+                                </td>
+
                             {% elif form.pol_intra_nego_vw.INDR_CONSUMIDOR_FINAL == 0 %}
                                 <td role="button" data-bs-toggle="modal" data-bs-target="#modal-revenda-id">
                                     R$ {{ item.VALR_IMPOSTO|floatformat:2 }}
