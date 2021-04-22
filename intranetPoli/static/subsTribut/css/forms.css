@@ -43,3 +43,7 @@ input::-webkit-inner-spin-button {
 #resultado-id {
     font-size: 2em;
 }
+
+#label-resultado-id {
+    font-size: 2em;
+}
