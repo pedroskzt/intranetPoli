@@ -2,6 +2,9 @@ from django.db import models
 
 
 class Tributos(models.Model):
+    class Meta:
+        verbose_name = 'Tributo'
+        verbose_name_plural = 'Tributos'
     ESTADOS = (
         ('AC', 'Acre'), ('AL', 'Alagoas'), ('AP', 'Amapá'), ('AM', 'Amazonas'), ('BA', 'Bahia'), ('CE', 'Ceará'),
         ('DF', 'Distrito Federal'), ('ES', 'Espírito Santo'), ('GO', 'Goiás'), ('MA', 'Maranhão'),
