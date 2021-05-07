@@ -65,7 +65,6 @@ class CalcularView(View):
         if _campo_vazio(request.GET.get('numr_negociacao')) is not True:
             form['numr_negociacao'] = request.GET.get('numr_negociacao')
             form['pol_intra_nego_vw'] = _get_pol_intra_nego_vw(form['numr_negociacao'])
-            print(form['pol_intra_nego_vw'])
             if _negociacao_nao_encontrada(form['pol_intra_nego_vw']):
                 messages.error(request, 'Número de negociação não encontrado. Verifique.')
                 form['numr_negociacao'] = None
