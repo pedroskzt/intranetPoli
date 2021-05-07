@@ -20,8 +20,10 @@
 }
 
 /* Colocaração do text dos links da NavBar */
+
 .navbar-custom .nav-pills .nav-link,
-.navbar-custom .nav-pills .dropdown-item {
+.navbar-custom .nav-pills .dropdown-item,
+.navbar-custom .nav-pills .nav-item{
     color: var(--logoLetra);
     font-weight: bold;
 }
@@ -37,4 +39,14 @@
 .navbar-custom .nav-pills .dropdown-item.active .dropdown-item:hover {
     color: #000000;
     background-color: var(--logoBarra);
+}
+
+.modal .modal-body label[for='floatingInput'],
+.modal .modal-body label[for='floatingPassword'] {
+    color: var(--logoLetra);
+    opacity: 100;
+}
+
+.modal .modal-title {
+    color: var(--logoLetra);
 }
