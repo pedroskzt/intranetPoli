@@ -1,0 +1,18 @@
+.form-floating .form-label {
+    color: var(--logoLetra);
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.form-group .form-label {
+    color: var(--logoLetra);
+    font-weight: bold;
+}
+
+#id_descricao {
+    height: 134px;
+}
+
+.form-floating .alert {
+    height: 3em;
+}
