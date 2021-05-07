@@ -1,0 +1,45 @@
+{% load static %}
+
+<div class="modal fade" id="login-modal-id" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'login' %}" method="post" enctype="multipart/form-data" id="login-id" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    <img class="mb-4" src="{% static 'intranet/img/core-img/logo.png' %}" alt="logo.png">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control {{ validacao.usuario.tag }}" id="floatingInput"
+                               placeholder="Usuário"
+                               name="usuario"
+                               value="{{ form.usuario }}"
+                               required>
+                        <label for="floatingInput">Usuário</label>
+                        <div class="invalid-feedback">
+                            {{ validacao.usuario.mensagem }}
+                        </div>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" class="form-control {{ validacao.senha.tag }}" id="floatingPassword"
+                               placeholder="Senha"
+                               name="senha" required>
+                        <label for="floatingPassword">Senha</label>
+                        <div class="invalid-feedback">
+                            {{ validacao.senha.mensagem }}
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success" form="login-id" id="login-button-id">Login</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+

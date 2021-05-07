@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>Painel Intranet</h1>
+    <section class="container">
+        <div class="row">
+            {% if links %}
+                {% for link in links %}
+                    <div class="col">
+                        <div class="mb-2">
+                            <img src="{{ link.logo.url }}" alt="{{ link.logo.url }}">
+                        </div>
+                        <div>
+                            <h5>{{ link.titulo }}</h5>
+                            <a href="{% url 'editar_link' link.id %}" type="button" class="btn btn-info">Editar</a>
+                            <a href="{% url 'excluir_link' link.id %}" type="button" class="btn btn-danger">Excluir</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div>
+            <a href="{% url 'adicionar_link' %}" class="btn btn-primary">Adicionar Link</a>
+        </div>
+
+    </section>
+
+
+{% endblock %}

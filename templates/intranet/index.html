@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extrahead %}
+    <link href="{% static 'intranet/css/index.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row mt-2">
+            {% if links %}
+                {% for link in links %}
+                    <div class="col">
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <a href="{{ link.url }}">
+                                    <img class="img-fluid" src="{{ link.logo.url }}" alt="{{ link.url }}">
+                                </a>
+                            </div>
+                            <h5>{{ link.titulo }}</h5>
+                            <p>{{ link.descricao }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}

@@ -24,10 +24,10 @@
     <title>Intranet Polipeças</title>
 </head>
 <body class="body-custom">
-<header>
+<header class="">
     {% include 'partials/_navbar.html' %}
 </header>
-<main>
+<main class="mt-2">
     <!-- Bloco de conteudo das paginas -->
     {% block content %}
     {% endblock %}
@@ -46,7 +46,14 @@
         integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG"
         crossorigin="anonymous"></script>
 
-
+<script> <!-- Validação de login -->
+{% if user.is_authenticated is False %}
+    {% if validacao.form_error %}
+        const myModal = new bootstrap.Modal(document.getElementById('login-modal-id'))
+        myModal.show()
+    {% endif %}
+{% endif %}
+</script>
 <!-- Bloco de Scripts -->
 {% block scripts %}
 {% endblock %}
