@@ -52,6 +52,7 @@ ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     'Apps.subsTribut',
+    'Apps.intranet',
     'widget_tweaks',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -140,13 +141,39 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+# STATICS
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'intranetPoli/static')
 ]
+# MEDIA
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+# MESSAGES
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
     messages.SUCCESS: 'success',
 }
+ENABLE_LOGGING = False
+if ENABLE_LOGGING is True:
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'file': {
+                'level': 'DEBUG',
+                'class': 'logging.FileHandler',
+                'filename': 'C:\\Users\\GYN-CPD-PEDRO\\Documents\\djangolog.txt',
+            },
+        },
+        'loggers': {
+            'django': {
+                'handlers': ['file'],
+                'level': 'DEBUG',
+                'propagate': True,
+            },
+        },
+    }
 
