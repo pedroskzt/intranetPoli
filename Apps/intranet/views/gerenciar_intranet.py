@@ -4,6 +4,8 @@ from Apps.intranet.forms.form_links import NovoLinkForms
 from Apps.intranet.models.links import Links
 
 
+# TODO: Mostrar links no Dashboard de gerenciamento da intranet, mesmo marcado com Exibir=NÃO
+
 def painel_intranet(request):
     links = Links.objects.filter(exibir=True)
     return render(request, 'intranet/painel/painel_intranet.html', context={'links': links})
