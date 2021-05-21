@@ -6,8 +6,13 @@
     <link href="{% static 'intranet/css/links.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
 
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'painel_intranet' %}">Painel Intranet</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Adicionar Link</li>
+{% endblock %}
+
 {% block content %}
-    <section class="container">
+    <div class="mb-4">
         <form action="{% url 'adicionar_link' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="row justify-content-center">
@@ -64,5 +69,5 @@
                 <button type="submit" class="btn btn-success">Salvar</button>
             </div>
         </form>
-    </section>
+    </div>
 {% endblock %}
