@@ -16,3 +16,33 @@
 .form-floating .alert {
     height: 3em;
 }
+
+.feature-icon {
+  width: 4rem;
+}
+.feature-icon .img-fluid {
+  width: auto;
+  height: 4em;
+}
+
+.input-group #input-add-id,
+.input-group .btn-primary {
+    border: 0;
+    background-color: var(--logoBarra);
+}
+
+.icon {
+    display: inline-flex;
+    align-self: center;
+}
+
+.icon svg, .icon img {
+    height: 1em;
+    width: 1em;
+    fill: currentColor;
+}
+
+.icon.baseline svg, .icon img {
+    top: .125em;
+    position: relative;
+}

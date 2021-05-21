@@ -1,3 +1,8 @@
 .feature-icon {
   width: 4rem;
 }
+
+.feature-icon .img-fluid {
+  width: auto;
+  height: 4em;
+}
