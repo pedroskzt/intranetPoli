@@ -11,6 +11,7 @@ class Links(models.Model):
     logo = models.ImageField(upload_to='logos')
     url = models.URLField(unique=True)
     exibir = models.BooleanField(default=False)
+    requer_acesso = models.BooleanField(default=False)
 
     # Log de criação
     data_criacao = models.DateTimeField(auto_now_add=True)
