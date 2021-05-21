@@ -24,15 +24,28 @@
     <title>Intranet Polipeças</title>
 </head>
 <body class="body-custom">
-<header class="">
+
+<header class="container">
     {% include 'partials/_navbar.html' %}
 </header>
-<main class="mt-2">
-    <!-- Bloco de conteudo das paginas -->
-    {% block content %}
-    {% endblock %}
-</main>
+<main>
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'pagina_inicial' %}">Home</a></li>
+                {% block breadcrumb %}
+                {% endblock %}
+            </ol>
+        </nav>
+        <div class="card card-custom"><!-- Bloco de conteudo das paginas -->
+            <section class="mt-2 ms-2 pe-4 ps-4 pt-4">
+                {% block content %}
+                {% endblock %}
+            </section>
 
+        </div>
+    </div>
+</main>
 
 {% include 'partials/_footer.html' %}
 
