@@ -6,13 +6,13 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="row mt-2">
-            {% if links %}
-                {% for link in links %}
-                    <div class="col">
-                        <div class="feature">
-                            <div class="feature-icon">
+    <div class="row">
+        {% if links %}
+            {% for link in links %}
+                <div class="col-3 mb-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <div class="feature-icon mx-auto">
                                 <a href="{{ link.url }}">
                                     <img class="img-fluid" src="{{ link.logo.url }}" alt="{{ link.url }}">
                                 </a>
@@ -21,9 +21,8 @@
                             <p>{{ link.descricao }}</p>
                         </div>
                     </div>
-                {% endfor %}
-            {% endif %}
-
-        </div>
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}
