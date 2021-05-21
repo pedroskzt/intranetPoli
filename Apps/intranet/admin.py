@@ -12,8 +12,8 @@ class ListandoLinks(admin.ModelAdmin):
         }
 
     list_display = ('titulo', 'url', 'data_ultima_alteracao',
-                    'usuario_ultima_alteracao', 'exibir')
-    list_editable = ('exibir',)
+                    'usuario_ultima_alteracao', 'exibir', 'requer_acesso')
+    list_editable = ('exibir', 'requer_acesso')
     readonly_fields = ('usuario_criacao', 'usuario_ultima_alteracao')
 
 
