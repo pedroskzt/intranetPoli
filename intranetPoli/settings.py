@@ -156,6 +156,8 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
     messages.SUCCESS: 'success',
 }
+
+#LOGGIN
 ENABLE_LOGGING = False
 if ENABLE_LOGGING is True:
     LOGGING = {
