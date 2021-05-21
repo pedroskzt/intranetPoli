@@ -10,5 +10,8 @@ from Apps.intranet.models.links import Links
 
 
 def index(request):
-    links = Links.objects.filter(exibir=True)
+    if request.user.is_authenticated:
+        links = Links.objects.filter(exibir=True)
+    else:
+        links = Links.objects.filter(exibir=True, requer_acesso=False)
     return render(request, 'intranet/index.html', context={'links': links})
