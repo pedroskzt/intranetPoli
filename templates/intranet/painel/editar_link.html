@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block extrahead %}
+    <link href="{% static 'intranet/css/links.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'painel_intranet' %}">Painel Intranet</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Editar Link</li>
+{% endblock %}
+
+
+{% block content %}
+    <div class="mb-4">
+        <form action="{% url 'editar_link' link_id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row justify-content-center">
+                <div class="row mb-4">
+                    <div class="col border rounded me-4">
+                        <div class="row">
+                            <div class="col-7">
+                                <div class="form-floating mt-2 mb-3">
+                                    {{ forms.titulo|add_class:'form-control' }}
+                                    <label for="{{ forms.titulo.id_for_label }}"
+                                           class="form-label">{{ forms.titulo.label }}</label>
+                                    {% for erro in forms.titulo.errors %}
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ forms.titulo.errors }}
+                                        </div>
+                                    {% endfor %}
+                                </div> <!-- Título -->
+                            </div>
+                            <div class="col-auto d-flex flex-column align-self-center">
+                                <div class="form-check form-switch">
+                                    {{ forms.exibir|add_class:'form-check-input' }}
+                                    <label for="{{ forms.exibir.id_for_label }}"
+                                           class="form-check-label">{{ forms.exibir.label }}</label>
+                                </div> <!-- Exibir -->
+                                <div class="form-check form-switch">
+                                    {{ forms.requer_acesso|add_class:'form-check-input' }}
+                                    <label for="{{ forms.requer_acesso.id_for_label }}"
+                                           class="form-check-label">{{ forms.requer_acesso.label }}</label>
+
+                                </div> <!-- Requer Acesso -->
+                            </div>
+                        </div>
+                        <div class="form-floating mb-2">
+                            {{ forms.url|add_class:'form-control' }}
+                            <label for="{{ forms.url.id_for_label }}" class="form-label">{{ forms.url.label }}</label>
+                            {% for erro in forms.url.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ forms.url.errors }}
+                                </div>
+                            {% endfor %}
+                        </div> <!-- URL -->
+
+                    </div>
+                    <div class="col border rounded">
+                        <div class="form-floating mt-2 mb-2">
+                            {{ forms.descricao|add_class:'form-control' }}
+                            <label for="{{ forms.descricao.id_for_label }}"
+                                   class="form-label">{{ forms.descricao.label }}</label>
+                            {% for erro in forms.descricao.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ forms.descricao.errors }}
+                                </div>
+                            {% endfor %}
+                        </div> <!-- Descrição -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group border rounded">
+                        <div>
+                            <label for="{{ forms.logo.id_for_label }}" class="form-label">{{ forms.logo.label }}</label>
+                        </div>
+                        <div>
+                            <img src="{{ media_url }}{{ forms.logo.value }}" alt="">
+                        </div>
+                        {{ forms.logo|add_class:'form-control mb-2' }}
+                        {% for erro in forms.logo.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ forms.logo.errors }}
+                            </div>
+                        {% endfor %}
+                    </div> <!-- LOGO -->
+                </div>
+            </div>
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{% url 'painel_intranet' %}" class="btn btn-primary"> Voltar </a>
+                <button type="submit" class="btn btn-success">Salvar</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
