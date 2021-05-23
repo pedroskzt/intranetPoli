@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+{% endblock %}
+{% block content %}
+    {% load widget_tweaks %}
+    <h1>Criar Assinatura</h1>
+    <section class="container col-4">
+        <form action="{% url 'visualizar_assinatura' %}" method="post">
+            {% csrf_token %}
+            {% for field in form.visible_fields %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field|add_class:'form-control' }}
+                </div>
+                {% for error in field.errors %}
+                    <section class="alert alert-danger" role="alert">
+                        {{ field.errors }}
+                    </section>
+                {% endfor %}
+            {% endfor %}
+            <input class="btn btn-success" type="submit" value="Criar">
+        </form>
+
+    </section>
+{% endblock %}
+
+{% block scripts %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $('#id_fone').mask('(00) 0000-0000');
+        });
+        $(document).ready(function () {
+            $('#id_ramal').mask('0000');
+        });
+    </script>
+{% endblock %}

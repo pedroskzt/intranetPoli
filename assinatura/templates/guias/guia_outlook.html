@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/guias.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="container">
+
+        <h1 class="h1-custom">Outlook</h1>
+        <h2>Preparando o Outlook</h2>
+        <ol class="ol-custom">
+            <li>Primeiramente, abra o Outlook.
+                <ul>
+                    <li class="li-image">
+                        <p></p>
+                        <img class="responsive" alt="Entradaout.png"
+                             src="{% static 'img/guia/outlook/Entradaout.png' %}"/>
+                        <p></p>
+                    </li>
+                </ul>
+            </li>
+            <li>Em seguida, clique no botão azul "Arquivo", no canto superior esquerdo do Outlook.
+                <ul>
+                    <li class="li-image">
+                        <p></p>
+                        <img class="responsive" alt="BotaoArquivo.png"
+                             src="{% static 'img/guia/outlook/BotaoArquivo.png' %}"/>
+                        <p></p>
+                    </li>
+                </ul>
+            </li>
+            <li>Agora clique em "Opções".
+                <ul>
+                    <li class="li-image">
+                        <p></p>
+                        <img class="responsive" alt="Opcoesout.png"
+                             src="{% static 'img/guia/outlook/Opcoesout.png' %}"/>
+                        <p></p>
+                    </li>
+                </ul>
+            </li>
+            <li>Depois clique em "Email".
+                <ul>
+                    <li class="li-image">
+                        <p></p>
+                        <img class="responsive" alt="Geralout.png" src="{% static 'img/guia/outlook/Geralout.png' %}"/>
+                        <p></p>
+                    </li>
+                </ul>
+            </li>
+            <li>Em seguida clique em "Assinatura".
+                <ul>
+                    <li class="li-image">
+                        <p></p>
+                        <img class="responsive" alt="Assinaturaout.png"
+                             src="{% static 'img/guia/outlook/Assinaturaout.png' %}"/>
+                        <p></p>
+                    </li>
+                </ul>
+            </li>
+            <li>Na janela que abrirá, clique em "Novo" para criar uma nova assinatura.
+                <ul>
+                    <li class="li-image">
+                        <p></p>
+                        <img class="responsive" alt="Novoout.png" src="{% static 'img/guia/outlook/Novoout.png' %}"/>
+                        <p></p>
+                    </li>
+                </ul>
+            </li>
+            <li>Digite seu nome
+                no campo que se abrirá e clique "Ok".
+                <ul>
+                    <li class="li-image">
+                        <p></p>
+                        <img class="responsive" alt="Nomeout.png" src="{% static 'img/guia/outlook/Nomeout.png' %}"/>
+                        <p></p>
+                    </li>
+                </ul>
+            </li>
+            <li>Agora em "Escolha a assinatura padrão", vá em "Novas Mensagens" e
+                escolha a assinatura que acabou de criar.
+                <ul>
+                    <li class="li-image">
+                        <p></p>
+                        <img class="responsive" alt="Padraoout.png"
+                             src="{% static 'img/guia/outlook/Padraoout.png' %}"/>
+                        <p></p>
+                    </li>
+                </ul>
+            </li>
+            <li>Depois clique em "Ok".
+                <ul>
+                    <li class="li-image">
+                        <p></p>
+                        <img class="responsive" alt="Nomeok.png" src="{% static 'img/guia/outlook/Nomeok.png' %}"/>
+                        <p></p>
+                    </li>
+                </ul>
+            </li>
+            <li> Na janela seguinte, clique em "Ok" novamente.
+                <ul>
+                    <li class="li-image">
+                        <p></p>
+                        <img class="responsive" alt="Okout.png" src="{% static 'img/guia/outlook/Okout.png' %}"/>
+                        <p></p>
+                    </li>
+                </ul>
+                <h2>Abrindo local da Assinatura</h2>
+            </li>
+            <li>Agora feche o Outlook. No seu teclado, pressione a tecla "Iniciar (tecla com a logo do Windows)" e sem
+                solta-la, pressione a tecla " R ".
+                <ul>
+                    <li class="li-image">
+                        <p></p>
+                        <img class="responsive" alt="IniciarR.png" src="{% static 'img/guia/outlook/IniciarR.png' %}"/>
+                        <p></p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Na janela "Executar" que irá abrir, digite o seguinte:
+                <input class="input-custom-bg appdata-custom-width" type="text" value="%appdata%/Microsoft/Assinaturas"
+                       readonly> e em seguida
+                clique em "OK".
+                Nesta pasta iremos salvar a assinatura, portanto não feche ela ainda.
+                <ul>
+                    <li class="li-image">
+                        <p></p>
+                        <img class="responsive" alt="Assinaturas.png"
+                             src="{% static 'img/guia/outlook/Assinaturas.png' %}"/>
+                        <p></p>
+                    </li>
+                </ul>
+                <h2>Instalando a Assinatura</h2>
+            </li>
+            <li>Agora navegue até a pasta onde foi salvo a assinatura
+                <ul>
+                    <li class="li-image">
+                        <p></p>
+                        <img class="responsive" alt="Salvoout.png" src="{% static 'img/guia/outlook/Salvoout.png' %}"/>
+                        <p></p>
+                    </li>
+                </ul>
+            </li>
+            <li>Selecione a assinatura, clique com o botão direito do mouse em cima da assinatura, depois clique em
+                "Renomear".
+                <ul>
+                    <li class="li-image">
+                        <p></p>
+                        <img class="responsive" alt="Renomearout.png"
+                             src="{% static 'img/guia/outlook/Renomearout.png' %}"/>
+                        <p></p>
+                    </li>
+                </ul>
+            </li>
+            <li>Coloque exatamente o mesmo nome da assinatura criada no Outlook anteriormente.
+                <ul>
+                    <li class="li-image">
+                        <p></p>
+                        <img class="responsive" alt="nomeAssin.png"
+                             src="{% static 'img/guia/outlook/nomeAssin.png' %}"/>
+                        <p></p>
+                    </li>
+                </ul>
+            </li>
+            <li>Clique novamente com o botão direito do mouse em cima da assinatura e clique em "Copiar", ou selecione a
+                assinatura e pressione <input class="input-custom-bg copy-custom-width" type="text" readonly
+                                              value="ctrl + c"/> para copiar.
+
+                <ul>
+                    <li class="li-image">
+                        <p></p>
+                        <img class="responsive" alt="Copiarout.png"
+                             src="{% static 'img/guia/outlook/Copiarout.png' %}"/>
+                        <p></p>
+                    </li>
+                </ul>
+            </li>
+            <li>Volte na pasta que havíamos aberto anteriormente, <input class="input-custom-bg appdata-custom-width"
+                                                                         type="text" readonly
+                                                                         value="(%appdata%/Microsoft/Assinaturas)"/>
+                <ul>
+                    <li class="li-image">
+                        <p></p>
+                        <img class="responsive" alt="Assinaturas.png"
+                             src="{% static 'img/guia/outlook/Assinaturas.png' %}"/>
+                        <p></p>
+                    </li>
+                </ul>
+            </li>
+            <li>Nesta pasta, cole o arquivo que acabamos de copiar. Para isso pressione <input
+                    class="input-custom-bg copy-custom-width" type="text" readonly value="ctrl + v"/> ou clicando com
+                o botão
+                direito do
+                mouse e então clicando em "Colar".
+                <ul>
+                    <li class="li-image">
+                        <p></p>
+                        <img class="responsive" alt="Colarout.png" src="{% static 'img/guia/outlook/Colarout.png' %}"/>
+                        <p></p>
+                    </li>
+                </ul>
+            </li>
+            <li>Uma janela aparecera alertando sobre arquivo repetido, clique em
+                "Copiar
+                e substituir". Agora sua assinatura esta salva em seu Outlook e ira ser adicionada automaticamente
+                quando
+                for enviar um email.
+                <ul>
+                    <li class="li-image">
+                        <p></p>
+                        <img class="responsive" alt="Replaceout.png"
+                             src="{% static 'img/guia/outlook/Replaceout.png' %}"/>
+                        <p></p>
+                    </li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+{% endblock %}
