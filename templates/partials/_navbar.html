@@ -9,16 +9,29 @@
     </button>
     <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
         <ul class="nav nav-pills">
-            {#                <li class="nav-item dropdown">#}
-            {#                    <a class="nav-link dropdown-toggle {{ pagina_guias }}" href="#" id="dropDrownGuias" role="button"#}
-            {#                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Guia de Instalação</a>#}
-            {#                    <div class="dropdown-menu" aria-labelledby="dropDrownGuias">#}
-            {#                        <a class="dropdown-item {{ guia_zimbra }}" href="{% url 'guia_zimbra' %}">Zimbra</a>#}
-            {#                        <a class="dropdown-item {{ guia_thunderbird }}"#}
-            {#                           href="{% url 'guia_thunderbird' %}">Thunderbird</a>#}
-            {#                        <a class="dropdown-item {{ guia_outlook }}" href="{% url 'guia_outlook' %}">Outlook</a>#}
-            {#                    </div>#}
-            {#                </li>#}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="dropDownAssinatura" role="button"
+                   data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                    Assinatura
+                </a>
+                <ul class="dropdown-menu" >
+                    <li class="submenu">
+                        <a class="nav-link {{ pagina_guias }}" href="#">Guia de Instalação</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item {{ guia_zimbra }}" href="{% url 'guia_zimbra' %}">Zimbra</a>
+                            </li>
+                            <li><a class="dropdown-item {{ guia_thunderbird }}"
+                                   href="{% url 'guia_thunderbird' %}">Thunderbird</a></li>
+                            <li><a class="dropdown-item {{ guia_outlook }}" href="{% url 'guia_outlook' %}">Outlook</a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                </ul>
+            </li>
+
             {#                <li class="nav-item">#}
             {#                    <form id="search-form" class="d-flex has-search mt-1" action="{% url 'visualizar_assinatura' %}">#}
             {#                        <input id="pesquisar_assinatura"#}

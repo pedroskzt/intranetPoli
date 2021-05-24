@@ -1,5 +1,5 @@
 from django.contrib import admin
-from assinaturas.models import Assinatura
+from Apps.assinaturas.models import Assinatura
 
 
 # Register your models here.

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_list_or_404
-from assinaturas.forms import AssinaturaForms
-from assinaturas.models import Assinatura
+from Apps.assinaturas.forms import AssinaturaForms
+from Apps.assinaturas.models import Assinatura
 
 
 def visualizar_assinatura(request):

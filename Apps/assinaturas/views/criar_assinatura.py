@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from assinaturas.forms import AssinaturaForms
+from Apps.assinaturas.forms import AssinaturaForms
 
 
 def criar_assinatura(request):

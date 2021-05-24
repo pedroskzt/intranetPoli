@@ -21,5 +21,8 @@ urlpatterns = [
     path('', index, name='index'),
     path('criar/assinatura', criar_assinatura, name='criar_assinatura'),
     path('visualizar/assinatura', visualizar_assinatura, name='visualizar_assinatura'),
-    path('pesquisar/assinatura/', pesquisar_assinatura, name='pesquisar_assinatura')
+    path('pesquisar/assinatura/', pesquisar_assinatura, name='pesquisar_assinatura'),
+    path('guia/zimbra', guia_zimbra, name='guia_zimbra'),
+    path('guia/thunderbird', guia_thunderbird, name='guia_thunderbird'),
+    path('guia/outlook', guia_outlook, name='guia_outlook')
 ]

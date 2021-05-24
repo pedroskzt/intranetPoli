@@ -44,15 +44,16 @@ def get_secret(configuracao, secrets=_secrets):
 SECRET_KEY = get_secret('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True if get_secret("DEBUG") == 'True' else False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = get_secret("HOSTS")
 
 # Application definition
 
 INSTALLED_APPS = [
     'Apps.subsTribut',
     'Apps.intranet',
+    'Apps.assinaturas',
     'widget_tweaks',
     'django.contrib.admin',
     'django.contrib.auth',

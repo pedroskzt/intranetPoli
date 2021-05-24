@@ -1,6 +1,5 @@
 from django.http import JsonResponse
-
-from assinaturas.models import Assinatura
+from Apps.assinaturas.models import Assinatura
 
 
 def pesquisar_assinatura(request):

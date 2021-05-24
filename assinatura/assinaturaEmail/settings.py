@@ -51,7 +51,7 @@ ALLOWED_HOSTS = get_secret("HOSTS")
 # Application definition
 
 INSTALLED_APPS = [
-    'assinaturas',
+    'Apps.assinaturas',
     'guias',
     'widget_tweaks',
     'django.contrib.admin',

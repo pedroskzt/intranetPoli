@@ -21,5 +21,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', include('Apps.intranet.urls')),
     path('st', include('Apps.subsTribut.urls')),
-    path('painerl/cpd/', admin.site.urls, name='painel_cpd'),
+    path('assinatura', include('Apps.assinaturas.urls')),
+    path('painel/cpd/', admin.site.urls, name='painel_cpd'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
