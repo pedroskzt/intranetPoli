@@ -23,9 +23,13 @@
 
 .navbar-custom .nav-pills .nav-link,
 .navbar-custom .nav-pills .dropdown-item,
-.navbar-custom .nav-pills .nav-item{
+.navbar-custom .nav-pills .nav-item {
     color: var(--logoLetra);
     font-weight: bold;
+}
+
+.navbar-custom .nav-pills .login-link {
+    cursor: pointer;
 }
 
 /* Cor dos textos dos links durante hover */
@@ -49,4 +53,49 @@
 
 .modal .modal-title {
     color: var(--logoLetra);
+}
+
+.dropdown-menu.columns-2 {
+    min-width: 465px;
+}
+
+.multi-column-dropdown {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.multi-column-dropdown li a {
+    display: block;
+    clear: both;
+    line-height: 1.428571429;
+    color: #333;
+    white-space: normal;
+}
+
+.has-search input.form-control[type=search] {
+    width: 7em;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+.has-search input.form-control[type=search]:focus:not([readonly]) {
+    border-bottom: 1px solid var(--logoLetra);
+    box-shadow: 0 0 0 1px var(--logoLetra);
+    width: 220px;
+}
+
+.has-search svg {
+    line-height: 2;
+    color: var(--logoLetra);
+}
+
+.has-search #search-button {
+    background-color: transparent;
+    border-width: 0;
+}
+
+/*the container must be positioned relative:*/
+.autocomplete {
+    border-width: 0;
 }
