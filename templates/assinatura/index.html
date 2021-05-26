@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block extrahead %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active" aria-current="page">Assinatura de Email</li>
 {% endblock %}
+
 {% block content %}
     <div class="text-center d-flex h-100 p-3 mx-auto flex-column">
         <h1 class="cover-heading">Bem Vindo.</h1>
@@ -13,13 +15,13 @@
     </div>
 {% endblock %}
 
-{% block scripts %}
-    <script src="{% static 'js/jquery-ui-1.12.1.js' %}"></script>
-    <script>
-        $("#pesquisar_assinatura").autocomplete({
-            source: "{% url 'pesquisar_assinatura' %}",
-            minLength: 3,
-            appendTo: "#search-form"
-        })
-    </script>
-{% endblock %}
+{#{% block scripts %}#}
+{#    <script src="{% static 'js/jquery-ui-1.12.1.js' %}"></script>#}
+{#    <script>#}
+{#        $("#pesquisar_assinatura").autocomplete({#}
+{#            source: "{% url 'pesquisar_assinatura' %}",#}
+{#            minLength: 3,#}
+{#            appendTo: "#search-form"#}
+{#        })#}
+{#    </script>#}
+{#{% endblock %}#}
