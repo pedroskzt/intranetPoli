@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block extrahead %}
     <link rel="stylesheet" type="text/css" href="{% static 'assinatura/css/guias.css' %}">
 {% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'index_assinatura' %}">Assinatura de Email</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Guia Outlook</li>
+{% endblock %}
+
 {% block content %}
     <div class="container">
 

@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'index_assinatura' %}">Assinatura de Email</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Visualizar Assinatura</li>
+{% endblock %}
+
 {% block content %}
     <section class="container" id="id_assinatura">
         <table style="font-family: sans-serif">

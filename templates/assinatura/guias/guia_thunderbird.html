@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block extrahead %}
     <link rel="stylesheet" type="text/css" href="{% static 'assinatura/css/guias.css' %}">
 {% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'index_assinatura' %}">Assinatura de Email</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Guia Thunderbird</li>
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <h1 class="h1-custom">Thunderbird</h1>
@@ -44,7 +51,8 @@
                 <ul>
                     <li class="li-image li-image-thunder">
                         <p></p>
-                        <img class="responsive" alt="Marque.png" src="{% static 'assinatura/img/guia/thunderbird/Marque.png' %}"/>
+                        <img class="responsive" alt="Marque.png"
+                             src="{% static 'assinatura/img/guia/thunderbird/Marque.png' %}"/>
                         <p></p>
                     </li>
                 </ul>
@@ -75,7 +83,8 @@
                 <ul>
                     <li class="li-image li-image-thunder">
                         <p></p>
-                        <img class="responsive" alt="Salvarthunder.png" src="{% static 'assinatura/img/guia/thunderbird/Salvarthunder.png' %}"/>
+                        <img class="responsive" alt="Salvarthunder.png"
+                             src="{% static 'assinatura/img/guia/thunderbird/Salvarthunder.png' %}"/>
                         <p></p>
                     </li>
                 </ul>
