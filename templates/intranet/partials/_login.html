@@ -32,9 +32,10 @@
                             {{ validacao.senha.mensagem }}
                         </div>
                     </div>
-
+                    <input type="hidden" name="next" value="{{ request.path }}">
                 </form>
             </div>
+
             <div class="modal-footer">
                 <button type="submit" class="btn btn-success" form="login-id" id="login-button-id">Login</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
