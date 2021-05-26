@@ -16,6 +16,7 @@ def login(request):
                               'usuario': {'tag': '', 'mensagem': 'Campo Usuário não pode ser vazio.'},
                               'senha': {'tag': '', 'mensagem': 'Campo Senha não pode ser vazio'}}}
     if request.method == 'POST':
+        redirecionamento = request.POST.get('next')
         usuario = request.POST['usuario']
         senha = request.POST['senha']
 
@@ -34,14 +35,16 @@ def login(request):
                 user = auth.authenticate(request, username=nome, password=senha)
                 if user is not None:
                     auth.login(request, user)
-                    return redirect('pagina_inicial')
+                    if redirecionamento:
+                        return redirect(redirecionamento)
+                    else:
+                        return redirect('pagina_inicial')
             else:
                 contexto['validacao']['form_error'] = True
                 contexto['validacao']['usuario']['tag'] = 'is-invalid'
                 contexto['validacao']['usuario']['mensagem'] = 'Usuário ou Senha incorretos.'
 
         contexto['form'] = {'usuario': usuario}
-    print(contexto)
     return render(request, 'intranet/index.html', context=contexto)
 
 
@@ -51,6 +54,9 @@ def logout(request):
     :param request:
     :return:
     """
+    redirecionamento = request.POST.get('next')
     auth.logout(request)
-    print("Logout")
-    return redirect('pagina_inicial')
+    if redirecionamento:
+        return redirect(redirecionamento)
+    else:
+        return redirect('pagina_inicial')
