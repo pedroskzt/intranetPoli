@@ -15,10 +15,10 @@ Including another URLconf
 """
 
 from django.urls import path
-from .views import *
+from Apps.assinaturas.views import *
 
 urlpatterns = [
-    path('', index, name='index'),
+    path('', index, name='index_assinatura'),
     path('criar/assinatura', criar_assinatura, name='criar_assinatura'),
     path('visualizar/assinatura', visualizar_assinatura, name='visualizar_assinatura'),
     path('pesquisar/assinatura/', pesquisar_assinatura, name='pesquisar_assinatura'),
