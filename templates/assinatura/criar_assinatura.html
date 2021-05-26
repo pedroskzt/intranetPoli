@@ -13,9 +13,9 @@
         <form action="{% url 'visualizar_assinatura' %}" method="post">
             {% csrf_token %}
             {% for field in siteAssinatura.form.visible_fields %}
-                <div class="">
+                <div class="form-floating">
+                    {{ field|add_class:'form-control mb-2' }}
                     <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                    {{ field|add_class:'form-control' }}
                 </div>
                 {% for error in field.errors %}
                     <section class="alert alert-danger" role="alert">
@@ -23,7 +23,7 @@
                     </section>
                 {% endfor %}
             {% endfor %}
-            <input class="btn btn-success" type="submit" value="Criar">
+            <input class="btn btn-success mb-4" type="submit" value="Criar">
         </form>
 
     </section>
