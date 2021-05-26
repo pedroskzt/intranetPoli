@@ -58,18 +58,28 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"
         integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG"
         crossorigin="anonymous"></script>
-
-<script> <!-- Validação de login -->
+<script src="{% static 'js/jquery-ui-1.12.1.js' %}"></script>
+{% block scripts %}
+{% endblock %}
 {% if user.is_authenticated is False %}
+    <script> <!-- Validação de login -->
     {% if validacao.form_error %}
         const myModal = new bootstrap.Modal(document.getElementById('login-modal-id'))
         myModal.show()
     {% endif %}
 {% endif %}
 </script>
+{% if siteAssinatura %}
+    <script>
+        $("#pesquisar_assinatura").autocomplete({
+            source: "{% url 'pesquisar_assinatura' %}",
+            minLength: 3,
+            appendTo: "#search-form"
+        })
+    </script>
+{% endif %}
 <!-- Bloco de Scripts -->
-{% block scripts %}
-{% endblock %}
+
 </body>
 
 </html>
