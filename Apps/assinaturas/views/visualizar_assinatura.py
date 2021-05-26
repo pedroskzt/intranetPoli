@@ -9,16 +9,16 @@ def visualizar_assinatura(request):
         if form.is_valid():
             form.save()
             query = Assinatura.objects.filter(nome=form['nome'].value()).get()
-            contexto = {'assinatura': query}
-            return render(request, 'visualizar_assinatura.html', contexto)
+            contexto = {"siteAssinatura": {'assinatura': query}}
+            return render(request, 'assinatura/visualizar_assinatura.html', contexto)
         else:
-            contexto = {'form': form}
-            return render(request, 'criar_assinatura.html', contexto)
+            contexto = {"siteAssinatura": {'form': form}}
+            return render(request, 'assinatura/criar_assinatura.html', contexto)
     if request.method == 'GET':
         query = Assinatura.objects.filter(nome=request.GET['buscar'])
         if query.exists():
-            contexto = {'assinatura': query.get()}
-            return render(request, 'visualizar_assinatura.html', contexto)
+            contexto = {"siteAssinatura": {'assinatura': query.get()}}
+            return render(request, 'assinatura/visualizar_assinatura.html', contexto)
         else:
-            return render(request, 'index.html')
+            return render(request, 'assinatura/index.html')
     return redirect('criar_assinatura')
