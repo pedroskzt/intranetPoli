@@ -13,3 +13,10 @@ class AssinaturaForms(forms.ModelForm):
         model = Assinatura
         fields = '__all__'
         labels = {'fone': 'Telefone'}
+        widgets = {
+            'nome': forms.TextInput(attrs={'placeholder': 'Nome'}),
+            'departamento': forms.TextInput(attrs={'placeholder': 'Departamento'}),
+            'fone': forms.TextInput(attrs={'placeholder': 'Telefone'}),
+            'ramal': forms.TextInput(attrs={'placeholder': 'Ramal'}),
+
+        }
