@@ -11,9 +11,9 @@
         <table style="font-family: sans-serif">
             <tr>
                 <td style="color:#26a6ff">
-                    <strong>{{ assinatura.nome }}</strong><br>
-                    {{ assinatura.departamento }}<br>
-                    {{ assinatura.fone }} - Ramal: {{ assinatura.ramal }}<br>
+                    <strong>{{ siteAssinatura.assinatura.nome }}</strong><br>
+                    {{ siteAssinatura.assinatura.departamento }}<br>
+                    {{ siteAssinatura.assinatura.fone }} - Ramal: {{ siteAssinatura.assinatura.ramal }}<br>
                     <a href="https://www.polipecas.com.br" target="_blank"
                        style="color:#000388">www.polipecas.com.br</a><br>
                     <small>Esta mensagem é confidencial e privilegiada. Caso Você não seja o destinatário, não está
@@ -36,7 +36,7 @@
             let assinatura = document.getElementById("id_assinatura").innerHTML
             assinatura = inicio_HTML + assinatura + fim_HTML
             console.log(assinatura)
-            let nome = "{{ assinatura.nome}}"
+            let nome = "{{ siteAssinatura.assinatura.nome}}"
             nome = nome.replaceAll(' ', '')
             download(assinatura, nome, "html")
 
