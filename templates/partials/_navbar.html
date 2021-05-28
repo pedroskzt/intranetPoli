@@ -1,99 +1,107 @@
 {% load static %}
 <nav class="navbar navbar-expand-lg navbar-custom navbar-light sticky-top" role="navigation">
+
     <a class="navbar-brand" href="{% url 'pagina_inicial' %}">
         <img class="logo" src="{% static 'intranet/img/core-img/logo.png' %}" alt="Polipeças">
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon my-toggler"></span>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navBar"
+            aria-controls="navBar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
-        <ul class="nav nav-pills">
-            {% if siteAssinatura %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="dropDownAssinatura" role="button"
-                       data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        Assinatura
-                    </a>
-                    <ul class="dropdown-menu multi-column columns-2" aria-labelledby="dropDownAssinatura">
-                        <div class="row gx-3">
-                            <div class="col-auto">
-                                <ul class="multi-column-dropdown">
-                                    <li>
-                                        <h5 class="dropdown-header">Guia de Instalação</h5>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item {{ siteAssinatura.guia_zimbra }}"
-                                           href="{% url 'guia_zimbra' %}">Zimbra</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item {{ siteAssinatura.guia_thunderbird }}"
-                                           href="{% url 'guia_thunderbird' %}">Thunderbird</a></li>
-                                    <li>
-                                        <a class="dropdown-item {{ siteAssinatura.guia_outlook }}"
-                                           href="{% url 'guia_outlook' %}">Outlook</a>
-                                    </li>
-                                </ul> <!-- Coluna 1 -->
-                            </div>
-                            <div class="col-auto">
-                                <ul class="multi-column-dropdown">
-                                    <li>
-                                        <h5 class="dropdown-header">Funções</h5>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item {{ siteAssinatura.pagina_criar }}"
-                                           href="{% url 'criar_assinatura' %}">
-                                            Criar Assinatura de Email</a>
-                                    </li>
-                                    <li>
-                                        <form id="search-form" class="d-flex has-search dropdown-item"
-                                              action="{% url 'visualizar_assinatura' %}">
-                                            <input id="pesquisar_assinatura"
-                                                   class="form-control form-control-sm" type="search"
-                                                   placeholder="Pesquisar"
-                                                   aria-label="Search"
-                                                   name="buscar">
-                                            <button id="search-button" type="submit">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                     fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                                                </svg>
-                                            </button>
-                                        </form>
-                                    </li>
-                                </ul> <!-- Coluna 2 -->
-                            </div>
-                        </div> <!-- Colunas Dropdown -->
-                    </ul>
-                </li>
-            {% endif %}
-        </ul>
-        <ul class="nav nav-pills">
-            {% if user.is_authenticated %}
-                <li class="nav-item"><a href="{% url 'admin:index' %}" class="nav-link px-2">Painel de Administração</a>
-                </li>
-                <li class="nav-item"><a href="{% url 'painel_intranet' %}" class="nav-link px-2">Painel Intranet</a>
-                </li>
-                <li class="nav-item">
-                    <form action="{% url 'logout' %}" method="post" enctype="multipart/form-data" id="logout-id">
-                        {% csrf_token %}
-                        <input type="hidden" name="next" value="{{ request.path }}">
-                    </form>
-                    <button type="submit" class="nav-link px-2" form="logout-id">Sair</button>
-                </li>
-            {% else %}
-                <li class="nav-item login-link" data-bs-toggle="modal" data-bs-target="#login-modal-id">Entrar
-                </li>
-            {% endif %}
-        </ul>
+    <div class="collapse navbar-collapse" id="navBar">
+        <div class="d-flex justify-content-between flex-fill">
+            <ul class="nav nav-pills">
+                {% if siteAssinatura %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="dropDownAssinatura" role="button"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            Assinatura
+                        </a>
+                        <ul class="dropdown-menu multi-column columns-2" aria-labelledby="dropDownAssinatura"
+                            id="dropdown-container-id">
+                            <div class="row gx-3">
+                                <div class="col-auto">
+                                    <ul class="multi-column-dropdown">
+                                        <li>
+                                            <h5 class="dropdown-header">Guia de Instalação</h5>
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item {{ siteAssinatura.guia_zimbra }}"
+                                               href="{% url 'guia_zimbra' %}">Zimbra</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item {{ siteAssinatura.guia_thunderbird }}"
+                                               href="{% url 'guia_thunderbird' %}">Thunderbird</a></li>
+                                        <li>
+                                            <a class="dropdown-item {{ siteAssinatura.guia_outlook }}"
+                                               href="{% url 'guia_outlook' %}">Outlook</a>
+                                        </li>
+                                    </ul> <!-- Coluna 1 -->
+                                </div>
+                                <div class="col-auto">
+                                    <ul class="multi-column-dropdown">
+                                        <li>
+                                            <h5 class="dropdown-header">Funções</h5>
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item {{ siteAssinatura.pagina_criar }}"
+                                               href="{% url 'criar_assinatura' %}">
+                                                Criar Assinatura de Email</a>
+                                        </li>
+                                        <li>
+                                            <form id="search-form" class="d-flex has-search dropdown-item"
+                                                  action="{% url 'visualizar_assinatura' %}">
+                                                <input id="pesquisar_assinatura"
+                                                       class="form-control form-control-sm" type="search"
+                                                       placeholder="Pesquisar"
+                                                       aria-label="Search"
+                                                       autocomplete="off"
+                                                       name="buscar">
+                                                <button id="search-button" type="submit">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                         fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul> <!-- Coluna 2 -->
+                                </div>
+                            </div> <!-- Colunas Dropdown -->
+                        </ul>
+                    </li>
+                {% endif %}
+            </ul>
+            <ul class="nav nav-pills">
+                {% if user.is_authenticated %}
+                    <li class="nav-item"><a href="{% url 'admin:index' %}" class="nav-link px-2">Painel de
+                        Administração</a>
+                    </li>
+                    <li class="nav-item"><a href="{% url 'painel_intranet' %}" class="nav-link px-2">Painel Intranet</a>
+                    </li>
+                    <li class="nav-item">
+                        <form action="{% url 'logout' %}" method="post" enctype="multipart/form-data" id="logout-id">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                        </form>
+                        <button type="submit" class="nav-link px-2" form="logout-id">Sair</button>
+                    </li>
+                {% else %}
+                    <li class="nav-item login-link" data-bs-toggle="modal" data-bs-target="#login-modal-id">Entrar
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
+
+
 </nav>
 {% if user.is_authenticated is False %}
     {% include 'intranet/partials/_login.html' %}
