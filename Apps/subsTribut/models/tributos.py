@@ -20,3 +20,5 @@ class Tributos(models.Model):
     mvaaliq = models.DecimalField(max_digits=19, decimal_places=5)
     basered = models.DecimalField(max_digits=19, decimal_places=5)
     ssimples = models.DecimalField(max_digits=19, decimal_places=5)
+    valr_fecop = models.DecimalField(max_digits=19, decimal_places=5, default=0)
+    separar_fecop = models.BooleanField(default=False)
