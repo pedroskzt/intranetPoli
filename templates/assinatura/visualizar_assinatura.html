@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-    <section class="container" id="id_assinatura">
+    <div id="assinatura-id">
         <table style="font-family: sans-serif">
             <tr>
                 <td style="color:#26a6ff">
@@ -25,23 +25,20 @@
                 </td>
             </tr>
         </table>
-    </section>
-    <section class="container mt-5">
+    </div>
+    <div class="mt-5 mb-4">
         <a class="btn btn-primary" href="#" id="donwload-link" onclick="myFunction()">Baixar Assinatura</a>
-    </section>
+    </div>
     <script>
         function myFunction() {
             const inicio_HTML = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"></head><body>'
             const fim_HTML = '</body></html>'
-            let assinatura = document.getElementById("id_assinatura").innerHTML
+            let assinatura = document.getElementById("assinatura-id").innerHTML
             assinatura = inicio_HTML + assinatura + fim_HTML
-            console.log(assinatura)
             let nome = "{{ siteAssinatura.assinatura.nome}}"
             nome = nome.replaceAll(' ', '')
             download(assinatura, nome, "html")
-
         }
-
         function download(assinatura, nome_do_arquivo, tipo_de_arquivo) {
             const link = document.getElementById("donwload-link");
             const arquivo = new Blob([assinatura], {type: tipo_de_arquivo});
