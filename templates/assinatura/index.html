@@ -6,22 +6,18 @@
 {% endblock %}
 
 {% block content %}
-    <div class="text-center d-flex h-100 p-3 mx-auto flex-column">
-        <h1 class="cover-heading">Bem Vindo.</h1>
-        <p class="lead">Crie sua assinatura acima e depois siga o guia de instalação para saber como instalar sua
-            assinatura. </p>
-        <p class="lead">Caso já tenha criado uma vez, não precisa criar outra! Basta pesquisar no campo de pesquisa
-            acima!</p>
+    <div class="d-flex justify-content-between">
+        <div class="w-25">
+        </div>
+        <div class="text-center">
+            <h1>Bem Vindo.</h1>
+            <p class="lead">Crie sua assinatura acima e depois siga o guia de instalação para saber como instalar sua
+                assinatura. </p>
+            <p class="lead">Caso já tenha criado uma vez, não precisa criar outra! Basta pesquisar no campo de pesquisa
+                acima!</p>
+        </div>
+        <div class="w-25">
+        </div>
     </div>
-{% endblock %}
 
-{#{% block scripts %}#}
-{#    <script src="{% static 'js/jquery-ui-1.12.1.js' %}"></script>#}
-{#    <script>#}
-{#        $("#pesquisar_assinatura").autocomplete({#}
-{#            source: "{% url 'pesquisar_assinatura' %}",#}
-{#            minLength: 3,#}
-{#            appendTo: "#search-form"#}
-{#        })#}
-{#    </script>#}
-{#{% endblock %}#}
+{% endblock %}
