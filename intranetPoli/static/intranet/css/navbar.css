@@ -95,7 +95,23 @@
     border-width: 0;
 }
 
-/*the container must be positioned relative:*/
-.autocomplete {
-    border-width: 0;
+.has-search:hover {
+    background-color: transparent;
 }
+
+.ui-menu {
+    background-color: #e9ecef;
+    color: var(--logoLetra);
+    border-radius: 0.3rem;
+}
+
+.ui-menu-item:hover {
+    /* Item selecionado no autocomplete */
+    background-color: var(--logoBarra);
+    color: var(--logoLetra);
+    border-radius: 0.25rem;
+}
+
+
+
+
