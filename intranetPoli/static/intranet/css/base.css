@@ -1,12 +1,7 @@
 .body-custom {
-    /*background-color: var(--background);*/
+    background-color: var(--background);
     color: var(--letras);
     font-family: Verdana, sans-serif;
-    background-color: rgba(0, 0, 0, .1);
-}
-
-.body-custom .container {
-    border: 0 solid rgba(0, 0, 0, .15);
 }
 
 .body-custom .card-custom {

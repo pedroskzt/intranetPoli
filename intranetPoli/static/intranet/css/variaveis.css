@@ -1,7 +1,7 @@
 :root {
     --logoLetra: #000388;
     --logoBarra: #26a6ff;
-    --background: #ffffff;
+    --background: rgba(0, 0, 0, .1);
     --letras: var(--logoLetra)
     /*--background: #607b8a;*/
 }
