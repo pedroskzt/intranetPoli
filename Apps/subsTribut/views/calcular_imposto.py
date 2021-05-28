@@ -111,17 +111,21 @@ class CalcularView(View):
                 item['aliquota_ICMS'] = float(item['PERC_ALIQ_ICMS'])
                 item['aliquota_interna'] = float(taxas.mvaaliq)
 
-                valor_item_bruto = float((item['VALR_ITEM'] - item['VALR_DESC_UNITARIO']) * item['QTDE_ITENS'])
-
-                item['valor_base_ICMS'] = valor_item_bruto + float(item['VALR_FRETE']) + float(item['VALR_DESPESAS'])
+                item['valor_item_bruto'] = float((item['VALR_ITEM'] - item['VALR_DESC_UNITARIO']) * item['QTDE_ITENS'])
+                item['valor_base_ICMS'] = item['valor_item_bruto'] + float(item['VALR_FRETE']) + float(item['VALR_DESPESAS'])
                 item['valor_ICMS'] = item['valor_base_ICMS'] * item['aliquota_ICMS']
                 item['valor_base_ST'] = (item['valor_base_ICMS'] * item['mva']) + item['valor_base_ICMS']
                 if negociacao['INDR_CONSUMIDOR_FINAL'] and negociacao['NUMR_INSC_ESTADUAL'] is None:
                     '''
                     Condição: Consumidor final e Não possui Inscrição Estadual
                     '''
-                    item['valor_bruto_difal'] = item['valor_base_ICMS'] * item['aliquota_interna']
+
+                    difal_intermediario = item['valor_base_ICMS'] - item['valor_ICMS']
+                    difal_intermediario = difal_intermediario / (1-item['aliquota_interna'])
+
+                    item['valor_bruto_difal'] = difal_intermediario * item['aliquota_interna']
                     valor_difal = item['valor_bruto_difal'] - item['valor_ICMS']
+
                     item['VALR_IMPOSTO'] = valor_difal
                     negociacao['VALR_TOTAL_IMPOSTO'] += valor_difal
                 elif negociacao['INDR_CONSUMIDOR_FINAL'] == 0:
