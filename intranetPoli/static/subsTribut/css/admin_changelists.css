@@ -1,5 +1,32 @@
+#content {
+    padding: 0 !important;
+}
+
+#changelist {
+    margin-bottom: 0;
+}
+
 #changelist table input::-webkit-outer-spin-button,
 #changelist table input::-webkit-inner-spin-button
 {
     display: none;
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#changelist table input[type=number]
+{
+    -moz-appearance: textfield;
+}
+
+/*#changelist-form table {*/
+/*    white-space: nowrap!important;*/
+/*}*/
+
+#changelist-form table input {
+    width: 40px !important;
+}
+
+#changelist-form .results {
+    margin-right: 270px;
 }
