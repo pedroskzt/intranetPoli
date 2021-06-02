@@ -14,7 +14,7 @@
                readonly>
     </div>
     <div>
-        <a href="{% url 'home' %}" class="btn btn-primary button-color mt-2">Voltar</a>
+        <a href="{% url 'index_st' %}" class="btn btn-primary button-color mt-2">Voltar</a>
     </div>
 </div>
 
@@ -69,7 +69,7 @@
         </div>
         <div class="col-5 border rounded-3 mb-2 me-4" id="resultado-calculo-id">
             <div class="row justify-content-center">
-                <div class="col-auto mb-2">
+                <div class="col-7 mb-2">
                     {% if form.pol_intra_nego_vw.VALR_TOTAL_IMPOSTO %}
                         {% if form.pol_intra_nego_vw.INDR_CONSUMIDOR_FINAL %}
                             <label for="resultado-id" class="form-label" id="label-resultado-id">Valor do DIFAL</label>
@@ -83,8 +83,15 @@
                         <h2> Isento de Imposto </h2>
                     {% endif %}
                 </div>
+                {% if form.pol_intra_nego_vw.FECOP > 0 %}
+                    <div class="col-5 mb-2">
+                        <label for="fecop-id" class="form-label" id="label-fecop-id">FECOP</label>
+                        <input type=text class="form-control" id="fecop-id"
+                               value="R$ {{ form.pol_intra_nego_vw.FECOP|floatformat:2 }}"
+                               readonly>
+                    </div>
+                {% endif %}
             </div>
-
         </div>
     </div>
 
@@ -122,107 +129,121 @@
                         <td>R$ {{ item.VALR_DESPESAS }}</td>
                         {% if form.pol_intra_nego_vw.VALR_TOTAL_IMPOSTO %}
                             {% if form.pol_intra_nego_vw.INDR_CONSUMIDOR_FINAL and form.pol_intra_nego_vw.NUMR_INSC_ESTADUAL is None %}
-                                <td role="button" data-bs-toggle="modal" data-bs-target="#modal-cons-final-id">
-                                    R$ {{ item.VALR_IMPOSTO|floatformat:2 }}
-                                <div id="modal-cons-final-id" class="modal fade bs-example-modal-lg" tabindex="-1"
-                                     role="dialog" aria-labelledby="classInfo" aria-hidden="true">
-                                    <div class="modal-dialog modal-sm modal-lg modal-xl">
-                                        <div class="modal-content modal-detalhe-imposto">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Detalhes do
-                                                    Cálculo</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Fechar"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <table class="table table-hover table-striped table-light table-responsive">
-                                                    <thead>
-                                                    <tr>
-                                                        <th scope="col">MVA</th>
-                                                        <th scope="col">Alíquota ICMS</th>
-                                                        <th scope="col">Alíquota Interna</th>
-                                                        <th scope="col">Desconto</th>
-                                                        <th scope="col">Base ICMS</th>
-                                                        <th scope="col">Valor do ICMS</th>
-                                                        <th scope="col">Valor Bruto Difal</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>{{ item.mva|formatar_porcentagem:"2" }}</td>
-                                                        <td>{{ item.aliquota_ICMS|formatar_porcentagem:"2" }}</td>
-                                                        <td>{{ item.aliquota_interna|formatar_porcentagem:"2" }}</td>
-                                                        <td>R$ {{ item.VALR_DESC_UNITARIO|floatformat:2 }}</td>
-                                                        <td>R$ {{ item.valor_base_ICMS|floatformat:2 }}</td>
-                                                        <td>R$ {{ item.valor_ICMS|floatformat:2 }}</td>
-                                                        <td>R$ {{ item.valor_bruto_difal|floatformat:2 }}</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">
-                                                    Fechar
-                                                </button>
+                                {% if user.is_authenticated %}
+                                    <td role="button" data-bs-toggle="modal"
+                                        data-bs-target="#modal-cons-final-{{ forloop.counter }}">
+                                        R$ {{ item.VALR_IMPOSTO|floatformat:2 }}
+                                        <div id="modal-cons-final-{{ forloop.counter }}"
+                                             class="modal fade bs-example-modal-lg" tabindex="-1"
+                                             role="dialog" aria-labelledby="classInfo" aria-hidden="true">
+                                            <div class="modal-dialog modal-sm modal-lg modal-xl">
+                                                <div class="modal-content modal-detalhe-imposto">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Detalhes do
+                                                            Cálculo</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Fechar"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <table class="table table-hover table-striped table-light table-responsive">
+                                                            <thead>
+                                                            <tr>
+                                                                <th scope="col">MVA</th>
+                                                                <th scope="col">Alíquota ICMS</th>
+                                                                <th scope="col">Alíquota Interna</th>
+                                                                <th scope="col">Desconto</th>
+                                                                <th scope="col">Base ICMS</th>
+                                                                <th scope="col">Valor do ICMS</th>
+                                                                <th scope="col">Valor Bruto Difal</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>{{ item.mva|formatar_porcentagem:"2" }}</td>
+                                                                <td>{{ item.aliquota_ICMS|formatar_porcentagem:"2" }}</td>
+                                                                <td>{{ item.aliquota_interna|formatar_porcentagem:"2" }}</td>
+                                                                <td>R$ {{ item.VALR_DESC_UNITARIO|floatformat:2 }}</td>
+                                                                <td>R$ {{ item.valor_base_ICMS|floatformat:2 }}</td>
+                                                                <td>R$ {{ item.valor_ICMS|floatformat:2 }}</td>
+                                                                <td>R$ {{ item.valor_bruto_difal|floatformat:2 }}</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">
+                                                            Fechar
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                </td>
+                                    </td>
+                                {% else %}
+                                    <td>R$ {{ item.VALR_IMPOSTO|floatformat:2 }}</td>
+                                {% endif %}
 
                             {% elif form.pol_intra_nego_vw.INDR_CONSUMIDOR_FINAL == 0 %}
-                                <td role="button" data-bs-toggle="modal" data-bs-target="#modal-revenda-id">
-                                    R$ {{ item.VALR_IMPOSTO|floatformat:2 }}
-                                    <div id="modal-revenda-id" class="modal fade bs-example-modal-lg" tabindex="-1"
-                                         role="dialog" aria-labelledby="classInfo" aria-hidden="true">
-                                        <div class="modal-dialog modal-sm modal-lg modal-xl">
-                                            <div class="modal-content modal-detalhe-imposto">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Detalhes do
-                                                        Cálculo</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Fechar"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <table class="table table-hover table-striped table-light table-responsive">
-                                                        <thead>
-                                                        <tr>
-                                                            <th scope="col">MVA</th>
-                                                            <th scope="col">Alíquota ICMS</th>
-                                                            <th scope="col">Alíquota Interna</th>
-                                                            <th scope="col">Desconto</th>
-                                                            <th scope="col">Base ICMS</th>
-                                                            <th scope="col">Valor do ICMS</th>
-                                                            <th scope="col">Base ST</th>
-                                                            <th scope="col">Valor Bruto ST</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>{{ item.mva|formatar_porcentagem:"2" }}</td>
-                                                            <td>{{ item.aliquota_ICMS|formatar_porcentagem:"2" }}</td>
-                                                            <td>{{ item.aliquota_interna|formatar_porcentagem:"2" }}</td>
-                                                            <td>R$ {{ item.VALR_DESC_UNITARIO|floatformat:2 }}</td>
-                                                            <td>R$ {{ item.valor_base_ICMS|floatformat:2 }}</td>
-                                                            <td>R$ {{ item.valor_ICMS|floatformat:2 }}</td>
-                                                            <td>R$ {{ item.valor_base_ST|floatformat:2 }}</td>
-                                                            <td>R$ {{ item.valor_bruto_ST|floatformat:2 }}</td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">
-                                                        Fechar
-                                                    </button>
+                                {% if user.is_authenticated %}
+                                    <td role="button" data-bs-toggle="modal"
+                                        data-bs-target="#modal-revenda-{{ forloop.counter }}">
+                                        R$ {{ item.VALR_IMPOSTO|floatformat:2 }}
+                                        <div id="modal-revenda-{{ forloop.counter }}"
+                                             class="modal fade bs-example-modal-lg"
+                                             tabindex="-1"
+                                             role="dialog" aria-labelledby="classInfo" aria-hidden="true">
+                                            <div class="modal-dialog modal-sm modal-lg modal-xl">
+                                                <div class="modal-content modal-detalhe-imposto">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Detalhes do
+                                                            Cálculo</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Fechar"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <table class="table table-hover table-striped table-light table-responsive">
+                                                            <thead>
+                                                            <tr>
+                                                                <th scope="col">MVA</th>
+                                                                <th scope="col">Alíquota ICMS</th>
+                                                                <th scope="col">Alíquota Interna</th>
+                                                                <th scope="col">FECOP</th>
+                                                                <th scope="col">Desconto</th>
+                                                                <th scope="col">Base ICMS</th>
+                                                                <th scope="col">Valor do ICMS</th>
+                                                                <th scope="col">Base ST</th>
+                                                                <th scope="col">Valor Bruto ST</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>{{ item.mva|formatar_porcentagem:"2" }}</td>
+                                                                <td>{{ item.aliquota_ICMS|formatar_porcentagem:"2" }}</td>
+                                                                <td>{{ item.aliquota_interna|formatar_porcentagem:"2" }}</td>
+                                                                <td>{{ form.pol_intra_nego_vw.VALR_FECOP|formatar_porcentagem:"2" }}</td>
+                                                                <td>R$ {{ item.VALR_DESC_UNITARIO|floatformat:2 }}</td>
+                                                                <td>R$ {{ item.valor_base_ICMS|floatformat:2 }}</td>
+                                                                <td>R$ {{ item.valor_ICMS|floatformat:2 }}</td>
+                                                                <td>R$ {{ item.valor_base_ST|floatformat:2 }}</td>
+                                                                <td>R$ {{ item.valor_bruto_ST|floatformat:2 }}</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">
+                                                            Fechar
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
-
+                                    </td>
+                                {% else %}
+                                    <td>R$ {{ item.VALR_IMPOSTO|floatformat:2 }}</td>
+                                {% endif %}
                             {% else %}
                                 <td>Isento de ST</td>
                             {% endif %}
