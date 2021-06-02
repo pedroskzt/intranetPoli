@@ -6,6 +6,17 @@
     <link href="{% static 'intranet/css/tooltip.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'subsTribut/css/forms.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'index_st' %}">Número de Negociação</a></li>
+    {% if form.pol_intra_nego_vw.INDR_CONSUMIDOR_FINAL %}
+        <li class="breadcrumb-item active" aria-current="page">Calculo do DIFAL</li>
+    {% else %}
+        <li class="breadcrumb-item active" aria-current="page">Calculo da ST</li>
+    {% endif %}
+
+{% endblock %}
+
 {% block content %}
     <div class="mb-4">
         <h1>Cálculo de ST e DIFAL</h1>
