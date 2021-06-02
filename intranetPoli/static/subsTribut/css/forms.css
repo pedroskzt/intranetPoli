@@ -30,20 +30,14 @@ input::-webkit-inner-spin-button {
     margin-left: -2.5em;
 }
 
-.modal-detalhe-imposto {
-    background-color: var(--background);
-    color: #ffffff;
-}
-
 .button-color {
     background-color: var(--logoLetra);
     border-color: var(--logoLetra);
 }
 
-#resultado-id {
-    font-size: 2em;
-}
-
-#label-resultado-id {
+#resultado-id,
+#label-resultado-id,
+#fecop-id,
+#label-fecop-id {
     font-size: 2em;
 }
