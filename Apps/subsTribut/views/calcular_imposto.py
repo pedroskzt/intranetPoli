@@ -76,7 +76,6 @@ class CalcularView(View):
             if request.GET:
                 messages.error(request, 'Campo vazio, favor digitar o número da negociação.')
         contexto = {'form': form}
-
         return render(request, self.template_name, context=contexto)
 
     def post(self, request):
@@ -101,6 +100,8 @@ class CalcularView(View):
         destino = negociacao['NOME_UF_CLIENTE']
         taxas = self.model_class.objects.get(origem=origem, destino=destino)
         negociacao['VALR_TOTAL_IMPOSTO'] = 0
+        negociacao['VALR_FECOP'] = float(taxas.valr_fecop)
+        negociacao['FECOP'] = 0
 
         if taxas.mva != 0 and origem != destino:
             '''
@@ -112,29 +113,56 @@ class CalcularView(View):
                 item['aliquota_interna'] = float(taxas.mvaaliq)
 
                 item['valor_item_bruto'] = float((item['VALR_ITEM'] - item['VALR_DESC_UNITARIO']) * item['QTDE_ITENS'])
-                item['valor_base_ICMS'] = item['valor_item_bruto'] + float(item['VALR_FRETE']) + float(item['VALR_DESPESAS'])
+                item['valor_base_ICMS'] = item['valor_item_bruto'] + float(item['VALR_FRETE']) + float(
+                    item['VALR_DESPESAS'])
                 item['valor_ICMS'] = item['valor_base_ICMS'] * item['aliquota_ICMS']
                 item['valor_base_ST'] = (item['valor_base_ICMS'] * item['mva']) + item['valor_base_ICMS']
                 if negociacao['INDR_CONSUMIDOR_FINAL'] and negociacao['NUMR_INSC_ESTADUAL'] is None:
                     '''
                     Condição: Consumidor final e Não possui Inscrição Estadual
+                    Calculo: DIFAL
                     '''
-
+                    # fecop = item['valor_base_ICMS'] * float(taxas.valr_fecop)
                     difal_intermediario = item['valor_base_ICMS'] - item['valor_ICMS']
-                    difal_intermediario = difal_intermediario / (1-item['aliquota_interna'])
+                    difal_intermediario = difal_intermediario / (1 - item['aliquota_interna'])
 
                     item['valor_bruto_difal'] = difal_intermediario * item['aliquota_interna']
                     valor_difal = item['valor_bruto_difal'] - item['valor_ICMS']
-
                     item['VALR_IMPOSTO'] = valor_difal
+
+                    # negociacao['FECOP'] += fecop
                     negociacao['VALR_TOTAL_IMPOSTO'] += valor_difal
                 elif negociacao['INDR_CONSUMIDOR_FINAL'] == 0:
                     '''
                     Condição: Não é Consumidor final
+                    Calculo: ST
                     '''
+                    # fecop = item['valor_base_ST'] * float(taxas.valr_fecop)
                     item['valor_bruto_ST'] = item['valor_base_ST'] * item['aliquota_interna']
                     valor_ST = item['valor_bruto_ST'] - item['valor_ICMS']
                     item['VALR_IMPOSTO'] = valor_ST
+
+                    # negociacao['FECOP'] += fecop
                     negociacao['VALR_TOTAL_IMPOSTO'] += valor_ST
         else:
             negociacao['VALR_TOTAL_IMPOSTO'] = False
+
+        if taxas.valr_fecop > 0:
+            """ Calcular o valor do imposto FECOP """
+            for item in itens:
+                item['aliquota_ICMS'] = float(item['PERC_ALIQ_ICMS'])
+                item['valor_item_bruto'] = float((item['VALR_ITEM'] - item['VALR_DESC_UNITARIO']) * item['QTDE_ITENS'])
+                item['valor_base_ICMS'] = item['valor_item_bruto'] + float(item['VALR_FRETE']) + float(
+                    item['VALR_DESPESAS'])
+                item['valor_ICMS'] = item['valor_base_ICMS'] * item['aliquota_ICMS']
+
+                if negociacao['INDR_CONSUMIDOR_FINAL']:
+                    fecop = item['valor_base_ICMS'] * float(taxas.valr_fecop)
+                elif not negociacao['INDR_CONSUMIDOR_FINAL']:
+                    if taxas.mva == 0:
+                        fecop = item['valor_base_ICMS'] * float(taxas.valr_fecop)
+                    else:
+                        item['mva'] = float(taxas.mvaimp) if item['INDR_IMPORTADO'] else float(taxas.mva)
+                        item['valor_base_ST'] = (item['valor_base_ICMS'] * item['mva']) + item['valor_base_ICMS']
+                        fecop = item['valor_base_ST'] * float(taxas.valr_fecop)
+                negociacao['FECOP'] += fecop
