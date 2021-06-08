@@ -9,7 +9,7 @@ from Apps.intranet.views.pagina_inicial import index
 
 urlpatterns = [
     path('', index, name='pagina_inicial'),
-    path('login', login, name='login'),
+    path('login/next', login, name='login'),
     path('logout', logout, name='logout'),
     path('painel/intranet', painel_intranet, name='painel_intranet'),
     path('painel/intranet/adicionar', adicionar_link, name='adicionar_link'),
