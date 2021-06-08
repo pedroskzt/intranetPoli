@@ -94,7 +94,11 @@
                         <button type="submit" class="nav-link px-2" form="logout-id">Sair</button>
                     </li>
                 {% else %}
-                    <li class="nav-item login-link" data-bs-toggle="modal" data-bs-target="#login-modal-id">Entrar
+                    <li class="nav-item">
+                        <form action="{% url 'login' %}" method="get" id="next-url">
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                        </form>
+                        <input type="submit" class="nav-link px-2" value="Entrar" form="next-url">
                     </li>
                 {% endif %}
             </ul>
@@ -103,6 +107,3 @@
 
 
 </nav>
-{% if user.is_authenticated is False %}
-    {% include 'intranet/partials/_login.html' %}
-{% endif %}
