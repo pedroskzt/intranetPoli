@@ -12,20 +12,27 @@ def login(request):
     :param request:
     :return:
     """
+
     contexto = {'validacao': {'form_error': False,
                               'usuario': {'tag': '', 'mensagem': 'Campo Usuário não pode ser vazio.'},
-                              'senha': {'tag': '', 'mensagem': 'Campo Senha não pode ser vazio'}}}
+                              'senha': {'tag': '', 'mensagem': 'Campo Senha não pode ser vazio'}},
+                'next': request.GET.get('next')}
+
     if request.method == 'POST':
         redirecionamento = request.POST.get('next')
+        contexto['next'] = redirecionamento
+        print(redirecionamento)
         usuario = request.POST['usuario']
         senha = request.POST['senha']
+
+        if 'voltar-btn' in request.POST:
+            return redirect(redirecionamento) if redirecionamento else redirect('pagina_inicial')
 
         if _campo_vazio(usuario):
             contexto['validacao']['form_error'] = True
             contexto['validacao']['usuario']['tag'] = 'is-invalid'
 
         if _campo_vazio(senha):
-            print('senha invalido')
             contexto['validacao']['form_error'] = True
             contexto['validacao']['senha']['tag'] = 'is-invalid'
 
@@ -35,17 +42,15 @@ def login(request):
                 user = auth.authenticate(request, username=nome, password=senha)
                 if user is not None:
                     auth.login(request, user)
-                    if redirecionamento:
-                        return redirect(redirecionamento)
-                    else:
-                        return redirect('pagina_inicial')
-            else:
-                contexto['validacao']['form_error'] = True
-                contexto['validacao']['usuario']['tag'] = 'is-invalid'
-                contexto['validacao']['usuario']['mensagem'] = 'Usuário ou Senha incorretos.'
+                    return redirect(redirecionamento) if redirecionamento else redirect('pagina_inicial')
+
+            contexto['validacao']['form_error'] = True
+            contexto['validacao']['usuario']['tag'] = 'is-invalid'
+            contexto['validacao']['usuario']['mensagem'] = 'Usuário ou Senha incorretos.'
 
         contexto['form'] = {'usuario': usuario}
-    return render(request, 'intranet/index.html', context=contexto)
+
+    return render(request, 'intranet/login.html', context=contexto)
 
 
 def logout(request):
