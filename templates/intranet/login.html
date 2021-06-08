@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extrahead %}
+    {#    <link href="{% static 'intranet/css/index.css' %}" rel="stylesheet" type="text/css">#}
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active" aria-current="page">Login</li>
+{% endblock %}
+
+{% block content %}
+    <div>
+
+        <form action="{% url 'login' %}" method="post" enctype="multipart/form-data" id="login-id"
+              class="needs-validation" novalidate>
+            {% csrf_token %}
+
+            <h3>Login</h3>
+            <div class="row">
+                <div class="col">
+                    <div class="form-floating mb-1">
+                        <input type="text" class="form-control {{ validacao.usuario.tag }}" id="floatingInput"
+                               placeholder="Usuário"
+                               name="usuario"
+                               value="{{ form.usuario }}"
+                               required>
+                        <label for="floatingInput">Usuário</label>
+                        <div class="invalid-feedback">
+                            {{ validacao.usuario.mensagem }}
+                        </div>
+                    </div>
+                    <div class="form-floating mt-1">
+                        <input type="password" class="form-control {{ validacao.senha.tag }}" id="floatingPassword"
+                               placeholder="Senha"
+                               name="senha" required>
+                        <label for="floatingPassword">Senha</label>
+                        <div class="invalid-feedback">
+                            {{ validacao.senha.mensagem }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <!-- Espaço reservado para informações extras ou comunicados -->
+                </div>
+            </div>
+            <input type="hidden" name="next" value="{{ next }}">
+        </form>
+        <div class="d-flex justify-content-between mt-2 mb-4">
+            <button type="submit" class="btn btn-success" form="login-id" id="login-button-id" name="login-btn">
+                Login
+            </button>
+            <button type="submit" class="btn btn-secondary" form="login-id" id="login-button-id" name="voltar-btn">
+                Voltar
+            </button>
+        </div>
+    </div>
+{% endblock %}
