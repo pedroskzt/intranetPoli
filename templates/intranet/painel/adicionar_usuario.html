@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block extrahead %}
+    <link href="{% static 'intranet/css/usuario.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'painel_intranet' %}">Painel Intranet</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Cadastro de Usuário</li>
+{% endblock %}
+
+{% block content %}
+    <h1>Cadastrar Usuário</h1>
+    <div class="mb-4">
+        <form action="{% url 'adicionar_usuario' %}" method="post" class="needs-validation" novalidate
+              id="cadastro-usuario-id">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col card card-custom">
+                    <h6 class="mt-2">Dados da Conta</h6>
+                    <div class="form-floating mb-2">
+                        {% if form.usuario.errors %}
+                            {{ form.usuario|add_class:'form-control is-invalid' }}
+                        {% else %}
+                            {{ form.usuario|add_class:'form-control' }}
+                        {% endif %}
+                        <label for="{{ form.usuario.id_for_label }}">
+                            {{ form.usuario.label }}{% if form.usuario.field.required %}
+                                <span class="required">*</span>{% endif %}</label>
+                        <div class="invalid-feedback">
+                            {{ form.usuario.errors }}
+                        </div>
+                    </div> <!-- Usuário -->
+                    <div class="form-floating mb-2">
+                        {% if form.senha.errors %}
+                            {{ form.senha|add_class:'form-control is-invalid' }}
+                        {% else %}
+                            {{ form.senha|add_class:'form-control' }}
+                        {% endif %}
+                        <label for="{{ form.senha.id_for_label }}">
+                            {{ form.senha.label }}{% if form.senha.field.required %}
+                                <span class="required">*</span>{% endif %}</label>
+                        <div class="invalid-feedback">
+                            {{ form.senha.errors }}
+                        </div>
+                    </div> <!-- Senha -->
+                    <div class="form-floating mb-2">
+                        {% if form.confirma_senha.errors %}
+                            {{ form.confirma_senha|add_class:'form-control is-invalid' }}
+                        {% else %}
+                            {{ form.confirma_senha|add_class:'form-control' }}
+                        {% endif %}
+                        <label for="{{ form.confirma_senha.id_for_label }}">
+                            {{ form.confirma_senha.label }}{% if form.confirma_senha.field.required %}
+                                <span class="required">*</span>{% endif %}</label>
+                        <div class="invalid-feedback">
+                            {{ form.confirma_senha.errors }}
+                        </div>
+                    </div> <!-- Confirmar Senha -->
+                </div>
+                <div class="col card card-custom ms-2">
+                    <h6 class="mt-2">Dados Pessoais</h6>
+                    <div class="form-floating mb-2">
+                        {% if form.email.errors %}
+                            {{ form.email|add_class:'form-control is-invalid' }}
+                        {% else %}
+                            {{ form.email|add_class:'form-control' }}
+                        {% endif %}
+                        <label for="{{ form.email.id_for_label }}">
+                            {{ form.email.label }} <span class="required">*</span></label>
+                        <div class="invalid-feedback">
+                            {{ form.email.errors }}
+                        </div>
+                    </div> <!-- Email -->
+                    <div class="form-floating mb-2">
+                        {% if form.nome.errors %}
+                            {{ form.nome|add_class:'form-control is-invalid' }}
+                        {% else %}
+                            {{ form.nome|add_class:'form-control' }}
+                        {% endif %}
+                        <label for="{{ form.nome.id_for_label }}">
+                            {{ form.nome.label }}{% if form.nome.field.required %}
+                                <span class="required">*</span>{% endif %}</label>
+                        <div class="invalid-feedback">
+                            {{ form.nome.errors }}
+                        </div>
+                    </div> <!-- Primeiro Nome -->
+                    <div class="form-floating mb-2">
+                        {% if form.sobrenome.errors %}
+                            {{ form.sobrenome|add_class:'form-control is-invalid' }}
+                        {% else %}
+                            {{ form.sobrenome|add_class:'form-control' }}
+                        {% endif %}
+                        <label for="{{ form.sobrenome.id_for_label }}">
+                            {{ form.sobrenome.label }}{% if form.sobrenome.field.required %}
+                                <span class="required">*</span>{% endif %}</label>
+                        <div class="invalid-feedback">
+                            {{ form.sobrenome.errors }}
+                        </div>
+                    </div> <!-- Sobrenome -->
+                </div>
+                <div class="col card card-custom ms-2">
+                    <h6 class="mt-2">Acesso</h6>
+                    <div class="form-check form-switch mb-2">
+                        {% if form.adm_intranet.errors %}
+                            {{ form.adm_intranet|add_class:"form-check-input is-invalid" }}
+                        {% else %}
+                            {{ form.adm_intranet|add_class:"form-check-input" }}
+                        {% endif %}
+                        <label class="form-check-label" for={{ form.adm_intranet.id_for_label }}>
+                            {{ form.adm_intranet.label }}{% if form.adm_intranet.field.required %}
+                                <span class="required">*</span>{% endif %}
+                        </label>
+                        <div class="invalid-feedback">
+                            {{ form.adm_intranet.errors }}
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label for="{{ form.groups.id_for_label }}">
+                            {{ form.groups.label }}{% if form.groups.field.required %}
+                                <span class="required">*</span>{% endif %}
+                        </label>
+                        {% if form.groups.errors %}
+                            {{ form.groups|add_class:'form-select is-invalid' }}
+                        {% else %}
+                            {{ form.groups|add_class:'form-select' }}
+                        {% endif %}
+                        <div class="invalid-feedback">
+                            {{ form.groups.errors }}
+                        </div>
+
+                    </div> <!-- Grupo de Acesso -->
+                </div>
+            </div>
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{% url 'painel_intranet' %}" class="btn btn-primary"> Voltar </a>
+                <a href="{% url 'adicionar_usuario' %}" class="btn btn-warning"> Limpar </a>
+                <button type="submit" class="btn btn-success" data-bs-toggle="tooltip"
+                        id="teste123">Salvar
+                </button>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            $('#id_groups').select2();
+        })
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#id_senha").tooltip({
+                title: "{{ form.senha.help_text }}",
+                placement: "right",
+                trigger: 'manual',
+                html: true,
+                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner border"></div></div>'
+            })
+        })
+    </script>
+    <script>
+        $("#id_senha").focusin(function () {
+            $(this).tooltip('show')
+        })
+
+        $("#id_senha").focusout(function () {
+            $(this).tooltip('hide')
+        })
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+{% endblock %}
+
+
