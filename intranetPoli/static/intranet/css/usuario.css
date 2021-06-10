@@ -1,0 +1,27 @@
+#cadastro-usuario-id .card {
+    box-shadow: inset 0 0 0 rgba(0, 0, 0, .1), 0 0 2em rgba(0, 0, 0, .3);
+}
+
+#cadastro-usuario-id .required {
+    color: red;
+}
+
+#cadastro-usuario-id .invalid-feedback ul {
+    list-style-type: none !important;
+    padding-left: 0.5rem;
+}
+
+.tooltip.show {
+    opacity: 1;
+}
+
+.tooltip-inner {
+    color: red;
+    background-color: #ffffff;
+    padding: 0;
+    text-align: left;
+}
+
+.tooltip-inner.border {
+    border-color: black !important;
+}
