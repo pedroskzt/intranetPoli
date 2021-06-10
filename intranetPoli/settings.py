@@ -51,8 +51,8 @@ ALLOWED_HOSTS = get_secret("HOSTS")
 # Application definition
 
 INSTALLED_APPS = [
-    'Apps.subsTribut',
     'Apps.intranet',
+    'Apps.subsTribut',
     'Apps.assinaturas',
     'widget_tweaks',
     'django.contrib.admin',
@@ -117,6 +117,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 6,
+        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -158,7 +161,11 @@ MESSAGE_TAGS = {
     messages.SUCCESS: 'success',
 }
 
-#LOGGIN
+#LOGIN
+LOGIN_URL = 'login'
+
+
+# LOGGING
 ENABLE_LOGGING = False
 if ENABLE_LOGGING is True:
     LOGGING = {
@@ -179,4 +186,3 @@ if ENABLE_LOGGING is True:
             },
         },
     }
-
