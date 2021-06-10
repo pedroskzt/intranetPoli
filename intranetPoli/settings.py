@@ -16,7 +16,7 @@ import os
 from django.contrib.messages import constants as messages
 from django.core.exceptions import ImproperlyConfigured
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 with open(os.path.join(BASE_DIR, 'secret.json')) as secret_file:
@@ -186,3 +186,7 @@ if ENABLE_LOGGING is True:
             },
         },
     }
+
+
+# Deploy
+CSRF_COOKIE_SECURE = True
