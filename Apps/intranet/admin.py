@@ -1,5 +1,5 @@
 from django.contrib import admin
-
+from django.contrib.auth.models import User, Group
 from Apps.intranet.models.links import Links
 
 
@@ -17,4 +17,12 @@ class ListandoLinks(admin.ModelAdmin):
     readonly_fields = ('usuario_criacao', 'usuario_ultima_alteracao')
 
 
+class MyAdminSite(admin.AdminSite):
+    def __init__(self):
+        admin.AdminSite.__init__(self)
+    login_template = 'intranet/login.html'
+
+admin.site = MyAdminSite()
 admin.site.register(Links, ListandoLinks)
+admin.site.register(User)
+admin.site.register(Group)
