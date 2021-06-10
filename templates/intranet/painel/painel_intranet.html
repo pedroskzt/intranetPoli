@@ -15,14 +15,24 @@
             <h1>Painel Intranet</h1>
         </div>
         <div>
-            <a href="{% url 'adicionar_link' %}" class="btn btn-primary">
-                <div class="icon baseline">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                         viewBox="0 0 16 16">
-                        <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"></path>
-                    </svg>
-                </div>
-                Adicionar Link</a>
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownAdicionarButton"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="icon baseline">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             viewBox="0 0 16 16">
+                            <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"></path>
+                        </svg>
+                    </div>
+                    Adicionar
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownAdicionarButton">
+                    <li><a href="{% url 'adicionar_link' %}" class="dropdown-item">Link</a></li>
+                    <li><a href="{% url 'adicionar_usuario' %}" class="dropdown-item">Usuário</a></li>
+                </ul>
+
+            </div>
+
         </div>
     </div>
     <div class="row">
@@ -38,7 +48,8 @@
                             </div>
                             <h5>{{ link.titulo }}</h5>
                             <a href="{% url 'editar_link' link.id %}" type="button" class="btn btn-info">Editar</a>
-                            <a href="{% url 'excluir_link' link.id %}" type="button" class="btn btn-primary delete-confirmation" object-delete-data="{{ link.titulo }}">Excluir</a>
+                            <a href="{% url 'excluir_link' link.id %}" type="button"
+                               class="btn btn-primary delete-confirmation" object-delete-data="{{ link.titulo }}">Excluir</a>
                         </div>
                     </div>
                 </div>
@@ -51,9 +62,9 @@
     <script>
         /* Modal de confirmação de exclusão de link */
 
-        $(document).on('click', '.delete-confirmation', function (evt){
+        $(document).on('click', '.delete-confirmation', function (evt) {
             const link = $(this).attr('object-delete-data')
-            const msg = 'Tem certeza que deseja excluir "'+link+'" ?'
+            const msg = 'Tem certeza que deseja excluir "' + link + '" ?'
             return confirm(msg);
         })
     </script>
