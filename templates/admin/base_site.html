@@ -4,7 +4,6 @@
 {% block title %}Painel CPD{% endblock %}
 
 {% block branding %}{% endblock %}
-{% block breadcrumbs %}{% endblock %}
 
 {% block bodyclass %}bg-light{% endblock %}
 
@@ -47,7 +46,8 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'pagina_inicial' %}">Página Inicial</a></li>
-            {% block breadcrumb %}
+            {% block breadcrumb_new %}
+                <li class="breadcrumb-item active" aria-current="page">Painel de Administração</li>
             {% endblock %}
         </ol>
     </nav>
