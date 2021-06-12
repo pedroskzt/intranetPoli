@@ -1,3 +1,8 @@
 /.idea/
 /secret.json
 /media/logos/
+/Apps/*/migrations/
+__pycache__/
+*/__pycache__/
+*/*/__pycache__/
+*/*/*/__pycache__/
