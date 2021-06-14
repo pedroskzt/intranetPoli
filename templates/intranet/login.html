@@ -24,7 +24,8 @@
                                placeholder="Usuário"
                                name="usuario"
                                value="{{ form.usuario }}"
-                               required>
+                               required
+                               autocomplete="username">
                         <label for="floatingInput">Usuário</label>
                         <div class="invalid-feedback">
                             {{ validacao.usuario.mensagem }}
@@ -33,7 +34,9 @@
                     <div class="form-floating mt-1">
                         <input type="password" class="form-control {{ validacao.senha.tag }}" id="floatingPassword"
                                placeholder="Senha"
-                               name="senha" required>
+                               name="senha"
+                               required
+                               autocomplete="current-password">
                         <label for="floatingPassword">Senha</label>
                         <div class="invalid-feedback">
                             {{ validacao.senha.mensagem }}
