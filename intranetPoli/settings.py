@@ -16,7 +16,6 @@ import os
 from django.contrib.messages import constants as messages
 from django.core.exceptions import ImproperlyConfigured
 
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 with open(os.path.join(BASE_DIR, 'secret.json')) as secret_file:
@@ -161,9 +160,8 @@ MESSAGE_TAGS = {
     messages.SUCCESS: 'success',
 }
 
-#LOGIN
+# LOGIN
 LOGIN_URL = 'login'
-
 
 # LOGGING
 ENABLE_LOGGING = False
@@ -186,7 +184,3 @@ if ENABLE_LOGGING is True:
             },
         },
     }
-
-
-# Deploy
-CSRF_COOKIE_SECURE = True
