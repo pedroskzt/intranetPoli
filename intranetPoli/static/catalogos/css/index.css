@@ -1,0 +1,9 @@
+.responsive {
+    width: 100%;
+    height: auto;
+}
+
+.logoBackground {
+    background-repeat: no-repeat;
+    opacity: 0.4;
+}

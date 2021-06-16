@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'Apps.intranet',
     'Apps.subsTribut',
     'Apps.assinaturas',
+    'Apps.catalogos',
     'widget_tweaks',
     'django.contrib.admin',
     'django.contrib.auth',
