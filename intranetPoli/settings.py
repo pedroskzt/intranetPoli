@@ -22,7 +22,7 @@ with open(os.path.join(BASE_DIR, 'secret.json')) as secret_file:
     _secrets = json.load(secret_file)
 
 
-def get_secret(configuracao, secrets=_secrets):
+def get_secret(configuracao, banco=None, secrets=_secrets):
     """
     Obtêm a configuração secreta ou eleva um "ImproperlyConfigured" erro
 
@@ -31,9 +31,10 @@ def get_secret(configuracao, secrets=_secrets):
     :return:
     """
     try:
-        return secrets[configuracao]
+        return secrets[configuracao.upper()] if banco is None else secrets['DB'][banco.upper()][configuracao.upper()]
     except KeyError:
-        raise ImproperlyConfigured(f"Não existe a configuração: '{configuracao}'")
+        msg = f"Não existe a configuração: '{configuracao}'"
+        raise ImproperlyConfigured(msg)
 
 
 # Quick-start development settings - unsuitable for production
@@ -100,14 +101,21 @@ WSGI_APPLICATION = 'intranetPoli.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
-        'NAME': get_secret('DB_NAME'),
-        'USER': get_secret('DB_USER'),
-        'PASSWORD': get_secret('DB_PASSWORD'),
+        'NAME': get_secret('DB_NAME', banco='default'),
+        'USER': get_secret('DB_USER', banco='default'),
+        'PASSWORD': get_secret('DB_PASSWORD', banco='default'),
+        'HOST': '',
+        'PORT': '',
+    },
+    'BI': {
+        'ENGINE': 'django.db.backends.oracle',
+        'NAME': get_secret('DB_NAME', banco='bi'),
+        'USER': get_secret('DB_USER', banco='bi'),
+        'PASSWORD': get_secret('DB_PASSWORD', banco='bi'),
         'HOST': '',
         'PORT': '',
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
