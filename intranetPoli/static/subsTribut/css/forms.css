@@ -1,6 +1,14 @@
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    display: none
+#numero-negociacao::-webkit-outer-spin-button,
+#numero-negociacao::-webkit-inner-spin-button
+{
+    display: none;
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#numero-negociacao[type=number]
+{
+    -moz-appearance: textfield;
 }
 
 .money {
@@ -38,6 +46,7 @@ input::-webkit-inner-spin-button {
 #resultado-id,
 #label-resultado-id,
 #fecop-id,
-#label-fecop-id {
+#label-fecop-id,
+#total-id{
     font-size: 2em;
 }
