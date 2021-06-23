@@ -7,8 +7,6 @@ from Apps.subsTribut.forms import CalculoForms
 from Apps.subsTribut.models import Tributos
 
 
-# TODO: Adicionar alerta sobre valores serem apenas para referencia.
-
 def _campo_vazio(campo):
     """
     Valida se o Campo é vazio
@@ -130,7 +128,6 @@ class CalcularView(View):
                     valor_difal = item['valor_bruto_difal'] - item['valor_ICMS']
                     item['VALR_IMPOSTO'] = valor_difal
 
-                    # negociacao['FECOP'] += fecop
                     negociacao['VALR_TOTAL_IMPOSTO'] += valor_difal
                 elif negociacao['INDR_CONSUMIDOR_FINAL'] == 0:
                     '''
@@ -142,7 +139,6 @@ class CalcularView(View):
                     valor_ST = item['valor_bruto_ST'] - item['valor_ICMS']
                     item['VALR_IMPOSTO'] = valor_ST
 
-                    # negociacao['FECOP'] += fecop
                     negociacao['VALR_TOTAL_IMPOSTO'] += valor_ST
         else:
             negociacao['VALR_TOTAL_IMPOSTO'] = False
@@ -166,3 +162,8 @@ class CalcularView(View):
                         item['valor_base_ST'] = (item['valor_base_ICMS'] * item['mva']) + item['valor_base_ICMS']
                         fecop = item['valor_base_ST'] * float(taxas.valr_fecop)
                 negociacao['FECOP'] += fecop
+
+                if negociacao['VALR_TOTAL_IMPOSTO']:
+                    negociacao['TOTAL'] = negociacao['FECOP'] + negociacao['VALR_TOTAL_IMPOSTO']
+                else:
+                    negociacao['TOTAL'] = False
