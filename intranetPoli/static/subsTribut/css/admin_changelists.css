@@ -19,10 +19,6 @@
     -moz-appearance: textfield;
 }
 
-/*#changelist-form table {*/
-/*    white-space: nowrap!important;*/
-/*}*/
-
 #changelist-form table input {
     width: 40px !important;
 }
