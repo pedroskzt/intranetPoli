@@ -18,16 +18,38 @@
             <div class="row justify-content-center">
                 <div class="row mb-4">
                     <div class="col border rounded me-4">
-                        <div class="form-floating mt-2 mb-3">
-                            {{ forms.titulo|add_class:'form-control' }}
-                            <label for="{{ forms.titulo.id_for_label }}"
-                                   class="form-label">{{ forms.titulo.label }}</label>
-                            {% for erro in forms.titulo.errors %}
-                                <div class="alert alert-danger" role="alert">
-                                    {{ forms.titulo.errors }}
-                                </div>
-                            {% endfor %}
-                        </div> <!-- Título -->
+                        <div class="row">
+                            <div class="col-7">
+                                <div class="form-floating mt-2 mb-3">
+                                    {{ forms.titulo|add_class:'form-control' }}
+                                    <label for="{{ forms.titulo.id_for_label }}"
+                                           class="form-label">{{ forms.titulo.label }}</label>
+                                    {% for erro in forms.titulo.errors %}
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ forms.titulo.errors }}
+                                        </div>
+                                    {% endfor %}
+                                </div> <!-- Título -->
+                            </div>
+                            <div class="col-auto d-flex flex-column align-self-center">
+                                <div class="form-check form-switch">
+                                    {{ forms.exibir|add_class:'form-check-input' }}
+                                    <label for="{{ forms.exibir.id_for_label }}"
+                                           class="form-check-label">{{ forms.exibir.label }}</label>
+                                </div> <!-- Exibir -->
+                                <div class="form-check form-switch">
+                                    {{ forms.requer_acesso|add_class:'form-check-input' }}
+                                    <label for="{{ forms.requer_acesso.id_for_label }}"
+                                           class="form-check-label">{{ forms.requer_acesso.label }}</label>
+                                </div> <!-- Requer Acesso -->
+                                <div class="form-check form-switch">
+                                    {{ forms.intranet|add_class:'form-check-input' }}
+                                    <label for="{{ forms.intranet.id_for_label }}"
+                                           class="form-check-label">{{ forms.intranet.label }}</label>
+                                </div> <!-- Intranet -->
+                            </div>
+                        </div>
+
                         <div class="form-floating mb-2">
                             {{ forms.url|add_class:'form-control' }}
                             <label for="{{ forms.url.id_for_label }}" class="form-label">{{ forms.url.label }}</label>
