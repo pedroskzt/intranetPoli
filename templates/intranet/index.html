@@ -13,7 +13,6 @@
                     <div class="card text-center">
                         <div class="card-body">
                             <div class="feature-icon mx-auto">
-                                <p>{{ link.url }}</p>
                                 <a href="{{ link.url }}" {% if link.intranet is False %}target="_blank"{% endif %}>
                                     <img class="img-fluid" src="{{ link.logo.url }}" alt="{{ link.url }}">
                                 </a>
