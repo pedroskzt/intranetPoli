@@ -26,7 +26,6 @@
 
 .icon {
     width: 25%;
-
 }
 
 .form-switch .baseRed {
@@ -48,5 +47,5 @@
 #fecop-id,
 #label-fecop-id,
 #total-id{
-    font-size: 2em;
+    font-size: 1.5rem;
 }
