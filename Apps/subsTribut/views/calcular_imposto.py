@@ -59,21 +59,24 @@ class CalcularView(View):
     model_class = Tributos
 
     def get(self, request):
-        form = {'numr_negociacao': None}
+        contexto = {'numr_negociacao': None}
+
         if _campo_vazio(request.GET.get('numr_negociacao')) is not True:
-            form['numr_negociacao'] = request.GET.get('numr_negociacao')
-            form['pol_intra_nego_vw'] = _get_pol_intra_nego_vw(form['numr_negociacao'])
-            if _negociacao_nao_encontrada(form['pol_intra_nego_vw']):
+            contexto['numr_negociacao'] = request.GET.get('numr_negociacao')
+            contexto['pol_intra_nego_vw'] = _get_pol_intra_nego_vw(contexto['numr_negociacao'])
+            if contexto['pol_intra_nego_vw']['NOME_UF_EMPRESA'] == 'DF':
+                messages.error(request, 'Vendas com origem em Brasília, o imposto é calculado direto na nota!')
+                contexto['numr_negociacao'] = None
+            elif _negociacao_nao_encontrada(contexto['pol_intra_nego_vw']):
                 messages.error(request, 'Número de negociação não encontrado. Verifique.')
-                form['numr_negociacao'] = None
+                contexto['numr_negociacao'] = None
             else:
-                form['pol_intra_item_nego_vw'] = _get_pol_intra_item_nego_vw(form['numr_negociacao'])
-                self._calculo(form['pol_intra_nego_vw'], form['pol_intra_item_nego_vw'])
+                contexto['pol_intra_item_nego_vw'] = _get_pol_intra_item_nego_vw(contexto['numr_negociacao'])
+                self._calculo(contexto['pol_intra_nego_vw'], contexto['pol_intra_item_nego_vw'])
                 messages.success(request, 'Negociação encontrada.')
         else:
             if request.GET:
                 messages.error(request, 'Campo vazio, favor digitar o número da negociação.')
-        contexto = {'form': form}
         return render(request, self.template_name, context=contexto)
 
     def post(self, request):

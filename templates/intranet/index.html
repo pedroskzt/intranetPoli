@@ -6,18 +6,21 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row">
+    <div class="row" id="links_id">
         {% if links %}
-            {% for link in links %}
+            {% for link in links|dictsort:"titulo" %}
                 <div class="col-3 mb-4">
                     <div class="card text-center">
                         <div class="card-body">
                             <div class="feature-icon mx-auto">
-                                <a href="{{ link.url }}">
+                                <p>{{ link.url }}</p>
+                                <a href="{{ link.url }}" {% if link.intranet is False %}target="_blank"{% endif %}>
                                     <img class="img-fluid" src="{{ link.logo.url }}" alt="{{ link.url }}">
                                 </a>
                             </div>
-                            <h5>{{ link.titulo }}</h5>
+                            <a href="{{ link.url }}" {% if link.intranet is False %}target="_blank"{% endif %}>
+                                <h5>{{ link.titulo }}</h5>
+                            </a>
                             <p>{{ link.descricao }}</p>
                         </div>
                     </div>
