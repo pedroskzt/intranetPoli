@@ -1,16 +1,15 @@
 {% load static %}
 {% load tags %}
-
 <div class="row mt-2">
     <div class="col-4">
         <label for="numero-negociacao" class="form-label">Número da Negociação</label>
         <input type="number" class="form-control" id="numero-negociacao" name="numr_negociacao"
-               value="{{ form.numr_negociacao }}" readonly>
+               value="{{ numr_negociacao }}" readonly>
     </div> <!-- Número da Negociação -->
     <div class="col">
         <label for="cliente-id" class="form-label">Cliente</label>
         <input type="text" class="form-control" id="cliente-id"
-               value="{{ form.pol_intra_nego_vw.DESC_SIGLA }} - {{ form.pol_intra_nego_vw.NOME_RAZAO_SOCIAL }}"
+               value="{{ pol_intra_nego_vw.DESC_SIGLA }} - {{ pol_intra_nego_vw.NOME_RAZAO_SOCIAL }}"
                readonly>
     </div> <!-- Cliente -->
     <div>
@@ -30,13 +29,13 @@
                     <label class="form-label"
                            for="origem-id">Origem</label>
                     <input type=text class="form-control" id="origem-id"
-                           value="{{ form.pol_intra_nego_vw.NOME_UF_EMPRESA }}"
+                           value="{{ pol_intra_nego_vw.NOME_UF_EMPRESA }}"
                            readonly>
 
                     <label class="form-label"
                            for="destino-id">Destino</label>
                     <input type=text class="form-control" id="destino-id"
-                           value="{{ form.pol_intra_nego_vw.NOME_UF_CLIENTE }}"
+                           value="{{ pol_intra_nego_vw.NOME_UF_CLIENTE }}"
                            readonly>
                 </div> <!-- Origem e Destino -->
                 <div class="col mb-2">
@@ -44,20 +43,20 @@
                         <label class="form-label"
                                for="frete-id">Valor do Frete</label>
                         <input type="text" class="form-control" id="frete-id"
-                               value="{{ form.pol_intra_nego_vw.VALR_FRETE }}"
+                               value="R$ {{ pol_intra_nego_vw.VALR_FRETE|floatformat:2 }}"
                                readonly>
-                    </div>
+                    </div> <!-- Frete -->
                     <div class="col">
                         <label class="form-label"
                                for="acessoria-id">Despesa Acessória</label>
                         <input type="text" class="form-control" id="acessoria-id"
-                               value="{{ form.pol_intra_nego_vw.VALR_DESP_ACESSORIA }}"
+                               value="R$ {{ pol_intra_nego_vw.VALR_DESP_ACESSORIA|floatformat:2 }}"
                                readonly>
-                    </div>
+                    </div> <!-- Acessória -->
                 </div> <!-- Frete e Acessória -->
                 <div class="col mt-4 mb-2" id="checkbox-01">
                     <div class="col  form-check form-switch">
-                        {% if form.pol_intra_nego_vw.INDR_CONSUMIDOR_FINAL %}
+                        {% if pol_intra_nego_vw.INDR_CONSUMIDOR_FINAL %}
                             <input class="form-check-input" type="checkbox" value="" id=consumidor-final-id checked
                                    onclick="return false;">
                         {% else %}
@@ -73,30 +72,30 @@
         <div class="col-5 border rounded-3 mb-2 me-4" id="resultado-calculo-id">
             <div class="row justify-content-center">
                 <div class="col-7 mb-2">
-                    {% if form.pol_intra_nego_vw.VALR_TOTAL_IMPOSTO %}
-                        {% if form.pol_intra_nego_vw.INDR_CONSUMIDOR_FINAL %}
+                    {% if pol_intra_nego_vw.VALR_TOTAL_IMPOSTO %}
+                        {% if pol_intra_nego_vw.INDR_CONSUMIDOR_FINAL %}
                             <label for="resultado-id" class="form-label" id="label-resultado-id">Valor do DIFAL</label>
                         {% else %}
                             <label for="resultado-id" class="form-label" id="label-resultado-id">Valor do ST</label>
                         {% endif %}
                         <input type=text class="form-control" id="resultado-id"
-                               value="R$ {{ form.pol_intra_nego_vw.VALR_TOTAL_IMPOSTO|floatformat:2 }}"
+                               value="R$ {{ pol_intra_nego_vw.VALR_TOTAL_IMPOSTO|floatformat:2 }}"
                                readonly>
                     {% else %}
                         <h2> Isento de Imposto </h2>
                     {% endif %} <!-- Valor do Imposto -->
                 </div>
-                {% if form.pol_intra_nego_vw.FECOP > 0 %}
+                {% if pol_intra_nego_vw.FECOP > 0 %}
                     <div class="col-5 mb-2">
                         <label for="fecop-id" class="form-label" id="label-fecop-id">FECOP</label>
                         <input type=text class="form-control" id="fecop-id"
-                               value="R$ {{ form.pol_intra_nego_vw.FECOP|floatformat:2 }}"
+                               value="R$ {{ pol_intra_nego_vw.FECOP|floatformat:2 }}"
                                readonly>
                     </div>
                 {% endif %} <!-- FECOP -->
-                {% if form.pol_intra_nego_vw.TOTAL %}
+                {% if pol_intra_nego_vw.TOTAL %}
                     <div class="alert alert-success show text-center" role="alert" id="total-id">
-                        Total: R$ {{ form.pol_intra_nego_vw.TOTAL|floatformat:2 }}
+                        Total: R$ {{ pol_intra_nego_vw.TOTAL|floatformat:2 }}
                     </div>
                 {% endif %} <!-- Total -->
             </div>
@@ -122,7 +121,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for item in form.pol_intra_item_nego_vw %}
+                {% for item in pol_intra_item_nego_vw %}
                     <tr>
                         <th scope="row">{{ forloop.counter }}</th>
                         <td>{{ item.CODG_PRODUTO }}</td>
@@ -136,8 +135,8 @@
                         <td>R$ {{ item.valor_item_bruto|floatformat:2 }}</td>
                         <td>R$ {{ item.VALR_FRETE }}</td>
                         <td>R$ {{ item.VALR_DESPESAS }}</td>
-                        {% if form.pol_intra_nego_vw.VALR_TOTAL_IMPOSTO %}
-                            {% if form.pol_intra_nego_vw.INDR_CONSUMIDOR_FINAL and form.pol_intra_nego_vw.NUMR_INSC_ESTADUAL is None %}
+                        {% if pol_intra_nego_vw.VALR_TOTAL_IMPOSTO %}
+                            {% if pol_intra_nego_vw.INDR_CONSUMIDOR_FINAL and pol_intra_nego_vw.NUMR_INSC_ESTADUAL is None %}
                                 {% if user.is_authenticated %}
                                     <td role="button" data-bs-toggle="modal"
                                         data-bs-target="#modal-cons-final-{{ forloop.counter }}">
@@ -193,7 +192,7 @@
                                     <td>R$ {{ item.VALR_IMPOSTO|floatformat:2 }}</td>
                                 {% endif %}
 
-                            {% elif form.pol_intra_nego_vw.INDR_CONSUMIDOR_FINAL == 0 %}
+                            {% elif pol_intra_nego_vw.INDR_CONSUMIDOR_FINAL == 0 %}
                                 {% if user.is_authenticated %}
                                     <td role="button" data-bs-toggle="modal"
                                         data-bs-target="#modal-revenda-{{ forloop.counter }}">
@@ -230,7 +229,7 @@
                                                                 <td>{{ item.mva|formatar_porcentagem:"2" }}</td>
                                                                 <td>{{ item.aliquota_ICMS|formatar_porcentagem:"2" }}</td>
                                                                 <td>{{ item.aliquota_interna|formatar_porcentagem:"2" }}</td>
-                                                                <td>{{ form.pol_intra_nego_vw.VALR_FECOP|formatar_porcentagem:"2" }}</td>
+                                                                <td>{{ pol_intra_nego_vw.VALR_FECOP|formatar_porcentagem:"2" }}</td>
                                                                 <td>R$ {{ item.VALR_DESC_UNITARIO|floatformat:2 }}</td>
                                                                 <td>R$ {{ item.valor_base_ICMS|floatformat:2 }}</td>
                                                                 <td>R$ {{ item.valor_ICMS|floatformat:2 }}</td>
