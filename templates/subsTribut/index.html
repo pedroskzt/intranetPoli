@@ -35,11 +35,10 @@
             <div class="tab-pane fade show active" id="nav-calculo-nego-vw" role="tabpanel"
                  aria-labelledby="nav-calculo-nego-vw-tab">
                 {% include 'partials/_alertas.html' %}
-                {% if form.numr_negociacao is None %}
+                {% if numr_negociacao is None %}
                     {% include 'subsTribut/partials/_calcular_nego_vw.html' %}
                 {% else %}
                     {% include 'subsTribut/partials/_calcular_nego_vw_resultado.html' %}
-
                 {% endif %}
             </div>
             {#            <div class="tab-pane fade" id="nav-calculo-individual" role="tabpanel"#}

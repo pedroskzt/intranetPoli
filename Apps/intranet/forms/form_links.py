@@ -6,12 +6,15 @@ from Apps.intranet.models.links import Links
 class NovoLinkForms(forms.ModelForm):
     class Meta:
         model = Links
-        fields = ('titulo', 'descricao', 'logo', 'url')
+        fields = ('titulo', 'descricao', 'logo', 'url', 'exibir', 'requer_acesso', 'intranet')
         labels = {
             'titulo': 'Título',
             'descricao': 'Descrição',
             'logo': 'Logo',
-            'url': 'Link da Página'
+            'url': 'Link da Página',
+            'exibir': 'Exibir?',
+            'requer_acesso': 'Requer Acesso?',
+            'intranet': 'Intranet?'
         }
         widgets = {
             'titulo': forms.TextInput(attrs={'placeholder': 'Título'}),
@@ -23,14 +26,15 @@ class NovoLinkForms(forms.ModelForm):
 class AtualizaLinkForms(forms.ModelForm):
     class Meta:
         model = Links
-        fields = ('id', 'titulo', 'descricao', 'logo', 'url', 'exibir', 'requer_acesso')
+        fields = ('id', 'titulo', 'descricao', 'logo', 'url', 'exibir', 'requer_acesso', 'intranet')
         labels = {
             'titulo': 'Título',
             'descricao': 'Descrição',
             'logo': 'Logo',
             'url': 'Link da Página',
             'exibir': 'Exibir?',
-            'requer_acesso': 'Requer Acesso?'
+            'requer_acesso': 'Requer Acesso?',
+            'intranet': 'Intranet?'
         }
         widgets = {
             'titulo': forms.TextInput(attrs={'placeholder': 'Título'}),

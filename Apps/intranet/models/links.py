@@ -12,6 +12,7 @@ class Links(models.Model):
     url = models.URLField(unique=True)
     exibir = models.BooleanField(default=False)
     requer_acesso = models.BooleanField(default=False)
+    intranet = models.BooleanField(default=False)
 
     # Log de criação
     data_criacao = models.DateTimeField(auto_now_add=True)
