@@ -37,6 +37,12 @@ def _query_update_cadastro(mes, ano, irpj, csll):
                        f"AND numr_ano = {ano};")
 
 
+def _query_recalcular_bi(mes, ano):
+    with connections['BI'].cursor() as cursor:
+        # cursor.execute(f"call dw_imp_ctb_prc({mes},{ano})")
+        cursor.callproc(f"dw_imp_ctb_prc", [mes, ano])
+
+
 def index(request):
     form = FormConsultaCadastro()
     return render(request, 'resultadoContabil/index.html', context={'form': form})
@@ -68,7 +74,11 @@ def cadastro(request):
                     _query_insert_cadastro(mes, ano, irpj, csll)
                 except DatabaseError as error:
                     messages.error(request,
-                                   f"Erro na inserção dos valores:<ul><li>{mes}/{ano}</li><li>IRPJ: {irpj}</li><li>CSLL: {csll}</li><li>{error}</li></ul>",
+                                   f"Erro na inserção dos valores:"
+                                   f"<ul><li>{mes}/{ano}</li>"
+                                   f"<li>IRPJ: {irpj}</li>"
+                                   f"<li>CSLL: {csll}</li>"
+                                   f"<li>{error}</li></ul>",
                                    extra_tags='safe')
                 else:
                     messages.success(request, "Valores cadastrados com Sucesso.")
@@ -78,7 +88,11 @@ def cadastro(request):
                     _query_update_cadastro(mes, ano, irpj, csll)
                 except DatabaseError as error:
                     messages.error(request,
-                                   f"Erro na atualização dos valores:<ul><li>{mes}/{ano}</li><li>IRPJ: {irpj}</li><li>CSLL: {csll}</li><li>{error}</li></ul>",
+                                   f"Erro na atualização dos valores:"
+                                   f"<ul><li>{mes}/{ano}</li>"
+                                   f"<li>IRPJ: {irpj}</li>"
+                                   f"<li>CSLL: {csll}</li>"
+                                   f"<li>{error}</li></ul>",
                                    extra_tags='safe')
                 else:
                     messages.success(request, "Valores atualizados com Sucesso.")
@@ -86,5 +100,20 @@ def cadastro(request):
     return render(request, 'resultadoContabil/index.html', context=contexto)
 
 
-def atualizar(request):
-    return render(request, 'resultadoContabil/index.html')
+def recalcular(request):
+    print("recalculando")
+    if request.method == 'POST':
+        print(request.POST)
+        mes = request.POST.get('mes')
+        ano = request.POST.get('ano')
+        try:
+            _query_recalcular_bi(mes, ano)
+        except DatabaseError as error:
+            messages.error(request,
+                           f"Erro no recalculo com a data:"
+                           f"<ul><li>{mes}/{ano}</li>"
+                           f"<li>{error}</li></ul>",
+                           extra_tags='safe')
+        else:
+            messages.success(request, "Valores recalculados com Sucesso.")
+    return redirect('index_contabil')
