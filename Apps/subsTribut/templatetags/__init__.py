@@ -1,1 +1,1 @@
-from .tags import *
+from .formatarPorcentagem import *
