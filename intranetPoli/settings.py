@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'Apps.assinaturas',
     'Apps.resultadoContabil',
     'widget_tweaks',
+    'django.contrib.humanize',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -171,6 +172,9 @@ MESSAGE_TAGS = {
 
 # LOGIN
 LOGIN_URL = 'login'
+
+# #Tempus Dominus
+# TEMPUS_DOMINUS_LOCALIZE = True
 
 # LOGGING
 ENABLE_LOGGING = False
