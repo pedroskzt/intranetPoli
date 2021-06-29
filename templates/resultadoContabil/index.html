@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load widget_tweaks %}
 
 {% block extrahead %}
     <link href="{% static 'resultadoContabil/css/index.css' %}" rel="stylesheet" type="text/css">
@@ -12,7 +11,7 @@
 
 
 {% block content %}
-    <h1>Cotnabilidade</h1>
+    <h1>Contabilidade</h1>
     <ul class="nav nav-pills mb-3" id="resultado-contabil-tab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="cadastro-previsao-tab" data-bs-toggle="pill"
@@ -28,6 +27,7 @@
         </li>
     </ul>
     <div class="tab-content" id="resultado-contabil-tabContent">
+        {% include 'partials/_alertas.html' %}
         <div class="tab-pane fade show active" id="cadastro-previsao" role="tabpanel"
              aria-labelledby="cadastro-previsao-tab">
             <div class="mb-4">
@@ -39,4 +39,31 @@
                 {% include 'resultadoContabil/atualizar.html' %}
             </div>
         </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'resultadoContabil/js/jquery.inputmask.min.js' %}"></script>
+    <script>
+        Inputmask.extendAliases({
+            'real': {
+                alias: 'currency',
+                autoUnmask: true,
+                radixPoint: ",",
+                groupSeparator: ".",
+                allowMinus: false,
+                prefix: 'R$ ',
+                digits: 2,
+                digitsOptional: false,
+                rightAlign: false,
+                unmaskAsNumber: true,
+                removeMaskOnSubmit: true
+            }
+        });
+        $(document).ready(function () {
+            $("#irpj_id").inputmask('real')
+        });
+        $(document).ready(function () {
+            $("#csll_id").inputmask('real')
+        });
+    </script>
 {% endblock %}
