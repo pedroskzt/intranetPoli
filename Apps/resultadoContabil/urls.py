@@ -1,6 +1,3 @@
-"""subsTribut URL Configuration
-
-"""
 from django.urls import path
 
 from Apps.intranet.views.gerenciar_intranet import painel_intranet, adicionar_link, editar_link, excluir_link
