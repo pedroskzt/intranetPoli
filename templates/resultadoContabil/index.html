@@ -19,12 +19,12 @@
                     type="button" role="tab" aria-controls="cadastro-previsao" aria-selected="true">Cadastro Previsão
             </button>
         </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="atualizar-valores-tab" data-bs-toggle="pill"
-                    data-bs-target="#atualizar-valores"
-                    type="button" role="tab" aria-controls="atualizar-valores" aria-selected="false">Atualizar Valores
-            </button>
-        </li>
+{#        <li class="nav-item" role="presentation">#}
+{#            <button class="nav-link" id="recalcular-tab" data-bs-toggle="pill"#}
+{#                    data-bs-target="#recalcular"#}
+{#                    type="button" role="tab" aria-controls="recalcular" aria-selected="false">Recalcular B.I#}
+{#            </button>#}
+{#        </li>#}
     </ul>
     <div class="tab-content" id="resultado-contabil-tabContent">
         {% include 'partials/_alertas.html' %}
@@ -34,9 +34,9 @@
                 {% include 'resultadoContabil/cadastro.html' %}
             </div>
         </div>
-        <div class="tab-pane fade" id="atualizar-valores" role="tabpanel" aria-labelledby="atualizar-valores-tab">
+        <div class="tab-pane fade" id="recalcular" role="tabpanel" aria-labelledby="recalcular-tab">
             <div class="mb-4">
-                {% include 'resultadoContabil/atualizar.html' %}
+                {% include 'resultadoContabil/recalcular.html' %}
             </div>
         </div>
     </div>
