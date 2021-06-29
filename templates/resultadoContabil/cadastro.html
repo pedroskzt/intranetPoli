@@ -1,17 +1,19 @@
-<div class="d-flex justify-content-between align-items-center">
-    <div class="col-4 border rounded-3">
-        <div class="m-3">
-            <div class="">
-                <div class="form-floating">
-                    <input type="number" class="form-control" id="floatingInput" placeholder="Mês">
-                    <label for="floatingInput">Mês</label>
+{% load widget_tweaks %}
+{% load formatarReal %}
 
+
+<form action="{% url 'consultar_cadastro' %}" method="post" enctype="multipart/form-data" id="form_cadastro_id">
+    {% csrf_token %}
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="col-4 border rounded-3">
+            <div class="m-3">
+                <div class="form-floating mb-2">
+                    {{ form.mes|add_class:'form-control' }}
+                    <label for="{{ form.mes.id_for_label }}">{{ form.mes.label }}</label>
                 </div> <!-- Mês -->
-            </div>
-            <div class="">
-                <div class="form-floating">
-                    <input type="number" class="form-control" id="floatingInput" placeholder="Ano">
-                    <label for="floatingInput">Ano</label>
+                <div class="form-floating mt-2">
+                    {{ form.ano|add_class:'form-control' }}
+                    <label for="{{ form.ano.id_for_label }}">{{ form.ano.label }}</label>
                 </div><!-- Ano -->
             </div>
         </div>
