@@ -15,30 +15,32 @@
                 </div><!-- Ano -->
             </div>
         </div>
-    </div>
-    <div>
-        <button class="btn btn-primary">Consultar</button>
-    </div>
-    <div class="col-4 border rounded-3">
-        <div class="m-3">
-            <div class="">
+        <div>
+            <button type="submit" class="btn btn-primary" name="consultar">Consultar</button>
+        </div>
+        <div class="col-4 border rounded-3">
+            <div class="m-3">
                 <div class="form-floating">
-                    <input type="number" class="form-control" id="floatingInput" placeholder="IRPJ">
-                    <label for="floatingInput">IRPJ</label>
-
+                    <input type="text" class="form-control" id="irpj_id" placeholder="IRPJ" name="irpj"
+                           value="{{ cadastro.VALR_IRPJ_PREV }}">
+                    <label for="irpj_id">IRPJ</label>
                 </div><!-- IRPJ -->
-            </div>
-            <div class="">
                 <div class="form-floating">
-                    <input type="number" class="form-control" id="floatingInput" placeholder="CSLL">
-                    <label for="floatingInput">CSLL</label>
+                    <input type="text" class="form-control" id="csll_id" placeholder="CSLL" name="csll"
+                           value="{{ cadastro.VALR_CSLL_PREV }}">
+                    <label for="csll_id">CSLL</label>
                 </div><!-- CSLL -->
             </div>
         </div>
     </div>
-</div>
+</form>
 <div class="d-flex justify-content-between mt-2">
-    <button class="btn btn-secondary">Voltar</button>
-    <button class="btn btn-success">Salvar</button>
+    <a href="{% url 'pagina_inicial' %}" class="btn btn-secondary mt-2">Voltar</a>
+    <a href="{% url 'index_contabil' %}" class="btn btn-warning mt-2"> Limpar </a>
+    {% if messages %}
+        <button type="submit" class="btn btn-success mt-2" form="form_cadastro_id" name="salvar">Salvar</button>
+    {% else %}
+        <button type="submit" class="btn btn-success mt-2" form="form_cadastro_id" name="atualizar">Atualizar</button>
+    {% endif %}
 </div>
 
