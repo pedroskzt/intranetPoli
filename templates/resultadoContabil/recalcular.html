@@ -1,0 +1,34 @@
+<div class="d-flex flex-column justify-content-center align-items-center">
+    <div class="border rounded-3">
+        <div class="m-3">
+            <form action="{% url 'recalcular_bi' %}" method="post" id="form-recalcular-id">
+                {% csrf_token %}
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="number" class="form-control" id="recalcular_mes_id" placeholder="Mês" name="mes"
+                               required>
+                        <label for="recalcular_mes_id">Mês</label>
+                    </div> <!-- Mês -->
+                </div>
+                <div class="mt-2">
+                    <div class="form-floating">
+                        <input type="number" class="form-control" id="recalcular_ano_id" placeholder="Ano" name="ano"
+                               required>
+                        <label for="recalcular_ano_id">Ano</label>
+                    </div><!-- Ano -->
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="d-flex flex-row justify-content-between align-items-center">
+        <div class="mb-4 mt-4">
+            <button type="submit" class="btn btn-success" form="form-recalcular-id">Recalcular</button>
+        </div>
+        <div class="mb-4 mt-4" id="id_voltar">
+            <button class="btn btn-secondary">Voltar</button>
+        </div>
+    </div>
+</div>
+
+
+
