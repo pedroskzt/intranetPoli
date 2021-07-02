@@ -48,6 +48,7 @@
 
         {% block object-tools %}
             <ul class="object-tools">
+                <li><a href="{% url 'log_models' cl.opts.app_label cl.opts.verbose_name_plural|capfirst cl.opts|admin_urlname:'changelist' %}">Log</a></li>
                 {% block object-tools-items %}
                     {% change_list_object_tools %}
                 {% endblock %}
