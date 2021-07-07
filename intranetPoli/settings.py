@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import json
 import os
+from datetime import datetime
 
 from django.contrib.messages import constants as messages
 from django.core.exceptions import ImproperlyConfigured
@@ -56,6 +57,7 @@ INSTALLED_APPS = [
     'Apps.assinaturas',
     'Apps.resultadoContabil',
     'widget_tweaks',
+    'simple_history',
     'django.contrib.humanize',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -73,6 +75,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'intranetPoli.urls'
@@ -177,16 +180,15 @@ LOGIN_URL = 'login'
 # TEMPUS_DOMINUS_LOCALIZE = True
 
 # LOGGING
-ENABLE_LOGGING = False
-if ENABLE_LOGGING is True:
+if get_secret("LOGGING") == 'True':
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,
         'handlers': {
             'file': {
-                'level': 'DEBUG',
+                f'level': {get_secret('LOGGING_LEVEL')},
                 'class': 'logging.FileHandler',
-                'filename': 'C:\\Users\\GYN-CPD-PEDRO\\Documents\\djangolog.txt',
+                f'filename': os.path.join(BASE_DIR, "logs", f'log-{datetime.now().date()}'),
             },
         },
         'loggers': {
@@ -197,3 +199,4 @@ if ENABLE_LOGGING is True:
             },
         },
     }
+
