@@ -1,4 +1,5 @@
 from django.db import models
+from simple_history.models import HistoricalRecords
 
 
 class Tributos(models.Model):
@@ -22,6 +23,7 @@ class Tributos(models.Model):
     basered = models.DecimalField(max_digits=19, decimal_places=4)
     ssimples = models.DecimalField(max_digits=19, decimal_places=4)
     valr_fecop = models.DecimalField(max_digits=19, decimal_places=4, default=0)
+    history = HistoricalRecords()
 
     def __str__(self):
-        return f'{self.get_origem_display()}/{self.get_origem_display()}'
+        return f'{self.get_origem_display()}/{self.get_destino_display()}'
