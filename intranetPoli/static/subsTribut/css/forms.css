@@ -37,11 +37,6 @@
     margin-left: -2.5em;
 }
 
-.button-color {
-    background-color: var(--logoLetra);
-    border-color: var(--logoLetra);
-}
-
 #resultado-id,
 #label-resultado-id,
 #fecop-id,

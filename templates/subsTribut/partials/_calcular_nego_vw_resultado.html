@@ -1,11 +1,24 @@
 {% load static %}
-{% load tags %}
+{% load formatarPorcentagem %}
+
 <div class="row mt-2">
     <div class="col-4">
-        <label for="numero-negociacao" class="form-label">Número da Negociação</label>
-        <input type="number" class="form-control" id="numero-negociacao" name="numr_negociacao"
-               value="{{ numr_negociacao }}" readonly>
-    </div> <!-- Número da Negociação -->
+        <div class="d-flex">
+            <div class="me-2">
+                <label for="numero-negociacao" class="form-label">Negociação</label>
+                <input type="number" class="form-control" id="numero-negociacao" name="numr_negociacao"
+                       value="{{ numr_negociacao }}" readonly>
+            </div>
+            <div class="ms-2">
+                {% if pol_intra_nego_vw.NUMERO_NOTA %}
+                    <label for="numero-nota" class="form-label">Nota Fiscal</label>
+                    <input type="number" class="form-control" id="numero-nota" name="numr_nota"
+                           value="{{ pol_intra_nego_vw.NUMERO_NOTA }}" readonly>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
     <div class="col">
         <label for="cliente-id" class="form-label">Cliente</label>
         <input type="text" class="form-control" id="cliente-id"
@@ -13,7 +26,7 @@
                readonly>
     </div> <!-- Cliente -->
     <div>
-        <a href="{% url 'index_st' %}" class="btn btn-primary button-color mt-2">Voltar</a>
+        <a href="{% url 'index_st' %}" class="btn btn-info mt-2">Voltar</a>
     </div>
 </div> <!-- Número da Negociação e Cliente -->
 
@@ -265,6 +278,4 @@
         </div>
     </div>
 </div>
-
-
 

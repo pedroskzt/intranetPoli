@@ -1,12 +1,11 @@
 {% load static %}
 <form action="" method="get">
-    <div class="row">
-        <div class="col mt-2">
-            <label for="numero-negociacao" class="form-label">Número da Negociação</label>
-            <input type="number" class="form-control" id="numero-negociacao" name="numr_negociacao">
-        </div>
-        <div class="col mt-4">
-            <input type="submit" class="btn btn-primary button-color mt-2" value="Calcular">
-        </div>
+    <div class="form-floating mt-2 w-25">
+        <input type="text" class="form-control" id="numero-negociacao" name="numr_negociacao"
+               placeholder="Número da Negociação">
+        <label for="numero-negociacao">Número da Negociação</label>
     </div>
+
+    <input type="submit" class="btn btn-primary button-color mt-2" value="Calcular">
+
 </form>

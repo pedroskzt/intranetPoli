@@ -49,7 +49,6 @@ def editar_link(request, link_id):
 
 @login_required
 def excluir_link(request, link_id):
-    # TODO: Adicionar modal de confirmação de exclusão
     link = get_object_or_404(Links, pk=link_id)
     os.remove(link.logo.path)
     link.delete()
