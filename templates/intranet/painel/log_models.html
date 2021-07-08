@@ -12,6 +12,7 @@
     <div class="m-3">
         {% if page_404 is True %}
             <h5>Modelo não possui registro de Log, se necessário o Log, contatar o Administrador do Sistema.</h5>
+            <a href="{% url breadcrumb.changelist %}" class="btn btn-info">Voltar</a>
         {% else %}
             <h1>Log {{ breadcrumb.tabela }}</h1>
             <form action="{% url 'ajax_log' %}" method="get" id="form_log_id">
