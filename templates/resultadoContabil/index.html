@@ -11,35 +11,39 @@
 
 
 {% block content %}
-    <h1>Contabilidade</h1>
-    <ul class="nav nav-pills mb-3" id="resultado-contabil-tab" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="cadastro-previsao-tab" data-bs-toggle="pill"
-                    data-bs-target="#cadastro-previsao"
-                    type="button" role="tab" aria-controls="cadastro-previsao" aria-selected="true">Cadastro Previsão
-            </button>
-        </li>
-{#        <li class="nav-item" role="presentation">#}
-{#            <button class="nav-link" id="recalcular-tab" data-bs-toggle="pill"#}
-{#                    data-bs-target="#recalcular"#}
-{#                    type="button" role="tab" aria-controls="recalcular" aria-selected="false">Recalcular B.I#}
-{#            </button>#}
-{#        </li>#}
-    </ul>
-    <div class="tab-content" id="resultado-contabil-tabContent">
-        {% include 'partials/_alertas.html' %}
-        <div class="tab-pane fade show active" id="cadastro-previsao" role="tabpanel"
-             aria-labelledby="cadastro-previsao-tab">
-            <div class="mb-4">
-                {% include 'resultadoContabil/cadastro.html' %}
+    <div class="mb-4">
+        <h1>Contabilidade</h1>
+        <ul class="nav nav-pills mb-3" id="resultado-contabil-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="cadastro-previsao-tab" data-bs-toggle="pill"
+                        data-bs-target="#cadastro-previsao"
+                        type="button" role="tab" aria-controls="cadastro-previsao" aria-selected="true">Cadastro
+                    Previsão
+                </button>
+            </li>
+            {#        <li class="nav-item" role="presentation">#}
+            {#            <button class="nav-link" id="recalcular-tab" data-bs-toggle="pill"#}
+            {#                    data-bs-target="#recalcular"#}
+            {#                    type="button" role="tab" aria-controls="recalcular" aria-selected="false">Recalcular B.I#}
+            {#            </button>#}
+            {#        </li>#}
+        </ul>
+        <div class="tab-content" id="resultado-contabil-tabContent">
+            {% include 'partials/_alertas.html' %}
+            <div class="tab-pane fade show active" id="cadastro-previsao" role="tabpanel"
+                 aria-labelledby="cadastro-previsao-tab">
+                <div class="mb-4">
+                    {% include 'resultadoContabil/cadastro.html' %}
+                </div>
             </div>
-        </div>
-        <div class="tab-pane fade" id="recalcular" role="tabpanel" aria-labelledby="recalcular-tab">
-            <div class="mb-4">
-                {% include 'resultadoContabil/recalcular.html' %}
+            <div class="tab-pane fade" id="recalcular" role="tabpanel" aria-labelledby="recalcular-tab">
+                <div class="mb-4">
+                    {% include 'resultadoContabil/recalcular.html' %}
+                </div>
             </div>
         </div>
     </div>
+
 {% endblock %}
 
 {% block scripts %}
