@@ -23,5 +23,6 @@ urlpatterns = [
     path('st/', include('Apps.subsTribut.urls')),
     path('assinatura/', include('Apps.assinaturas.urls')),
     path('catalogo/', include('Apps.catalogos.urls')),
+    path('contabilidade/', include('Apps.resultadoContabil.urls')),
     path('painel/cpd/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -46,3 +46,13 @@
     top: .125em;
     position: relative;
 }
+
+.input-group .form-control,
+.input-group button:hover,
+.input-group button:focus{
+  box-shadow: none;
+}
+
+.input-group .btn.btn-primary{
+    background-color: var(--logoLetra);
+}

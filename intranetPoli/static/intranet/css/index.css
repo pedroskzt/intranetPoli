@@ -10,3 +10,7 @@
   text-decoration: none;
   color: var(--logoLetra);
 }
+
+.input-group .form-control{
+  box-shadow: none;
+}

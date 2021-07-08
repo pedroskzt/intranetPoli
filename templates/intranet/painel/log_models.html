@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n admin_urls static admin_modify %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'admin:index' %}">Painel de Administração</a></li>
+    <li class="breadcrumb-item"><a href="{% url breadcrumb.changelist %}">Tabela: {{ breadcrumb.tabela }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Log</li>
+{% endblock %}
+
+{% block content %}
+    <div class="m-3">
+        {% if page_404 is True %}
+            <h5>Modelo não possui registro de Log, se necessário o Log, contatar o Administrador do Sistema.</h5>
+            <a href="{% url breadcrumb.changelist %}" class="btn btn-info">Voltar</a>
+        {% else %}
+            <h1>Log {{ breadcrumb.tabela }}</h1>
+            <form action="{% url 'ajax_log' %}" method="get" id="form_log_id">
+                <div class="d-flex justify-content-between flex-column">
+                    <div class="col-4 border rounded-3">
+                        <div class="m-3">
+                            <div class="mb-2">
+                                <label for="data_inicial">Data Inicial</label>
+                                <input type="date" id="data_inicial" class="form-control" required>
+                            </div>
+                            <div class="mt-2">
+                                <label for="data_final">Data Final</label>
+                                <input type="date" id="data_final" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <button type="submit" class="btn btn-primary" id="consultar_id">Consultar</button>
+                    </div>
+                </div>
+                <input type="hidden" value="{{ breadcrumb.modelo }}" name="modelo" id="hidden_modelo_id">
+            </form>
+            <div class="table-responsive">
+                <table class="table" id="table_log_id">
+                    <thead>
+                    <tr>
+                        <th scope="col">Origem</th>
+                        <th scope="col">Destino</th>
+                        <th scope="col">Data da Alteração</th>
+                        <th scope="col">Usuário</th>
+                        <th scope="col">Dados Alterados</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script>
+        $("#form_log_id").on('submit', function (event) {
+            event.preventDefault();
+            $.ajax({
+                url: $(this).attr('action'),
+                data: {
+                    data_inicial: $('#data_inicial').val(),
+                    data_final: $('#data_final').val(),
+                    modelo: $('#hidden_modelo_id').val(),
+                },
+                dataType: 'json',
+                success: function (data) {
+                    $("#tbody_log_id").remove()
+                    $("#table_log_id").append("<tbody id='tbody_log_id'></tbody>")
+
+                    const tabela = $("#tbody_log_id");
+                    const inicio_linha = '<tr>';
+                    const fim_linha = '</tr>';
+                    const inicio_conteudo = '<td>';
+                    const fim_conteudo = '</td>';
+                    for (const log of data.logs) {
+                        let linha = inicio_linha;
+                        for (const id_campo in log) {
+                            if (typeof log[id_campo] === 'object' && log[id_campo] !== null) {
+                                linha += inicio_conteudo
+                                linha += "<table class='table'><thead><tr><th scope='col'>Campo</th><th scope='col'>Valor Anterior</th><th scope='col'>Novo Valor</th></tr></thead><tbody>"
+
+                                for (const id_alteracao in log[id_campo]) {
+                                    linha += inicio_linha
+                                    linha += inicio_conteudo
+                                    linha += id_alteracao
+                                    linha += fim_conteudo
+
+                                    linha += inicio_conteudo
+                                    linha += log[id_campo][id_alteracao][0]
+                                    linha += fim_conteudo
+
+                                    linha += inicio_conteudo
+                                    linha += log[id_campo][id_alteracao][1]
+                                    linha += fim_conteudo
+                                    linha += fim_linha
+                                }
+
+                                linha += "</tbody></table>"
+                                linha += fim_conteudo
+
+                            } else {
+                                linha += inicio_conteudo;
+                                linha += log[id_campo];
+                                linha += fim_conteudo;
+                            }
+
+                        }
+                        linha += fim_linha;
+                        tabela.append(linha)
+                    }
+                }
+            })
+        })
+    </script>
+{% endblock %}
