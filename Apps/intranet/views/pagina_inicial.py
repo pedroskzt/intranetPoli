@@ -31,6 +31,5 @@ def ajax_pesquisar_links(request):
     filtro = False
     if request.method == 'GET':
         links_id = _query_select_links(request.GET['pesquisar'])
-        print(links_id)
         filtro = {'links_id': links_id if links_id else False}
     return JsonResponse(filtro)

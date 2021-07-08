@@ -101,9 +101,7 @@ def cadastro(request):
 
 
 def recalcular(request):
-    print("recalculando")
     if request.method == 'POST':
-        print(request.POST)
         mes = request.POST.get('mes')
         ano = request.POST.get('ano')
         try:
