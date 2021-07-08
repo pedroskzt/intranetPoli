@@ -6,3 +6,7 @@
   width: auto;
   height: 4em;
 }
+
+.input-group .form-control{
+  box-shadow: none;
+}

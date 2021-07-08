@@ -1,3 +1,8 @@
 .submit-row .deletelink-box .deletelink {
     height: auto;
 }
+
+.btn-primary {
+    background-color: var(--logoLetra);
+    border-color: var(--logoLetra);
+}

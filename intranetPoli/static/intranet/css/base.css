@@ -22,6 +22,15 @@
     color: var(--logoBarra);
 }
 
+.btn-primary {
+    background-color: var(--logoLetra);
+    border-color: var(--logoLetra);
+}
+
+.btn-info {
+    background-color: var(--logoBarra);
+    border-color: var(--logoBarra);
+}
 
 /*.h-divider {*/
 /*    height: 3rem;*/
