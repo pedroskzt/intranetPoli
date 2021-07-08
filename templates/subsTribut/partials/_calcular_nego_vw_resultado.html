@@ -7,13 +7,13 @@
             <div class="me-2">
                 <label for="numero-negociacao" class="form-label">Negociação</label>
                 <input type="number" class="form-control" id="numero-negociacao" name="numr_negociacao"
-                       value="{{ form.numr_negociacao }}" readonly>
+                       value="{{ numr_negociacao }}" readonly>
             </div>
             <div class="ms-2">
-                {% if form.pol_intra_nego_vw.NUMERO_NOTA %}
+                {% if pol_intra_nego_vw.NUMERO_NOTA %}
                     <label for="numero-nota" class="form-label">Nota Fiscal</label>
                     <input type="number" class="form-control" id="numero-nota" name="numr_nota"
-                           value="{{ form.pol_intra_nego_vw.NUMERO_NOTA }}" readonly>
+                           value="{{ pol_intra_nego_vw.NUMERO_NOTA }}" readonly>
                 {% endif %}
             </div>
         </div>
