@@ -93,6 +93,12 @@ class CalcularView(View):
         """
         Realiza o calculo do ST para cada item da negociação, e adiciona no dicionario de itens o valor
         de ST para cada ITEM. Também adiciona no dicionario de negociação, o valor total de ST da negociação.
+
+        Condição: Consumidor final e Não possui Inscrição Estadual
+            Calculo: DIFAL
+        Condição: Não é Consumidor final
+            Calculo: ST
+
         :param negociacao:
         :param itens:
         :return:
