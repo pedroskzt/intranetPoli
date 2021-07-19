@@ -1,0 +1,1 @@
+from .cadastrar_assinatura import *
