@@ -6,6 +6,9 @@ class Links(models.Model):
     class Meta:
         verbose_name = 'Link'
         verbose_name_plural = 'Links'
+        permissions = [
+            ("gerenciar_intranet", "Pode gerenciar a Intranet")
+        ]
     titulo = models.CharField(max_length=30, unique=True)
     descricao = models.TextField(max_length=200)
     logo = models.ImageField(upload_to='logos')
@@ -24,4 +27,3 @@ class Links(models.Model):
 
     def __str__(self):
         return self.titulo
-
