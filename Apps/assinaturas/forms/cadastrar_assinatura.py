@@ -1,6 +1,6 @@
 from django import forms
 from django.core.validators import RegexValidator
-from .models import Assinatura
+from Apps.assinaturas.models import Assinatura
 
 phone_regex = RegexValidator(regex=r'^\(\d{2}\)\s\d{4}\-\d{4}$',
                              message="Telefone deve ser no formato: '(00) 0000-0000'.")

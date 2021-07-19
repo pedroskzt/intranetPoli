@@ -7,28 +7,59 @@
 {% endblock %}
 
 {% block content %}
-    <div id="assinatura-id">
-        <table style="font-family: sans-serif">
-            <tr>
-                <td style="color:#26a6ff">
-                    <strong>{{ siteAssinatura.assinatura.nome }}</strong><br>
-                    {{ siteAssinatura.assinatura.departamento }}<br>
-                    {{ siteAssinatura.assinatura.fone }} - Ramal: {{ siteAssinatura.assinatura.ramal }}<br>
-                    <a href="https://www.polipecas.com.br" target="_blank"
-                       style="color:#000388">www.polipecas.com.br</a><br>
-                    <small>Esta mensagem é confidencial e privilegiada. Caso Você não seja o destinatário, não está
-                        autorizado a reproduzir divulgar a terceiros o conteúdo e deve apagá-la.</small><br><br>
-                    <a href="https://www.polipecas.com.br" target="_blank">
-                        <img src="https://www.polipecas.com.br/images/logo/logo.png" alt="Logo.png"
-                             moz-do-not-send="false" border="0">
-                    </a>
-                </td>
-            </tr>
-        </table>
+    <div class="d-flex justify-content-between">
+        <div id="assinatura-id">
+            <table style="font-family: sans-serif">
+                <tr>
+                    <td style="color:#26a6ff">
+                        <strong>{{ siteAssinatura.assinatura.nome }}</strong><br>
+                        {{ siteAssinatura.assinatura.departamento }}<br>
+                        {{ siteAssinatura.assinatura.fone }} - Ramal: {{ siteAssinatura.assinatura.ramal }}<br>
+                        <a href="https://www.polipecas.com.br" target="_blank"
+                           style="color:#000388">www.polipecas.com.br</a><br>
+                        <small>Esta mensagem é confidencial e privilegiada. Caso Você não seja o destinatário, não está
+                            autorizado a reproduzir divulgar a terceiros o conteúdo e deve apagá-la.</small><br><br>
+                        <a href="https://www.polipecas.com.br" target="_blank">
+                            <img src="https://www.polipecas.com.br/images/logo/logo.png" alt="Logo.png"
+                                 moz-do-not-send="false" border="0">
+                        </a>
+                    </td>
+                </tr>
+            </table>
+            <div id="portal_cliente_id" style="display: none">
+                <h3>Portal do Cliente Polipeças:</h3>
+                Acesse nosso site, na opção <strong>Portal do Cliente</strong> siga o tutorial para se cadastrar e baixe
+                suas notas fiscais, boletos, solicite renegociação de dividas entre outras opções.
+                <br>
+                <a href="https://www.polipecas.com.br" target="_blank">
+                    <button style="color: #ffffff; background: #26a6ff; border-radius: 4px; cursor: pointer;">Clique
+                        aqui e
+                        realize seu primeiro acesso
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="check_portal_cliente_id">
+            <label class="form-check-label" for="portal_cliente_id">
+                Adicionar recado sobre Portal do Cliente
+            </label>
+        </div>
+
     </div>
+
     <div class="mt-5 mb-4">
         <a class="btn btn-primary" href="#" id="donwload-link" onclick="myFunction()">Baixar Assinatura</a>
     </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $("#check_portal_cliente_id").on('click', function () {
+            $("#portal_cliente_id").toggle(this.checkd)
+        })
+    </script>
     <script>
         function myFunction() {
             const inicio_HTML = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"></head><body>'
@@ -39,6 +70,7 @@
             nome = nome.replaceAll(' ', '')
             download(assinatura, nome, "html")
         }
+
         function download(assinatura, nome_do_arquivo, tipo_de_arquivo) {
             const link = document.getElementById("donwload-link");
             const arquivo = new Blob([assinatura], {type: tipo_de_arquivo});

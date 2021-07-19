@@ -84,10 +84,14 @@
                     <li class="nav-item"><a href="{% url 'admin:index' %}" class="nav-link px-2">Painel de
                         Administração</a>
                     </li>
-                    <li class="nav-item"><a href="{% url 'painel_intranet' %}" class="nav-link px-2">Painel Intranet</a>
-                    </li>
+                    {% if perms.intranet.gerenciar_intranet %}
+                        <li class="nav-item"><a href="{% url 'painel_intranet' %}" class="nav-link px-2">Painel
+                            Intranet</a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item">
-                        <form action="{% url 'logout' %}" method="post" enctype="multipart/form-data" id="logout-id">
+                        <form action="{% url 'logout' %}" method="post" enctype="multipart/form-data"
+                              id="logout-id">
                             {% csrf_token %}
                             <input type="hidden" name="next" value="{{ request.path }}">
                         </form>
