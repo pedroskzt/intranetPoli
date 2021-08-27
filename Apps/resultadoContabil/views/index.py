@@ -36,7 +36,7 @@ def _query_update_cadastro(mes, ano, irpj, csll):
                        f"valr_csll_prev = {csll} "
                        f"WHERE numr_mes = {mes} "
                        f"AND numr_ano = {ano}"
-                       f"AND parempr_id = 1"
+                       f"AND id_empresa = 1"
                        f"AND indr_tipo = 1;")
 
 
