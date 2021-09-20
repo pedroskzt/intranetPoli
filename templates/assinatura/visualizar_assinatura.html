@@ -18,9 +18,9 @@
                         <a href="https://www.polipecas.com.br" target="_blank"
                            style="color:#000388">www.polipecas.com.br</a><br>
                         <small>Esta mensagem é confidencial e privilegiada. Caso Você não seja o destinatário, não está
-                            autorizado a reproduzir divulgar a terceiros o conteúdo e deve apagá-la.</small><br><br>
+                            autorizado a reproduzir ou divulgar a terceiros o conteúdo e deve apaga-la.</small><br><br>
                         <a href="https://www.polipecas.com.br" target="_blank">
-                            <img src="https://www.polipecas.com.br/images/logo/logo.png" alt="Logo.png"
+                            <img src="https://www.polipecas.com.br/images/logo/logo-email.png" alt="Logo.png"
                                  moz-do-not-send="false" border="0">
                         </a>
                     </td>
@@ -32,16 +32,39 @@
                 suas notas fiscais, boletos, solicite renegociação de dividas entre outras opções.
                 <br>
                 <a href="https://www.polipecas.com.br" target="_blank">
-                    <button style="color: #ffffff; background: #26a6ff; border-radius: 4px; cursor: pointer;">Clique e realize seu primeiro acesso.</button>
+                    <button style="color: #ffffff; background: #26a6ff; border-radius: 4px; cursor: pointer;">Clique e
+                        realize seu primeiro acesso.
+                    </button>
                 </a>
             </div>
         </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="check_portal_cliente_id">
-            <label class="form-check-label" for="portal_cliente_id">
-                Adicionar recado sobre Portal do Cliente
-            </label>
+        <div class="row">
+            <div class="form-check col">
+                <input class="form-check-input" type="checkbox" value="" id="check_portal_cliente_id">
+                <label class="form-check-label" for="portal_cliente_id">
+                    Adicionar recado sobre Portal do Cliente
+                </label>
+            </div>
+            <div class="col">
+                <label class="form-label">Outlook?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" value="1" id="radio_outlook_sim_id"
+                           name="radio_outlook">
+                    <label class="form-check-label" for="radio_outlook_id">
+                        Sim
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" value="0" id="radio_outlook_nao_id"
+                           name="radio_outlook" checked>
+                    <label class="form-check-label" for="radio_outlook_id">
+                        Não
+                    </label>
+                </div>
+            </div>
+
         </div>
+
 
     </div>
 
@@ -65,7 +88,14 @@
             assinatura = inicio_HTML + assinatura + fim_HTML
             let nome = "{{ siteAssinatura.assinatura.nome}}"
             nome = nome.replaceAll(' ', '')
-            download(assinatura, nome, "html")
+            let formato
+            radio_selecionado = $('input[name=radio_outlook]:checked')
+            if (radio_selecionado.val() === "1") {
+                formato = 'htm'
+            } else {
+                formato = 'html'
+            }
+            download(assinatura, nome, formato)
         }
 
         function download(assinatura, nome_do_arquivo, tipo_de_arquivo) {
