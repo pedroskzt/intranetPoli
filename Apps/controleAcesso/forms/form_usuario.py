@@ -3,29 +3,6 @@ from django.contrib.auth.models import Group, User
 from django.contrib.auth.password_validation import validate_password, password_validators_help_text_html
 from django.core.exceptions import ValidationError
 
-# class NovoUsuarioForms(forms.ModelForm):
-#     confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Confirmar Senha'}),
-#                                        label='Confirmar Senha')
-#     email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'E-mail'}), required=True, label='E-mail')
-#
-#     class Meta:
-#         model = User
-#         fields = ('username', 'password', 'first_name', 'last_name', 'email', 'groups')
-#         labels = {
-#             'username': 'Usuário',
-#             'password': 'Senha',
-#             'first_name': 'Nome',
-#             'last_name': 'Sobrenome',
-#             'groups': 'Grupo de Acesso'
-#         }
-#         widgets = {
-#             'username': forms.TextInput(attrs={'placeholder': 'Usuário'}),
-#             'password': forms.PasswordInput(attrs={'placeholder': 'Senha'}),
-#             'first_name': forms.TextInput(attrs={'placeholder': 'Nome'}),
-#             'last_name': forms.TextInput(attrs={'placeholder': 'Sobrenome'}),
-#             'groups': forms.Select(attrs={'required': 'true'})  # Mudar required também no HTML
-#         }
-
 GRUPOS = []
 for grupo in Group.objects.all():
     GRUPOS.append((grupo.id, grupo))
@@ -75,3 +52,44 @@ class NovoUsuarioForms(forms.Form):
                 for erro in error:
                     self.add_error('senha', erro)
         return self.cleaned_data
+
+
+class AtualizaUsuarioForms(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'groups', 'email', 'first_name', 'last_name', 'is_staff')
+        labels = {
+            'username': 'Usuário',
+            'email': 'E-mail',
+            'first_name': 'Nome',
+            'last_name': 'Sobrenome',
+            'is_staff': 'Administrador da Intranet',
+            'groups': 'Grupos'
+        }
+        widgets = {
+            'username': forms.TextInput(attrs={'placeholder': 'Usuário', 'readonly': True}),
+            'email': forms.EmailInput(attrs={'placeholder': 'E-mail'}),
+            'first_name': forms.TextInput(attrs={'placeholder': 'Nome'}),
+            'last_name': forms.TextInput(attrs={'placeholder': 'Sobrenome'}),
+            'groups': forms.SelectMultiple(attrs={'placeholder': 'Grupos'})
+        }
+
+    def __init__(self, user, *args, **kwargs):
+        super(AtualizaUsuarioForms, self).__init__(*args, **kwargs)
+        self.user = user
+
+    def clean_groups(self):
+        print(self.cleaned_data)
+        print(self.user.has_perm('auth'))
+        if self.user.has_perm('auth'):
+            grupos = self.cleaned_data.get('groups')
+            if len(grupos) == 0:
+                self.add_error('groups', 'Pelo menos 1 grupo deve ser selecionado!')
+            return grupos
+        return self.user.groups.all()
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email == '':
+            self.add_error('email', 'Campo email não pode ser vazio!')
+        return email
