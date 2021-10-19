@@ -1,5 +1,6 @@
 from django.contrib.auth.models import auth, User
 from django.shortcuts import redirect, render
+from django.urls import resolve
 
 
 def _campo_vazio(campo):
@@ -20,6 +21,8 @@ def login(request):
 
     if request.method == 'POST':
         redirecionamento = request.POST.get('next')
+        if resolve(redirecionamento).url_name == 'login' or resolve(redirecionamento).url_name == 'logout':
+            redirecionamento = '/'
         contexto['next'] = redirecionamento
         usuario = request.POST['usuario']
         senha = request.POST['senha']
