@@ -1,0 +1,15 @@
+{% autoescape off %}
+Hello,
+
+Recebemos um pedido para recuperação de senha de sua conta, cadastrado neste email. Para iniciar o processo de recuperação de senha da sua conta, clique no link abaixo.
+
+{{ protocol }}://{{ domain }}{% url 'recuperar_senha_confirmacao' uidb64=uid token=token %}
+
+Este link só pode ser utilizado uma vez. Caso seja necessário recuperar a senha novamente, acesse o site da intranet em: {{ protocol }}://{{domain}} e realizo um novo pedido de recuperação de senha.
+
+Caso não tenha sido você quem solicitou a recuperação de senha, você pode simplesmente ignorar este email.
+
+Att.
+Departamento de Informática.
+
+{% endautoescape %}
