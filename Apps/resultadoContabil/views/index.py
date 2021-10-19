@@ -11,9 +11,9 @@ def _query_cadastro(mes, ano):
     with connections['BI'].cursor() as cursor:
         cursor.execute(
             f'SELECT t.valr_irpj_prev, t.valr_csll_prev '
-            f'FROM dw_resultado t '
+            f'FROM dw_resultado '
             f'WHERE numr_ano = {ano} '
-            f'AND t.numr_mes = {mes} '
+            f'AND numr_mes = {mes} '
             f'AND indr_tipo = 1 '
             f'AND id_empresa = 1')
         retornoBanco = cursor.fetchone()
