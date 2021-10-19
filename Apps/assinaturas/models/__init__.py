@@ -1,1 +1,1 @@
-from .assinatura_model import *
+from .assinatura_model import Assinatura
