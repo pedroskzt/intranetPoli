@@ -1,0 +1,106 @@
+{% load static %}
+<nav id="sidebar" class="container d-flex flex-column text-white">
+    <button id="dismiss" type="button" class="btn btn-outline-secondary w-25 mt-4 mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right"
+             viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
+        </svg>
+        <span class="visually-hidden">Button</span>
+    </button>
+    <div class="acordion" id="in_sidebar">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="menu_favoritos">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#favoritos"
+                        aria-expanded="false" aria-controls="favoritos">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-star me-2">
+                                <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                            </svg>
+                            Favoritos
+                        </div>
+                        <div class="me-3">
+                            <a type="button" class="btn btn-primary" href="{% url 'painel_intranet' %}"
+                               id="editar_favoritos">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-pencil"
+                                     viewBox="0 0 16 16">
+                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"></path>
+                                </svg>
+                            </a>
+                        </div>
+
+                    </div>
+                </button>
+            </h2>
+            <div id="favoritos" class="accordion-collapse collapse" aria-labelledby="menu_favoritos"
+                 data-bs-parent="in_sidebar">
+                <div class="accordion-body">
+                    <a class="btn btn-primary" href="#">Assinatura de Email</a>
+                    <a class="btn btn-primary" href="#">B.I</a>
+                    <a class="btn btn-primary" href="#">Polipeças</a>
+                </div>
+            </div>
+        </div> <!-- Favoritos -->
+        {% if perms.intranet.gerenciar_intranet %}
+            <hr>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="menu_intranet">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#intranet"
+                            aria-expanded="false" aria-controls="intranet">
+                        Intranet
+                    </button>
+                </h2>
+                <div id="intranet" class="accordion-collapse collapse" aria-labelledby="menu_intranet"
+                     data-bs-parent="in_sidebar">
+                    <div class="accordion-body">
+                        <a class="btn btn-primary" href="{% url 'painel_intranet' %}">Painel Intranet</a>
+                        {% if perms.auth %}
+                            <a class="btn btn-primary" href="{% url 'listar_usuarios' %}">Lista de Usuários</a>
+                            <a class="btn btn-primary" href="{% url 'gerenciar_permissoes' %}">Gerenciar Permissões</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div> <!-- Intranet -->
+        {% endif %}
+
+        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownIntranet">
+            <li></li>
+        </ul>
+    </div>
+
+    <hr>
+    <a type="button" class="btn btn-primary mb-auto" href="{% url 'admin:index' %}">Painel de Administração</a>
+
+    <hr>
+    <div class="dropdown mb-4">
+        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+           id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+            <strong>
+                {% if user.get_full_name %}{{ user.get_full_name }}{% else %}
+                    {{ user.username }}{% endif %}</strong>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+            <li><a class="dropdown-item" href="{% url 'alterar_senha' %}">Alterar senha</a></li>
+            {% if user.is_authenticated %}
+                <li><a class="dropdown-item" href="{% url 'editar_usuario' user.pk %}">Editar Perfil</a></li>
+            {% endif %}
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li>
+                <form action="{% url 'logout' %}" method="post" enctype="multipart/form-data"
+                      id="logout-id">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                </form>
+                <button type="submit" class="dropdown-item" form="logout-id">Sair</button>
+            </li>
+        </ul>
+    </div>
+</nav>
