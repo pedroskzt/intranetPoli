@@ -8,11 +8,19 @@ from Apps.intranet.models.links import Links
 from intranetPoli.settings import MEDIA_URL
 
 
-def _group_cpd_check(user):
-    return user.has_perm('intranet.gerenciar_intranet') and user.is_authenticated
+def _group_check(user, permissions):
+    if user.is_authenticated:
+        permitir_acesso = True
+        for permission in permissions:
+            if user.has_perm(permission) is False:
+                permitir_acesso = False
+        if permitir_acesso:
+            return True
+    return False
 
 
-@user_passes_test(_group_cpd_check, login_url='pagina_inicial', redirect_field_name=None)
+@user_passes_test(lambda user, permissions=('intranet.gerenciar_intranet',): _group_check(user, permissions),
+                  login_url='pagina_inicial', redirect_field_name=None)
 def painel_intranet(request):
     links = Links.objects.all()
     return render(request, 'intranet/painel/painel_intranet.html', context={'links': links})
@@ -38,7 +46,6 @@ def editar_link(request, link_id):
     if request.method == 'GET':
         link = get_object_or_404(Links, pk=link_id)
         form = AtualizaLinkForms(instance=link)
-
     elif request.method == 'POST':
         link = get_object_or_404(Links, pk=link_id)
         form = AtualizaLinkForms(request.POST, request.FILES, instance=link)
