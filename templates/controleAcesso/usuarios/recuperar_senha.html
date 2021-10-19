@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load html_placeholder %}
+
+{% block extrahead %}
+    <link href="{% static 'intranet/css/../../../intranetPoli/static/controleAcesso/css/usuario.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+    <h1>Recuperar senha</h1>
+    <div class="mb-4" id="usuario">
+        <form action="{% url 'recuperar_senha' %}" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col card card-custom">
+                    <h6 class="mt-2">Esqueceu sua senha?</h6>
+                    <div class="mb-2">
+                        <p>Preencha o campo ao lado com seu endereço de E-mail e iremos te encaminhas as instruções para
+                            criar uma nova
+                            senha!</p>
+                    </div>
+                </div>
+                <div class="col card card-custom ms-2">
+                    <h6 class="mt-2">Recuperar Senha</h6>
+                    <div class="form-floating mb-2">
+                        {{ form.email|add_class:"form-control"|html_placeholder:"Email" }}
+                        <label for="{{ form.email.id_for_label }}">
+                            {{ form.email.label }}{% if form.email.field.required %}
+                                <span class="required">*</span>{% endif %}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{% url 'pagina_inicial' %}" class="btn btn-info">Voltar</a>
+                <a href="{% url 'recuperar_senha' %}" class="btn btn-warning">Limpar</a>
+                <button type="submit" class="btn btn-success" data-bs-toggle="tooltip">Enviar</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
+
+
