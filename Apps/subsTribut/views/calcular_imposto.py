@@ -142,6 +142,8 @@ class CalcularView(View):
                     item['valor_bruto_difal'] = item['valor_base_ICMS'] * item['aliquota_interna']
                     item['VALR_IMPOSTO'] = (item['valor_bruto_difal'] - item['valor_ICMS'])
                     negociacao['VALR_TOTAL_IMPOSTO'] += item['VALR_IMPOSTO']
+                    # for i in item:
+                    #     print(f'{i}: {item[i]}')
                 elif negociacao['INDR_CONSUMIDOR_FINAL'] == 0 and taxas.mva != 0:
                     '''
                     Condição: Não é Consumidor final
