@@ -1,5 +1,5 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg navbar-custom navbar-light sticky-top" role="navigation">
+<nav class="navbar navbar-expand-lg navbar-custom navbar-light" role="navigation">
 
     <a class="navbar-brand" href="{% url 'pagina_inicial' %}">
         <img class="logo" src="{% static 'intranet/img/core-img/logo.png' %}" alt="Polipeças">
@@ -81,22 +81,7 @@
             </ul>
             <ul class="nav nav-pills">
                 {% if user.is_authenticated %}
-                    <li class="nav-item"><a href="{% url 'admin:index' %}" class="nav-link px-2">Painel de
-                        Administração</a>
-                    </li>
-                    {% if perms.intranet.gerenciar_intranet %}
-                        <li class="nav-item"><a href="{% url 'painel_intranet' %}" class="nav-link px-2">Painel
-                            Intranet</a>
-                        </li>
-                    {% endif %}
-                    <li class="nav-item">
-                        <form action="{% url 'logout' %}" method="post" enctype="multipart/form-data"
-                              id="logout-id">
-                            {% csrf_token %}
-                            <input type="hidden" name="next" value="{{ request.path }}">
-                        </form>
-                        <button type="submit" class="nav-link px-2" form="logout-id">Sair</button>
-                    </li>
+                    <li class="nav-item"><button type="button" id="sidebarCollapse" class="btn btn-info">SideBar</button></li>
                 {% else %}
                     <li class="nav-item">
                         <form action="{% url 'login' %}" method="get" id="next-url">
