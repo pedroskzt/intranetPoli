@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extrahead %}
+    <link href="{% static 'controleAcesso/css/usuario.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active" aria-current="page">Gerenciar Grupos e Permissões</li>
+{% endblock %}
+
+{% block content %}
+    <h1>Gerenciar Grupos e Permissões</h1>
+    <div class="mb-4" id="usuario">
+        <form action="{% url 'adicionar_usuario' %}" method="post" class="needs-validation" novalidate
+              id="cadastro-usuario-id">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col card card-custom">
+                    <div class="d-flex justify-content-between mb-2 mt-2">
+                        <h6 class="mt-2">Grupos</h6>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#cadastrar_grupo_id">Cadastrar Grupo
+                        </button>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="selecionar_grupos_id" aria-label="Grupos"
+                                action="{% url 'ajax_permissoes_grupo' %}">
+                            <option value="-1" selected>Selecione um Grupo</option>
+                            {% for grupo in grupos %}
+                                <option value="{{ grupo.id }}">{{ grupo.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="selecionar_grupos_id">Grupos</label>
+                    </div> <!-- Selecionar Grupos -->
+                    {#                    <div class="form-floating mb-2">#}
+                    {#                        {% if form.senha.errors %}#}
+                    {#                            {{ form.senha|add_class:'form-control is-invalid' }}#}
+                    {#                        {% else %}#}
+                    {#                            {{ form.senha|add_class:'form-control' }}#}
+                    {#                        {% endif %}#}
+                    {#                        <label for="{{ form.senha.id_for_label }}">#}
+                    {#                            {{ form.senha.label }}{% if form.senha.field.required %}#}
+                    {#                                <span class="required">*</span>{% endif %}</label>#}
+                    {#                        <div class="invalid-feedback">#}
+                    {#                            {{ form.senha.errors }}#}
+                    {#                        </div>#}
+                    {#                    </div> <!-- Senha -->#}
+                    {#                    <div class="form-floating mb-2">#}
+                    {#                        {% if form.confirma_senha.errors %}#}
+                    {#                            {{ form.confirma_senha|add_class:'form-control is-invalid' }}#}
+                    {#                        {% else %}#}
+                    {#                            {{ form.confirma_senha|add_class:'form-control' }}#}
+                    {#                        {% endif %}#}
+                    {#                        <label for="{{ form.confirma_senha.id_for_label }}">#}
+                    {#                            {{ form.confirma_senha.label }}{% if form.confirma_senha.field.required %}#}
+                    {#                                <span class="required">*</span>{% endif %}</label>#}
+                    {#                        <div class="invalid-feedback">#}
+                    {#                            {{ form.confirma_senha.errors }}#}
+                    {#                        </div>#}
+                    {#                    </div> <!-- Confirmar Senha -->#}
+                </div><!-- Grupos -->
+                <div class="col card card-custom ms-2">
+                    <div class="d-flex justify-content-between mb-2 mt-2">
+                        <h6 class="mt-2">Permissões</h6>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#cadastrar_permissao_id">Cadastrar Permissão
+                        </button>
+                    </div>
+
+                    <select class="form-select mb-2" id="selecionar_permissoes_id" aria-label="Permissões"
+                            action="{% url 'ajax_permissoes_grupo' %}" multiple>
+                    </select>
+                    {#                    <div class="form-floating mb-2">#}
+                    {#                        {% if form.nome.errors %}#}
+                    {#                            {{ form.nome|add_class:'form-control is-invalid' }}#}
+                    {#                        {% else %}#}
+                    {#                            {{ form.nome|add_class:'form-control' }}#}
+                    {#                        {% endif %}#}
+                    {#                        <label for="{{ form.nome.id_for_label }}">#}
+                    {#                            {{ form.nome.label }}{% if form.nome.field.required %}#}
+                    {#                                <span class="required">*</span>{% endif %}</label>#}
+                    {#                        <div class="invalid-feedback">#}
+                    {#                            {{ form.nome.errors }}#}
+                    {#                        </div>#}
+                    {#                    </div> <!-- Primeiro Nome -->#}
+                    {#                    <div class="form-floating mb-2">#}
+                    {#                        {% if form.sobrenome.errors %}#}
+                    {#                            {{ form.sobrenome|add_class:'form-control is-invalid' }}#}
+                    {#                        {% else %}#}
+                    {#                            {{ form.sobrenome|add_class:'form-control' }}#}
+                    {#                        {% endif %}#}
+                    {#                        <label for="{{ form.sobrenome.id_for_label }}">#}
+                    {#                            {{ form.sobrenome.label }}{% if form.sobrenome.field.required %}#}
+                    {#                                <span class="required">*</span>{% endif %}</label>#}
+                    {#                        <div class="invalid-feedback">#}
+                    {#                            {{ form.sobrenome.errors }}#}
+                    {#                        </div>#}
+                    {#                    </div> <!-- Sobrenome -->#}
+                </div><!-- Permissões do Grupo -->
+
+                {#        <div class="col card card-custom ms-2">#}
+                {#            <h6 class="mt-2">Acesso</h6>#}
+                {#                    <div class="form-check form-switch mb-2">#}
+                {#                        {% if form.adm_intranet.errors %}#}
+                {#                            {{ form.adm_intranet|add_class:"form-check-input is-invalid" }}#}
+                {#                        {% else %}#}
+                {#                            {{ form.adm_intranet|add_class:"form-check-input" }}#}
+                {#                        {% endif %}#}
+                {#                        <label class="form-check-label" for={{ form.adm_intranet.id_for_label }}>#}
+                {#                            {{ form.adm_intranet.label }}{% if form.adm_intranet.field.required %}#}
+                {#                                <span class="required">*</span>{% endif %}#}
+                {#                        </label>#}
+                {#                        <div class="invalid-feedback">#}
+                {#                            {{ form.adm_intranet.errors }}#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                    <div class="mb-2">#}
+                {#                        <label for="{{ form.groups.id_for_label }}">#}
+                {#                            {{ form.groups.label }}{% if form.groups.field.required %}#}
+                {#                                <span class="required">*</span>{% endif %}#}
+                {#                        </label>#}
+                {#                        {% if form.groups.errors %}#}
+                {#                            {{ form.groups|add_class:'form-select is-invalid' }}#}
+                {#                        {% else %}#}
+                {#                            {{ form.groups|add_class:'form-select' }}#}
+                {#                        {% endif %}#}
+                {#                        <div class="invalid-feedback">#}
+                {#                            {{ form.groups.errors }}#}
+                {#                        </div>#}
+                {##}
+                {#                    </div> <!-- Grupo de Acesso -->#}
+                {#        </div>#}
+            </div>
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{% url 'listar_usuarios' %}" class="btn btn-info">Voltar</a>
+                <a href="{% url 'adicionar_usuario' %}" class="btn btn-warning">Limpar</a>
+                <button type="submit" class="btn btn-success" data-bs-toggle="tooltip">Salvar</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal fade" id="cadastrar_permissao_id" tabindex="-1" aria-labelledby="cadastrar_permissao_label"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cadastrar_permissao_label">Cadastrar Permissão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" method="post">
+                        <input type="number" id="id_grupo_id" name="id_grupo" hidden>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Cadastrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            $('#selecionar_permissoes_id').select2({
+                theme: 'classic',
+            })
+            $('.select2-search__field').addClass("rounded")
+        })
+
+        $('#selecionar_grupos_id').change(function () {
+            if ($(this).val() == -1) {
+                $('#selecionar_permissoes_id').empty()
+            } else {
+                let grupo_selecionado = {
+                    'grupo_id': $(this).val()
+                }
+                $.ajax({
+                    url: $(this).attr('action'),
+                    data: grupo_selecionado,
+                    dataType: 'json',
+                    success: function (data) {
+                        const permissoes_select = $('#selecionar_permissoes_id')
+                        permissoes_select.empty()
+                        for (permissao of data['permissoes']) {
+                            permissoes_select.append(new Option(permissao.nome, permissao.id, false, permissao.grupo_id in data['permissoes_grupo']))
+                        }
+                    }
+                })
+            }
+
+
+        })
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+{% endblock %}
+
+
