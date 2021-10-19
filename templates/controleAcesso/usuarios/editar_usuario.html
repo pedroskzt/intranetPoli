@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block extrahead %}
+    <link href="{% static 'controleAcesso/css/usuario.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+{% endblock %}
+
+{% block breadcrumb %}
+    {% if perms.auth %}
+        <li class="breadcrumb-item"><a href="{% url 'listar_usuarios' %}">Lista de Usuários</a></li>
+    {% endif %}
+    <li class="breadcrumb-item active" aria-current="page">Editar Usuário: {# Colocar Nome do Usuário #}</li>
+{% endblock %}
+
+{% block content %}
+    <h1>Editar Usuário</h1>
+    <div class="mb-4" id="editar_usuario">
+        <form action="{% url 'editar_usuario' usuario_id %}" method="post" class="needs-validation" novalidate
+              id="editar-usuario-form">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col card card-custom">
+                    <h6 class="mt-2">Dados da Conta</h6>
+                    <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                    <div class="mb-2">
+                        {% if form.username.errors %}
+                            {{ form.username|add_class:'form-control is-invalid' }}
+                        {% else %}
+                            {{ form.username|add_class:'form-control' }}
+                        {% endif %}
+                        <div class="invalid-feedback">
+                            {{ form.username.errors }}
+                        </div>
+                    </div> <!-- Usuário -->
+                    {#                    <div class="form-floating mb-2">#}
+                    {#                        {% if form.senha.errors %}#}
+                    {#                            {{ form.senha|add_class:'form-control is-invalid' }}#}
+                    {#                        {% else %}#}
+                    {#                            {{ form.senha|add_class:'form-control' }}#}
+                    {#                        {% endif %}#}
+                    {#                        <label for="{{ form.senha.id_for_label }}">#}
+                    {#                            {{ form.senha.label }}{% if form.senha.field.required %}#}
+                    {#                                <span class="required">*</span>{% endif %}</label>#}
+                    {#                        <div class="invalid-feedback">#}
+                    {#                            {{ form.senha.errors }}#}
+                    {#                        </div>#}
+                    {#                    </div> <!-- Senha -->#}
+                </div>
+                <div class="col card card-custom ms-2">
+                    <h6 class="mt-2">Dados Pessoais</h6>
+                    <div class="form-floating mb-2">
+                        {% if form.email.errors %}
+                            {{ form.email|add_class:'form-control is-invalid' }}
+                        {% else %}
+                            {{ form.email|add_class:'form-control' }}
+                        {% endif %}
+                        <label for="{{ form.email.id_for_label }}">
+                            {{ form.email.label }} <span class="required">*</span></label>
+                        <div class="invalid-feedback">
+                            {{ form.email.errors }}
+                        </div>
+                    </div> <!-- Email -->
+                    <div class="form-floating mb-2">
+                        {% if form.first_name.errors %}
+                            {{ form.first_name|add_class:'form-control is-invalid' }}
+                        {% else %}
+                            {{ form.first_name|add_class:'form-control' }}
+                        {% endif %}
+                        <label for="{{ form.first_name.id_for_label }}">
+                            {{ form.first_name.label }}{% if form.first_name.field.required %}
+                                <span class="required">*</span>{% endif %}</label>
+                        <div class="invalid-feedback">
+                            {{ form.first_name.errors }}
+                        </div>
+                    </div> <!-- Primeiro Nome -->
+                    <div class="form-floating mb-2">
+                        {% if form.last_name.errors %}
+                            {{ form.last_name|add_class:'form-control is-invalid' }}
+                        {% else %}
+                            {{ form.last_name|add_class:'form-control' }}
+                        {% endif %}
+                        <label for="{{ form.last_name.id_for_label }}">
+                            {{ form.last_name.label }}{% if form.last_name.field.required %}
+                                <span class="required">*</span>{% endif %}</label>
+                        <div class="invalid-feedback">
+                            {{ form.last_name.errors }}
+                        </div>
+                    </div> <!-- Sobrenome -->
+                </div>
+
+                <div class="col card card-custom ms-2">
+                    <h6 class="mt-2">Acesso</h6>
+                    {% if perms.auth %}
+                        <div class="form-check form-switch mb-2">
+                            {% if form.is_staff.errors %}
+                                {{ form.is_staff|add_class:"form-check-input is-invalid" }}
+                            {% else %}
+                                {{ form.is_staff|add_class:"form-check-input" }}
+                            {% endif %}
+                            <label class="form-check-label" for={{ form.is_staff.id_for_label }}>
+                                {{ form.is_staff.label }}{% if form.is_staff.field.required %}
+                                    <span class="required">*</span>{% endif %}
+                            </label>
+                            <div class="invalid-feedback">
+                                {{ form.is_staff.errors }}
+                            </div>
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="{{ form.groups.id_for_label }}">
+                                {{ form.groups.label }}{% if form.groups.field.required %}
+                                    <span class="required">*</span>{% endif %}
+                            </label>
+                            {% if form.groups.errors %}
+                                {{ form.groups|add_class:'form-select is-invalid' }}
+                            {% else %}
+                                {{ form.groups|add_class:'form-select' }}
+                            {% endif %}
+                            <div class="invalid-feedback">
+                                {{ form.groups.errors }}
+                            </div>
+
+                        </div> <!-- Grupo de Acesso -->
+
+                        </div>
+                    {% endif %}
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                {% if perms.auth %}
+                    <a href="{% url 'listar_usuarios' %}" class="btn btn-info">Voltar</a>
+                {% else %}
+                    <a href="{% url 'pagina_inicial' %}" class="btn btn-info">Voltar</a>
+                {% endif %}
+
+                <button type="submit" class="btn btn-success" data-bs-toggle="tooltip">Salvar</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            $('#id_groups').select2({
+                theme: 'classic'
+            });
+        })
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+{% endblock %}
