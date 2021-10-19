@@ -1,4 +1,4 @@
-from django.db import connections
+from django.db import connection
 from django.http import JsonResponse
 from django.shortcuts import render
 
@@ -9,7 +9,7 @@ from Apps.intranet.models.links import Links
 
 
 def _query_select_links(pesquisar):
-    with connections['default'].cursor() as cursor:
+    with connection.cursor() as cursor:
         cursor.execute("ALTER SESSION SET NLS_COMP=LINGUISTIC")
         cursor.execute("ALTER SESSION SET NLS_SORT=BINARY_AI")
         cursor.execute(f"SELECT id "
