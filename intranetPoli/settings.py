@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'Apps.catalogos',
     'Apps.resultadoContabil',
     'Apps.controleAcesso',
+    'Apps.liberarDesconto',
     'widget_tweaks',
     'simple_history',
     'django.contrib.humanize',
