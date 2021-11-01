@@ -1,9 +1,9 @@
 #sidebar {
-    width: 250px;
+    width: 270px;
     height: 100vh;
     position: fixed;
     top: 0;
-    right: -250px;
+    right: -270px;
     left: auto;
     z-index: 999;
     background: var(--logoLetra);
