@@ -12,6 +12,9 @@ from Apps.controleAcesso.views.usuario import recuperar_senha
 from Apps.controleAcesso.views.usuario import ajax_pesquisar_usuarios
 from Apps.controleAcesso.views.gerenciarPermissoes import ajax_permissoes_grupo
 from Apps.controleAcesso.views.gerenciarPermissoes import gerenciar_permissoes
+from Apps.controleAcesso.views.gerenciarPermissoes import ajax_content_type
+from Apps.controleAcesso.views.gerenciarPermissoes import criar_permissao
+from Apps.controleAcesso.views.gerenciarPermissoes import criar_grupo
 
 urlpatterns = [
     path('intranet/usuario/adicionar', adicionar_usuario, name='adicionar_usuario'),
@@ -19,7 +22,10 @@ urlpatterns = [
     path('intranet/usuario/editar/<int:usuario_id>', editar_usuario, name='editar_usuario'),
     path('intranet/usuario/search/ajax', ajax_pesquisar_usuarios, name='ajax_pesquisar_usuarios'),
     path('intranet/gerenciar/permissoes', gerenciar_permissoes, name='gerenciar_permissoes'),
-    path('intranet/gerenciar/permissoes/search/ajax', ajax_permissoes_grupo, name='ajax_permissoes_grupo'),
+    path('intranet/gerenciar/permissoes/search/ajax/permissoes', ajax_permissoes_grupo, name='ajax_permissoes_grupo'),
+    path('intranet/gerenciar/permissoes/search/ajax/content_type', ajax_content_type, name='ajax_content_type'),
+    path('intranet/gerenciar/permissoes/criar/permissao', criar_permissao, name='criar_permissao'),
+    path('intranet/gerenciar/permissoes/criar/grupo', criar_grupo, name='criar_grupo'),
     path('intranet/usuario/alterar/senha', alterar_senha, name='alterar_senha'),
     path('intranet/usuario/recuperar/senha', recuperar_senha, name='recuperar_senha'),
     path('intranet/usuario/recuperar/senha/enviado',
