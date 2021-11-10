@@ -10,7 +10,7 @@ from Apps.resultadoContabil.forms.form_cadastro import FormConsultaCadastro
 def _query_cadastro(mes, ano):
     with connections['BI'].cursor() as cursor:
         cursor.execute(
-            f'SELECT t.valr_irpj_prev, t.valr_csll_prev '
+            f'SELECT valr_irpj_prev, valr_csll_prev '
             f'FROM dw_resultado '
             f'WHERE numr_ano = {ano} '
             f'AND numr_mes = {mes} '
@@ -53,6 +53,7 @@ def index(request):
 @login_required
 def cadastro(request):
     contexto = {}
+    print(request.POST)
     if request.method == 'POST':
         form = FormConsultaCadastro(request.POST)
         contexto['form'] = form
@@ -73,6 +74,7 @@ def cadastro(request):
             irpj = request.POST.get('irpj')
             csll = request.POST.get('csll')
             if 'salvar' in request.POST:
+
                 try:
                     _query_insert_cadastro(mes, ano, irpj, csll)
                 except DatabaseError as error:
