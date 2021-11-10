@@ -72,7 +72,10 @@
         });
     </script>
     <script>
-        $("#form_cadastro_id").one('submit', function (event) {
+        /*  Adicionar Spinner ao botão Atualizar E Salvar
+            Impedir que estes botões e o botão Consultar sejam pressionados mais de uma vez após o Submit
+         */
+        $("#form_cadastro_id").one('submit', function () {
             const submit_buttons = $('button[name="atualizar"], button[name="salvar"]')
             submit_buttons.html('<span id="spinner_id" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Carregando')
             submit_buttons.on('click', function (event) {
