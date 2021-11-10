@@ -71,4 +71,16 @@
             $("#csll_id").inputmask('real')
         });
     </script>
+    <script>
+        $("#form_cadastro_id").one('submit', function (event) {
+            const submit_buttons = $('button[name="atualizar"], button[name="salvar"]')
+            submit_buttons.html('<span id="spinner_id" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Carregando')
+            submit_buttons.on('click', function (event) {
+                event.preventDefault()
+            })
+            $('button[name="consultar"]').on('click', function (event) {
+                event.preventDefault()
+            })
+        })
+    </script>
 {% endblock %}
