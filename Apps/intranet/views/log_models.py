@@ -41,17 +41,18 @@ def _subs_tribut(request):
             Tributos.history.filter(history_date__gt=data_inicial, history_date__lt=data_final),
             LogEntry.objects.filter(action_time__gt=data_inicial, action_time__lt=data_final)):
         alterados = {}
-        for campo in json.loads(log_entry.change_message)[0]['changed']['fields']:
-            # { "campo": [previous, current], ...}
-            alterados[campo] = (formatar_porcentagem(float(getattr(tributos.prev_record, campo)), "2"),
-                                formatar_porcentagem(float(getattr(tributos, campo)), "2"))
+        if tributos.history_type == '~' or tributos.history_type == '-':
+            for campo in json.loads(log_entry.change_message)[0]['changed']['fields']:
+                # { "campo": [previous, current], ...}
+                alterados[campo] = (formatar_porcentagem(float(getattr(tributos.prev_record, campo)), "2"),
+                                        formatar_porcentagem(float(getattr(tributos, campo)), "2"))
 
-        log_list.append({'origem': tributos.get_origem_display(),
-                         'destino': tributos.get_destino_display(),
-                         'history_date': tributos.history_date.strftime("%d/%m/%Y %H:%M:%S"),
-                         'usuario': User.objects.get(pk=tributos.history_user_id).username,
-                         'alterados': alterados
-                         })
+            log_list.append({'origem': tributos.get_origem_display(),
+                             'destino': tributos.get_destino_display(),
+                             'history_date': tributos.history_date.strftime("%d/%m/%Y %H:%M:%S"),
+                             'usuario': User.objects.get(pk=tributos.history_user_id).username,
+                             'alterados': alterados
+                             })
     log['logs'] = log_list
     return log
 
@@ -59,3 +60,4 @@ def _subs_tribut(request):
 modelos = {
     'subsTribut': _subs_tribut
 }
+
