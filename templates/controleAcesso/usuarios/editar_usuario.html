@@ -16,6 +16,7 @@
 
 {% block content %}
     <h1>Editar Usuário</h1>
+    {% include 'partials/_alertas.html' %}
     <div class="mb-4" id="editar_usuario">
         <form action="{% url 'editar_usuario' usuario_id %}" method="post" class="needs-validation" novalidate
               id="editar-usuario-form">
@@ -34,19 +35,6 @@
                             {{ form.username.errors }}
                         </div>
                     </div> <!-- Usuário -->
-                    {#                    <div class="form-floating mb-2">#}
-                    {#                        {% if form.senha.errors %}#}
-                    {#                            {{ form.senha|add_class:'form-control is-invalid' }}#}
-                    {#                        {% else %}#}
-                    {#                            {{ form.senha|add_class:'form-control' }}#}
-                    {#                        {% endif %}#}
-                    {#                        <label for="{{ form.senha.id_for_label }}">#}
-                    {#                            {{ form.senha.label }}{% if form.senha.field.required %}#}
-                    {#                                <span class="required">*</span>{% endif %}</label>#}
-                    {#                        <div class="invalid-feedback">#}
-                    {#                            {{ form.senha.errors }}#}
-                    {#                        </div>#}
-                    {#                    </div> <!-- Senha -->#}
                 </div>
                 <div class="col card card-custom ms-2">
                     <h6 class="mt-2">Dados Pessoais</h6>
@@ -89,10 +77,9 @@
                         </div>
                     </div> <!-- Sobrenome -->
                 </div>
-
-                <div class="col card card-custom ms-2">
-                    <h6 class="mt-2">Acesso</h6>
-                    {% if perms.auth %}
+                {% if perms.auth.change_user %}
+                    <div class="col card card-custom ms-2">
+                        <h6 class="mt-2">Acesso</h6>
                         <div class="form-check form-switch mb-2">
                             {% if form.is_staff.errors %}
                                 {{ form.is_staff|add_class:"form-check-input is-invalid" }}
@@ -124,8 +111,8 @@
 
                         </div> <!-- Grupo de Acesso -->
 
-                        </div>
-                    {% endif %}
+                    </div>
+                {% endif %}
             </div>
 
             <div class="d-flex justify-content-between mt-4">
