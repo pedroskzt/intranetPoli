@@ -1,4 +1,5 @@
 from django.contrib.auth.models import auth, User
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.urls import resolve
 
@@ -57,7 +58,7 @@ def login(request):
 
     return render(request, 'intranet/login.html', context=contexto)
 
-
+@login_required
 def logout(request):
     """
     Encerra a sessão.

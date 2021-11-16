@@ -1,10 +1,11 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.db import connections
 from django.db.utils import DatabaseError
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
 
 from Apps.resultadoContabil.forms.form_cadastro import FormConsultaCadastro
+from intranetPoli.decorators import verificar_permissoes
 
 
 def _query_cadastro(mes, ano):
@@ -43,17 +44,21 @@ def _query_update_cadastro(mes, ano, irpj, csll):
 def _query_recalcular_bi(mes, ano):
     with connections['BI'].cursor() as cursor:
         # cursor.execute(f"call dw_imp_ctb_prc({mes},{ano})")
-        cursor.callproc(f"dw_imp_ctb_prc", [mes, ano])
+        # cursor.callproc(f"dw_imp_ctb_prc", [mes, ano])
+        pass
+
 
 @login_required
+@verificar_permissoes(permissoes_exigidas=['controleAcesso.pode_cadastrar_irpj'])
 def index(request):
     form = FormConsultaCadastro()
     return render(request, 'resultadoContabil/index.html', context={'form': form})
 
+
 @login_required
+@verificar_permissoes(permissoes_exigidas=['controleAcesso.pode_cadastrar_irpj'])
 def cadastro(request):
     contexto = {}
-    print(request.POST)
     if request.method == 'POST':
         form = FormConsultaCadastro(request.POST)
         contexto['form'] = form
@@ -104,7 +109,9 @@ def cadastro(request):
                     return redirect('index_contabil')
     return render(request, 'resultadoContabil/index.html', context=contexto)
 
+
 @login_required
+@verificar_permissoes(permissoes_exigidas=['controleAcesso.pode_cadastrar_irpj'])
 def recalcular(request):
     if request.method == 'POST':
         mes = request.POST.get('mes')

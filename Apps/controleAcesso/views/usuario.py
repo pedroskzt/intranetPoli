@@ -1,11 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
+from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail, BadHeaderError
 from django.db import connection
 from django.http import HttpResponse, JsonResponse
@@ -16,26 +17,16 @@ from django.utils.http import urlsafe_base64_encode
 
 from Apps.controleAcesso.forms.form_usuario import AtualizaUsuarioForms
 from Apps.controleAcesso.forms.form_usuario import NovoUsuarioForms
+from intranetPoli.decorators import verificar_permissoes
 
 
-def _group_check(user, permissions):
-    if user.is_authenticated:
-        permitir_acesso = True
-        for permission in permissions:
-            if user.has_perm(permission) is False:
-                permitir_acesso = False
-        if permitir_acesso:
-            return True
-    return False
-
-
-@user_passes_test(lambda user, permissions=('intranet.gerenciar_intranet',): _group_check(user, permissions),
-                  login_url='pagina_inicial', redirect_field_name=None)
+@login_required
+@verificar_permissoes(permissoes_exigidas=['auth.add_user'])
 def adicionar_usuario(request):
     """
     View para adição de novos usuários na intranet.
     GET:
-        Retorna a página de login em branco.
+        Retorna a página de cadastro de usuário em branco.
     POST:
         Valida os campos preenchidos, testa se a senha e confirmação de senha coincidem, se os campos obrigatorios foram
         preenchidos, cria o cadastro do usuário no banco e retorna para página do painel da intranet.
@@ -86,6 +77,12 @@ def alterar_senha(request):
 
 
 def recuperar_senha(request):
+    """
+    Recebe os dados de um formulario de recuperação de senha. Verifica se os dados conferem. Caso confira, envia um
+    email de recuperação de senha para o email informado.
+    :param request:
+    :return:
+    """
     if request.method == 'POST':
         form = PasswordResetForm(request.POST)
         if form.is_valid():
@@ -109,16 +106,20 @@ def recuperar_senha(request):
                               recipient_list=[usuario.email], fail_silently=False)
                 except BadHeaderError:
                     return HttpResponse('Invalid header found.')
-            print("oi")
             return redirect('recuperar_senha_enviado')
     else:
         form = PasswordResetForm()
     return render(request, 'controleAcesso/usuarios/recuperar_senha.html', {'form': form})
 
 
-@user_passes_test(lambda user, permissions=('auth.change_user',): _group_check(user, permissions),
-                  login_url='pagina_inicial', redirect_field_name=None)
+@login_required
+@verificar_permissoes(permissoes_exigidas=['auth.view_user'])
 def listar_usuarios(request):
+    """
+    Lista todos os usuários cadastrados na intranet.
+    :param request:
+    :return:
+    """
     usuarios = User.objects.all()
     lista_usuarios = []
     for usuario in usuarios:
@@ -130,29 +131,38 @@ def listar_usuarios(request):
     return render(request, 'controleAcesso/usuarios/listar_usuarios.html', context=contexto)
 
 
-@user_passes_test(lambda user, permissions=('auth.change_user',): _group_check(user, permissions),
-                  login_url='pagina_inicial', redirect_field_name=None)
+@login_required
 def editar_usuario(request, usuario_id):
-    if request.method == 'GET':
+    """
+    GET:
+    Retorna um formulário com os dados do usúario referente ao usuario_id. Permite que os campos sejam editados.
+
+    POST:
+    Verifica se os campos obrigatórios foram preenchidos e alva as alterações no banco.
+    :param request:
+    :param usuario_id: ID do usuário para edição
+    :return:
+    """
+    if request.user.has_perm('auth.change_user') or request.user.id == usuario_id:
         usuario = get_object_or_404(User, pk=usuario_id)
-        form = AtualizaUsuarioForms(request.user, instance=usuario)
+        contexto = {'usuario_id': usuario_id,
+                    'form': AtualizaUsuarioForms(request.user, instance=usuario)}
+        if request.method == 'POST':
+            form = AtualizaUsuarioForms(request.user, request.POST, instance=usuario)
+            if request.user.is_authenticated and form.is_valid():
+                form.save()
+                messages.success(request, f'Usuário {usuario.get_full_name()} editado com sucesso!')
+                contexto['form'] = AtualizaUsuarioForms(request.user, instance=usuario)
+            else:
+                contexto['form'] = form
 
-    elif request.method == 'POST':
-        print(request.POST)
-        usuario = get_object_or_404(User, pk=usuario_id)
-        form = AtualizaUsuarioForms(request.user, request.POST, instance=usuario)
-        if request.user.is_authenticated and form.is_valid():
-            form.save()
-            return redirect('listar_usuarios')
-    contexto = {
-        'form': form,
-        'usuario_id': usuario_id
-    }
-    return render(request, 'controleAcesso/usuarios/editar_usuario.html', context=contexto)
+        return render(request, 'controleAcesso/usuarios/editar_usuario.html', context=contexto)
+    else:
+        raise PermissionDenied(f'Permissões exigidas: [\'auth.change_user\']')
 
 
-@user_passes_test(lambda user, permissions=('auth.change_user',): _group_check(user, permissions),
-                  login_url='pagina_inicial', redirect_field_name=None)
+@login_required
+@verificar_permissoes(permissoes_exigidas=['auth.view_user'])
 def ajax_pesquisar_usuarios(request):
     filtro = False
     if request.method == 'GET':
@@ -161,6 +171,8 @@ def ajax_pesquisar_usuarios(request):
     return JsonResponse(filtro)
 
 
+@login_required
+@verificar_permissoes(permissoes_exigidas=['auth.view_user'])
 def _query_select_usuarios(pesquisar):
     with connection.cursor() as cursor:
         cursor.execute("ALTER SESSION SET NLS_COMP=LINGUISTIC")

@@ -1,9 +1,11 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db import connection
 from django.shortcuts import render
 
 from Apps.liberarDesconto.models.log import Log as LogDescontos
+from intranetPoli.decorators import verificar_permissoes
 
 
 def _get_empresas_e_descontos():
@@ -29,7 +31,6 @@ def _update_descontos(desconto_filiais):
             update = f"update DR.pol_empresa_info " \
                      f"set PERC_MAXDESC = {desconto_filiais[desconto]} " \
                      f"WHERE PAREMPR_ID = {desconto} AND PERC_MAXDESC <> {desconto_filiais[desconto]};"
-            print(update)
             cursor.execute(update)
 
 
@@ -38,7 +39,8 @@ def _log_update_desconto(desconto_filiais_anterior, desconto_filiais_novo):
         if f"{desconto_filial['desconto']:.2f}" != desconto_filiais_novo[desconto_filial['id']]:
             LogDescontos.objects.create(usuario=User.objects.get())
 
-
+@login_required
+@verificar_permissoes(permissoes_exigidas=['controleAcesso.pode_liberar_desconto'])
 def liberar_desconto(request):
     contexto = {'desconto_filiais': _get_empresas_e_descontos()}
     if request.method == 'POST':

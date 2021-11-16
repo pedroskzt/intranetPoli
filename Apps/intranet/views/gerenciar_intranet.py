@@ -1,32 +1,23 @@
 import os
 
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
 from Apps.intranet.forms.form_links import NovoLinkForms, AtualizaLinkForms
 from Apps.intranet.models.links import Links
+from intranetPoli.decorators import verificar_permissoes
 from intranetPoli.settings import MEDIA_URL
 
 
-def _group_check(user, permissions):
-    if user.is_authenticated:
-        permitir_acesso = True
-        for permission in permissions:
-            if user.has_perm(permission) is False:
-                permitir_acesso = False
-        if permitir_acesso:
-            return True
-    return False
-
-
-@user_passes_test(lambda user, permissions=('intranet.gerenciar_intranet',): _group_check(user, permissions),
-                  login_url='pagina_inicial', redirect_field_name=None)
+@login_required
+@verificar_permissoes(permissoes_exigidas=['intranet.view_links'])
 def painel_intranet(request):
     links = Links.objects.all()
     return render(request, 'intranet/painel/painel_intranet.html', context={'links': links})
 
 
 @login_required
+@verificar_permissoes(['intranet.add_links'])
 def adicionar_link(request):
     if request.method == 'POST':
         form = NovoLinkForms(request.POST, request.FILES)
@@ -42,6 +33,7 @@ def adicionar_link(request):
 
 
 @login_required
+@verificar_permissoes(['intranet.change_links'])
 def editar_link(request, link_id):
     if request.method == 'GET':
         link = get_object_or_404(Links, pk=link_id)
@@ -63,6 +55,7 @@ def editar_link(request, link_id):
 
 
 @login_required
+@verificar_permissoes(['intranet.delete_links'])
 def excluir_link(request, link_id):
     link = get_object_or_404(Links, pk=link_id)
     os.remove(link.logo.path)
