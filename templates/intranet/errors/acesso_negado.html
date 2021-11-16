@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extrahead %}
+
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active" aria-current="page">Acesso Negado</li>
+{% endblock %}
+
+{% block content %}
+    <h1 id="acesso_negado" action="{% url 'pagina_inicial' %}"> Acesso Negado </h1>
+    {% include 'partials/_alertas.html' %}
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        let tempo = 10000
+        $(document).ready(function () {
+            const timer_elm = `<p id='timer'>Retornando a página inicial em ${tempo / 1000} segundos.</p>`
+            $('.alert-danger').append(timer_elm)
+
+            setInterval(function () {
+                if (tempo <= 0) {
+                    window.location = $("#acesso_negado").attr('action')
+                } else {
+                    const timer = `Retornando a página inicial em ${tempo / 1000} segundos.`
+                    $('#timer').html(timer)
+                }
+                tempo -= 1000
+            }, 1000)
+        })
+    </script>
+{% endblock %}
