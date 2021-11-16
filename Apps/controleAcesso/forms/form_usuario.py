@@ -79,17 +79,15 @@ class AtualizaUsuarioForms(forms.ModelForm):
         self.user = user
 
     def clean_groups(self):
-        print(self.cleaned_data)
-        print(self.user.has_perm('auth'))
-        if self.user.has_perm('auth'):
-            grupos = self.cleaned_data.get('groups')
-            if len(grupos) == 0:
-                self.add_error('groups', 'Pelo menos 1 grupo deve ser selecionado!')
-            return grupos
-        return self.user.groups.all()
+        grupos = self.cleaned_data.get('groups')
+        if len(grupos) == 0:
+            self.add_error('groups', 'Pelo menos 1 grupo deve ser selecionado!')
 
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        if email == '':
-            self.add_error('email', 'Campo email não pode ser vazio!')
-        return email
+        return grupos if self.user.has_perm('auth.change_user') else self.user.groups.all()
+
+
+def clean_email(self):
+    email = self.cleaned_data.get('email')
+    if email == '':
+        self.add_error('email', 'Campo email não pode ser vazio!')
+    return email
