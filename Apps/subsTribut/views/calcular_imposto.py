@@ -55,7 +55,7 @@ def _get_pol_intra_item_nego_vw(numr_negociacao):
 
 class CalcularView(View):
     form_class = CalculoForms
-    template_name = 'subsTribut/index.html'
+    template_name = 'subsTribut/assinaturas_email.html'
     model_class = Tributos
 
     def get(self, request):
