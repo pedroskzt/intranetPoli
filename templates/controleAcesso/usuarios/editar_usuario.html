@@ -2,14 +2,14 @@
 {% load static %}
 {% load widget_tweaks %}
 
-{% block extrahead %}
+{% block head %}
     <link href="{% static 'controleAcesso/css/usuario.css' %}" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 {% endblock %}
 
 {% block breadcrumb %}
     {% if perms.auth %}
-        <li class="breadcrumb-item"><a href="{% url 'listar_usuarios' %}">Lista de Usuários</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'gerenciar_usuarios' %}">Lista de Usuários</a></li>
     {% endif %}
     <li class="breadcrumb-item active" aria-current="page">Editar Usuário: {# Colocar Nome do Usuário #}</li>
 {% endblock %}
@@ -114,10 +114,9 @@
                     </div>
                 {% endif %}
             </div>
-
             <div class="d-flex justify-content-between mt-4">
                 {% if perms.auth %}
-                    <a href="{% url 'listar_usuarios' %}" class="btn btn-info">Voltar</a>
+                    <a href="{% url 'gerenciar_usuarios' %}" class="btn btn-info">Voltar</a>
                 {% else %}
                     <a href="{% url 'pagina_inicial' %}" class="btn btn-info">Voltar</a>
                 {% endif %}

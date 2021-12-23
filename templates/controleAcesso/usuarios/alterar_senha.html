@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 {% load html_placeholder %}
 
-{% block extrahead %}
+{% block head %}
     <link href="{% static 'controleAcesso/css/usuario.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
 
@@ -63,7 +63,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-between mt-4">
-                <a href="{% url 'painel_intranet' %}" class="btn btn-info">Voltar</a>
+                <a href="{% url 'gerenciar_links' %}" class="btn btn-info">Voltar</a>
                 <a href="{% url 'alterar_senha' %}" class="btn btn-warning">Limpar</a>
                 <button type="submit" class="btn btn-success" data-bs-toggle="tooltip">Salvar</button>
             </div>
