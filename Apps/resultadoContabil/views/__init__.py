@@ -1,3 +1,3 @@
-from .index import cadastro
-from .index import index
-from .index import recalcular
+from .resultadoContabil import cadastro
+from .resultadoContabil import consulta_cadastro_imposto
+from .resultadoContabil import recalcular
