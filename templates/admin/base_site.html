@@ -37,7 +37,39 @@
 {% block bodyheader %}
     {% include 'partials/_sidebar.html' %}
     <div class="container">
-    {% include 'partials/_navbar.html' %}
+    <nav class="navbar navbar-expand-lg navbar-custom2" role="navigation">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'pagina_inicial' %}">
+                <img class="logo" src="{% static 'intranet/img/core-img/logo.png' %}" alt="Polipeças">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navBar"
+                    aria-controls="navBar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navBar">
+                <div class="d-flex justify-content-between flex-fill">
+                    <ul class="nav nav-pills">
+                        {% block navbar %}
+                        {% endblock %}
+                    </ul>
+                    <ul class="nav nav-pills">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <button type="button" id="sidebarCollapse" class="btn btn-info">Menu</button>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <form action="{% url 'login' %}" method="get" id="next-url">
+                                    <input type="hidden" name="next" value="{{ request.path }}">
+                                </form>
+                                <input type="submit" class="nav-link px-2" value="Entrar" form="next-url">
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'pagina_inicial' %}">Página Inicial</a></li>
