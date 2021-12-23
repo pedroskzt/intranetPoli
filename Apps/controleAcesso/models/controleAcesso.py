@@ -12,3 +12,7 @@ class ControleAcesso(models.Model):
 
         verbose_name = 'Controle de Acesso'
         verbose_name_plural = 'Controle de Acessos'
+
+        permissions = [('pode_cadastrar_irpj', 'Pode Cadastrar IRPJ'),
+                       ('pode_liberar_desconto', 'Pode Gerenciar Intranet'),
+                       ('pode_acessar_painel_admin', 'Pode Acessar Painel de Admin')]
