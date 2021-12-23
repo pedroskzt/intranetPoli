@@ -23,7 +23,7 @@
                             Favoritos
                         </span>
                     <span class="me-3">
-                            <a type="button" class="btn btn-primary" href="{% url 'painel_intranet' %}"
+                            <a type="button" class="btn btn-primary" href="{% url 'gerenciar_links' %}"
                                id="editar_favoritos">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-pencil"
@@ -43,7 +43,7 @@
                 </div>
             </div>
         </div> <!-- Favoritos -->
-        {% if perms.intranet or perms.auth or perms.controleAcesso %}
+        {% if perms.intranet or perms.auth or perms.controleAcesso or perms.catalogos %}
             <hr>
             <div class="accordion-item">
                 <h2 class="accordion-header" id="menu_intranet">
@@ -57,20 +57,23 @@
                      data-bs-parent="in_sidebar">
                     <div class="accordion-body">
                         {% if perms.intranet.view_links %}
-                            <a class="btn btn-primary" href="{% url 'painel_intranet' %}">Painel Intranet</a>
+                            <a class="btn btn-primary" href="{% url 'gerenciar_links' %}">Gerenciar Links</a>
                         {% endif %}
                         {% if perms.auth.view_user %}
-                            <a class="btn btn-primary" href="{% url 'listar_usuarios' %}">Lista de Usuários</a>
+                            <a class="btn btn-primary" href="{% url 'gerenciar_usuarios' %}">Gerenciar Usuários</a>
                         {% endif %}
                         {% if perms.controleAcesso.view_controleacesso %}
                             <a class="btn btn-primary" href="{% url 'gerenciar_permissoes' %}">Gerenciar Permissões</a>
+                        {% endif %}
+                        {% if perms.catalogos.view_catalogos %}
+                            <a class="btn btn-primary" href="{% url 'gerenciar_catalogos' %}">Gerenciar Catálogos</a>
                         {% endif %}
                     </div>
                 </div>
             </div> <!-- Intranet -->
         {% endif %} <!-- Intranet -->
     </div> <!-- Favoritos e Intranet -->
-    {% if perms.subsTribut.change_tributos or user.is_staff %}
+    {% if perms.controleAcesso.pode_acessar_painel_admin %}
         <hr>
         <a type="button" class="btn btn-primary mb-auto" href="{% url 'admin:index' %}">Painel de Administração</a>
     {% else %}
