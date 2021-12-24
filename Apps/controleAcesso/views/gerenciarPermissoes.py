@@ -26,7 +26,7 @@ def gerenciar_permissoes(request):
 @verificar_permissoes(permissoes_exigidas=['controleAcesso.view_controleacesso'])
 def ajax_permissoes_grupo(request):
     filtro = False
-    if request.method == 'GET':
+    if request.is_ajax():
         grupo = get_object_or_404(Group, pk=request.GET['grupo_id'])
         permissoes_grupo = False
         if grupo:
@@ -45,7 +45,7 @@ def ajax_permissoes_grupo(request):
 @verificar_permissoes(permissoes_exigidas=['controleAcesso.view_controleacesso'])
 def ajax_content_type(request):
     filtro = False
-    if request.method == 'GET':
+    if request.is_ajax():
         content_types = []
         for content_type in ContentType.objects.all():
             content_types.append({'content_type_id': content_type.pk,
