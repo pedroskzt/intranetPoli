@@ -32,7 +32,7 @@ def log_models(request, model, tabela, changelist):
 @verificar_permissoes(permissoes_exigidas=['subsTribut.view_tributos', 'subsTribut.view_historicaltributos'])
 def ajax_log(request):
     log = {}
-    if request.method == 'GET':
+    if request.is_ajax():
         log = MODELOS[request.GET['modelo']](request)
     return JsonResponse(log)
 
