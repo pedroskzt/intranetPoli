@@ -20,13 +20,13 @@ from django.urls import path, include
 
 urlpatterns = [
                   path('', include('Apps.intranet.urls')),
-                  path('', include('Apps.controleAcesso.urls')),
+                  path('controleAcesso/', include('Apps.controleAcesso.urls')),
                   path('st/', include('Apps.subsTribut.urls')),
                   path('assinatura/', include('Apps.assinaturas.urls')),
-                  path('catalogo/', include('Apps.catalogos.urls')),
+                  path('catalogos/', include('Apps.catalogos.urls')),
                   path('contabilidade/', include('Apps.resultadoContabil.urls')),
                   path('liberar_desconto/', include('Apps.liberarDesconto.urls')),
-                  path('painel/cpd/', admin.site.urls),
+                  path('cpd/painel/', admin.site.urls),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = "intranetPoli.views.page_not_found_view"
