@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block extrahead %}
-    <link href="{% static 'liberarDesconto/css/liberarDesconto.css' %}" rel="stylesheet" type="text/css">
+{% block head %}
 {% endblock %}
 
 {% block breadcrumb %}
@@ -19,7 +18,7 @@
             <div class="row">
                 <div class="col card card-custom">
                     <div class="d-flex justify-content-between mb-2 mt-2">
-                        <h6 class="mt-2"></h6>
+                        <a href="{% url 'liberar_desconto' %}" class="btn btn-warning">Atualizar Página</a>
                         <button type="button" class="btn btn-primary" id="voltar_padrao_desconto_id">Voltar para Padrão
                         </button>
                     </div>
@@ -29,7 +28,9 @@
                             <tr>
                                 <th scope="col">Filial</th>
                                 <th scope="col">Desconto</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">Autorizado Por</th>
+                                <th scope="col">Alterado por:</th>
+                                <th scope="col">Data da Alteração</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -37,11 +38,28 @@
                                 {% for desconto_filial in desconto_filiais|dictsortreversed:'desconto' %}
                                     <tr>
                                         <td class="">{{ desconto_filial.filial }}</td>
-                                        <td class=""><input type="text" class="form-control w-25"
-                                                            name="desconto_{{ desconto_filial.id }}"
-                                                            value="{{ desconto_filial.desconto|floatformat:2 }}">
+                                        <td class="">
+                                            <input type="text" class="form-control w-50"
+                                                   name="desconto_{{ desconto_filial.id_linha_alterada }}"
+                                                   value="{{ desconto_filial.desconto|floatformat:2 }}">
                                         </td>
-                                        <td class="">{{ desconto_filial.status }}</td>
+                                        <td class=""><select class="usuario_autorizacao form-select"
+                                                             id="select_usuario_autorizacao"
+                                                             name="autorizado_{{ desconto_filial.id_linha_alterada }}">
+                                            <option value="-1">Selecione uma Pessoa</option>
+                                            {% for usuario in autorizado_por %}
+                                                {% if usuario.id_usuario == desconto_filial.autorizado_por %}
+                                                    <option value={{ usuario.id_usuario }} selected>{{ usuario.nome }}</option>
+                                                {% else %}
+                                                    {% if usuario.pode_autorizar %}
+                                                        <option value={{ usuario.id_usuario }}>{{ usuario.nome }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                        </td>
+                                        <td class="">{{ desconto_filial.alterado_por }}</td>
+                                        <td class="">{{ desconto_filial.data_alteracao }}</td>
                                     </tr>
                                 {% endfor %}
                             {% endif %}
@@ -52,7 +70,7 @@
             </div>
             <div class="d-flex justify-content-between mt-4">
                 <a href="{% url 'pagina_inicial' %}" class="btn btn-info">Voltar</a>
-                <a href="{% url 'liberar_desconto' %}" class="btn btn-warning">Limpar</a>
+                <a href="{% url 'liberar_desconto' %}" class="btn btn-warning">Atualizar Página</a>
                 <button type="submit" class="btn btn-success" id="button_salvar_id">Salvar</button>
             </div>
         </form>
@@ -61,12 +79,28 @@
 
 {% block scripts %}
     <script>
+        /* Voltar todos os campos para os valores padrão. */
         $('#voltar_padrao_desconto_id').on('click', function () {
-            $("input[name*='desconto']").val(26)
+            $("input[name*='desconto']").val({{ padrao.valor_desconto_padrao }})
+            $("select[name*='autorizado']").val({{ padrao.id_autorizacao_padrao }})
         })
     </script>
     <script>
-        $('#button_salvar_id').one('click', function (event){
+        $('#form_liberar_desconto_id').on('submit', function (event) {
+            for (input of $("input[name*='desconto']")) {
+                elmt = $('input[name=' + input.name + ']')
+                if (!$.isNumeric(elmt.val().replace(',', '.'))) {
+                    event.preventDefault()
+                    elmt.addClass('is-invalid')
+                    $('#button_salvar_id').html('Salvar')
+                }
+            }
+        })
+
+    </script>
+    <script>
+        /* Spinner botão "Salvar" para aguardar update no banco */
+        $('#button_salvar_id').one('click', function (event) {
             $(this).html('<span id="spinner_id" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Salvando')
         })
     </script>
