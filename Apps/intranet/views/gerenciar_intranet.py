@@ -11,9 +11,9 @@ from intranetPoli.settings import MEDIA_URL
 
 @login_required
 @verificar_permissoes(permissoes_exigidas=['intranet.view_links'])
-def painel_intranet(request):
+def gerenciar_links(request):
     links = Links.objects.all()
-    return render(request, 'intranet/painel/painel_intranet.html', context={'links': links})
+    return render(request, 'intranet/painel/gerenciar_links.html', context={'links': links})
 
 
 @login_required
@@ -26,7 +26,7 @@ def adicionar_link(request):
             link.usuario_criacao = request.user
             link.usuario_ultima_alteracao = request.user
             link.save()
-            return redirect('painel_intranet')
+            return redirect('gerenciar_links')
     else:
         form = NovoLinkForms()
     return render(request, 'intranet/painel/adicionar_link.html', context={'forms': form})
@@ -45,7 +45,7 @@ def editar_link(request, link_id):
             link = form.save(commit=False)
             link.usuario_ultima_alteracao = request.user
             link.save()
-            return redirect('painel_intranet')
+            return redirect('gerenciar_links')
     contexto = {
         'forms': form,
         'link_id': link_id,
@@ -60,4 +60,4 @@ def excluir_link(request, link_id):
     link = get_object_or_404(Links, pk=link_id)
     os.remove(link.logo.path)
     link.delete()
-    return redirect('painel_intranet')
+    return redirect('gerenciar_links')
