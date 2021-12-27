@@ -45,7 +45,7 @@ def adicionar_usuario(request):
             new_user.is_staff = form.cleaned_data['adm_intranet']
             new_user.groups.set(Group.objects.filter(pk__in=form.cleaned_data['groups']))
             new_user.save()
-            return redirect('listar_usuarios')
+            return redirect('gerenciar_usuarios')
 
     return render(request, 'controleAcesso/usuarios/adicionar_usuario.html', context={'form': form})
 
@@ -114,7 +114,7 @@ def recuperar_senha(request):
 
 @login_required
 @verificar_permissoes(permissoes_exigidas=['auth.view_user'])
-def listar_usuarios(request):
+def gerenciar_usuarios(request):
     """
     Lista todos os usuários cadastrados na intranet.
     :param request:
@@ -128,7 +128,7 @@ def listar_usuarios(request):
         nome = usuario.username if nome == '' else nome
         lista_usuarios.append({'id': usuario_id, 'nome': nome})
     contexto = {'lista_usuarios': lista_usuarios}
-    return render(request, 'controleAcesso/usuarios/listar_usuarios.html', context=contexto)
+    return render(request, 'controleAcesso/usuarios/gerenciar_usuarios.html', context=contexto)
 
 
 @login_required
@@ -165,7 +165,7 @@ def editar_usuario(request, usuario_id):
 @verificar_permissoes(permissoes_exigidas=['auth.view_user'])
 def ajax_pesquisar_usuarios(request):
     filtro = False
-    if request.method == 'GET':
+    if request.is_ajax():
         usuarios_id = _query_select_usuarios(request.GET['pesquisar'])
         filtro = {'usuarios_id': usuarios_id if usuarios_id else False}
     return JsonResponse(filtro)
