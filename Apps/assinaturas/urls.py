@@ -22,7 +22,7 @@ from Apps.assinaturas.views.assinaturas_email import visualizar_assinatura
 from Apps.assinaturas.views.assinaturas_email import tutoriais
 
 urlpatterns = [
-    path('', assinaturas_email, name='index_assinatura'),
+    path('', assinaturas_email, name='assinaturas_email'),
     path('criar', criar_assinatura, name='criar_assinatura'),
     path('visualizar', visualizar_assinatura, name='visualizar_assinatura'),
     path('tutoriais/<str:programa_email>', tutoriais, name='tutoriais'),
