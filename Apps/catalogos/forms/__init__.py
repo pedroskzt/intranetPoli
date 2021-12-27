@@ -1,0 +1,2 @@
+from .form_catalogos import AtualizaCatalogoForms
+from .form_catalogos import NovoCatalogoForms
