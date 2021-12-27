@@ -7,5 +7,4 @@ from Apps.liberarDesconto.views import liberar_desconto
 
 urlpatterns = [
     path('', liberar_desconto, name='liberar_desconto'),
-
 ]
