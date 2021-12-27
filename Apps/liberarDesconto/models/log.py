@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from Apps.liberarDesconto.models.usuarios_autorizacao import Usuarios_autorizacao
+
 
 class Log(models.Model):
     """
@@ -23,8 +25,12 @@ order by ld.data_alteracao;
         verbose_name = "Log de Liberação de Desconto"
         verbose_name_plural = "Logs de Liberação de Desconto"
 
-    usuario = models.ForeignKey(User, models.PROTECT)
-    data_alteracao = models.DateTimeField(auto_now=True)
+    alterado_por = models.ForeignKey(User, models.PROTECT)
+    autorizado_por = models.ForeignKey(Usuarios_autorizacao, models.PROTECT)
     id_linha_alterada = models.IntegerField()
     valor_anterior = models.DecimalField(max_digits=4, decimal_places=2)
     novo_valor = models.DecimalField(max_digits=4, decimal_places=2)
+    data_alteracao = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.id_linha_alterada} - {self.data_alteracao}'
