@@ -1,0 +1,12 @@
+.feature-icon .img-fluid {
+  width: auto;
+  height: 4em;
+}
+div [intranet-catalogo] a {
+  text-decoration: none;
+  color: var(--logoLetra);
+}
+
+.input-group .form-control{
+  box-shadow: none;
+}
