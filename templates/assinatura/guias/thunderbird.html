@@ -1,0 +1,92 @@
+{% extends 'assinatura/assinaturas_email.html' %}
+{% load static %}
+
+{% block extrahead %}
+    <link rel="stylesheet" type="text/css" href="{% static 'assinatura/css/guias.css' %}">
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'assinaturas_email' %}">Assinatura de Email</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Guia Thunderbird</li>
+{% endblock %}
+
+{% block content %}
+    <h1 class="h1-custom">Thunderbird</h1>
+    <h2>Adicionando a Assinatura</h2>
+    <ol class="ol-custom">
+        <li>Primeiramente, abra o Thunderbird.
+            <ul>
+                <li class="li-image">
+                    <p></p>
+                    <img class="responsive" alt="Thunderbird.png"
+                         src="{% static 'assinatura/img/guia/thunderbird/Thunderbird.png' %}"/>
+                    <p></p>
+                </li>
+            </ul>
+        </li>
+        <li>Em seguida, clique em cima do nome do seu email, no canto superior esquerdo do Thunderbird.
+            <ul>
+                <li class="li-image">
+                    <p></p>
+                    <img class="responsive" alt="EmailThunder.png"
+                         src="{% static 'assinatura/img/guia/thunderbird/EmailThunder.png' %}"/>
+                    <p></p>
+                </li>
+            </ul>
+        </li>
+        <li>Agora clique em "Ver configurações desta conta".
+            <ul>
+                <li class="li-image">
+                    <p></p>
+                    <img class="responsive" alt="Configthunder.png"
+                         src="{% static 'assinatura/img/guia/thunderbird/Configthunder.png' %}"/>
+                    <p></p>
+                </li>
+            </ul>
+
+        </li>
+        <li>Na janela que se abrirá, marque a opção "Anexar a assinatura de um arquivo
+            (text, HTML ou imagem):".
+            <ul>
+                <li class="li-image li-image-thunder">
+                    <p></p>
+                    <img class="responsive" alt="Marque.png"
+                         src="{% static 'assinatura/img/guia/thunderbird/Marque.png' %}"/>
+                    <p></p>
+                </li>
+            </ul>
+        <li>Depois clique em "Arquivo..." para selecionar o arquivo de assinatura (.HTML).
+            <ul>
+                <li class="li-image li-image-thunder">
+                    <p></p>
+                    <img class="responsive" alt="Localizar.png"
+                         src="{% static 'assinatura/img/guia/thunderbird/Localizar.png' %}"/>
+                    <p></p>
+                </li>
+            </ul>
+        </li>
+        <li>Navegue até a pasta em que o arquivo de assinatura foi salvo, selecione o arquivo de
+            assinatura (.HTML) e clique em "Abrir".
+
+            <ul>
+                <li class="li-image li-image-thunder">
+                    <p></p>
+                    <img class="responsive" alt="Arquivo.png"
+                         src="{% static 'assinatura/img/guia/thunderbird/Arquivo.png' %}"/>
+                </li>
+            </ul>
+
+        </li>
+        <li>Finalmente, basta clicar em "Ok" e a assinatura esta salva em seu
+            Thunderbird e ira ser adicionada automaticamente quando for enviar um email.
+            <ul>
+                <li class="li-image li-image-thunder">
+                    <p></p>
+                    <img class="responsive" alt="Salvarthunder.png"
+                         src="{% static 'assinatura/img/guia/thunderbird/Salvarthunder.png' %}"/>
+                    <p></p>
+                </li>
+            </ul>
+        </li>
+    </ol>
+{% endblock %}
