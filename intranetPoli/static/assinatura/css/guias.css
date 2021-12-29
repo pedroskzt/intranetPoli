@@ -47,7 +47,6 @@
 }
 
 .input-custom-bg {
-    color: #ffffff;
     background-color: var(--background);
     border-width: thin;
     text-align: center;

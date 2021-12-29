@@ -9,7 +9,7 @@
 
 {% block breadcrumb %}
     {% if perms.auth %}
-        <li class="breadcrumb-item"><a href="{% url 'gerenciar_usuarios' %}">Lista de Usuários</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'gerenciar_usuarios' %}">Gerenciar Usuários</a></li>
     {% endif %}
     <li class="breadcrumb-item active" aria-current="page">Editar Usuário: {# Colocar Nome do Usuário #}</li>
 {% endblock %}
