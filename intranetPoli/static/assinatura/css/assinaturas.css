@@ -1,0 +1,10 @@
+.select2-container--classic .select2-selection--single,
+.select2-container--classic .select2-selection--single .select2-selection__arrow{
+    height: 100% !important;
+}
+/*span.select2.select2-container.select2-container--classic.select2-container--below*/
+
+.custom-select2 {
+    font-size: small;
+    padding-right: 1rem;
+}
