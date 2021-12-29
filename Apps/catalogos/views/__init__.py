@@ -1,0 +1,5 @@
+from .exibir_catalogos import exibir_catalogos
+from .gerenciar_catalogos import gerenciar_catalogos
+from .gerenciar_catalogos import adicionar_catalogo
+from .gerenciar_catalogos import editar_catalogo
+from .gerenciar_catalogos import excluir_catalogo
