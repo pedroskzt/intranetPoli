@@ -1,1 +1,1 @@
-from .calcular_imposto import *
+from .calcular_imposto import CalcularView

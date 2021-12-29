@@ -1,1 +1,1 @@
-from .cadastrar_assinatura import *
+from .cadastrar_assinatura import AssinaturaForms

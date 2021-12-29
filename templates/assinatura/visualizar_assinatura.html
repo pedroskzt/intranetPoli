@@ -1,8 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'assinatura/assinaturas_email.html' %}
 {% load static %}
 
 {% block breadcrumb %}
-    <li class="breadcrumb-item"><a href="{% url 'index_assinatura' %}">Assinatura de Email</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'assinaturas_email' %}">Assinatura de Email</a></li>
     <li class="breadcrumb-item active" aria-current="page">Visualizar Assinatura</li>
 {% endblock %}
 
@@ -12,9 +12,9 @@
             <table style="font-family: sans-serif">
                 <tr>
                     <td style="color:#26a6ff">
-                        <strong>{{ siteAssinatura.assinatura.nome }}</strong><br>
-                        {{ siteAssinatura.assinatura.departamento }}<br>
-                        {{ siteAssinatura.assinatura.fone }} - Ramal: {{ siteAssinatura.assinatura.ramal }}<br>
+                        <strong>{{ assinatura.nome }}</strong><br>
+                        {{ assinatura.departamento }}<br>
+                        {{ assinatura.fone }} - Ramal: {{ assinatura.ramal }}<br>
                         <a href="https://www.polipecas.com.br" target="_blank"
                            style="color:#000388">www.polipecas.com.br</a><br>
                         <small>Esta mensagem é confidencial e privilegiada. Caso Você não seja o destinatário, não está
@@ -51,7 +51,7 @@
 
 {% endblock %}
 
-{% block scripts %}
+{% block extra_scripts %}
     <script>
         $("#check_portal_cliente_id").on('click', function () {
             $("#portal_cliente_id").toggle(this.checkd)
@@ -63,7 +63,7 @@
             const fim_HTML = '</body></html>'
             let assinatura = document.getElementById("assinatura-id").innerHTML
             assinatura = inicio_HTML + assinatura + fim_HTML
-            let nome = "{{ siteAssinatura.assinatura.nome}}"
+            let nome = "{{ assinatura.nome}}"
             nome = nome.replaceAll(' ', '')
             download(assinatura, nome, "html")
         }

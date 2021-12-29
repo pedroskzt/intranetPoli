@@ -1,5 +1,6 @@
 from django import forms
 from django.core.validators import RegexValidator
+
 from Apps.assinaturas.models import Assinatura
 
 phone_regex = RegexValidator(regex=r'^\(\d{2}\)\s\d{4}\-\d{4}$',
@@ -20,3 +21,10 @@ class AssinaturaForms(forms.ModelForm):
             'ramal': forms.TextInput(attrs={'placeholder': 'Ramal'}),
 
         }
+
+    def clean_nome(self):
+        lista_minusculos = [' Da ', ' De ', ' Di ', ' Do ', ' Du ']
+        nome = self.cleaned_data.get('nome').lower().title()
+        for termo in lista_minusculos:
+            nome = nome.replace(termo, termo.lower())
+        return nome

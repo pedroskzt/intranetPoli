@@ -1,0 +1,52 @@
+/* Forms */
+.form-floating .form-label {
+    color: var(--logoLetra);
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.form-group .form-label {
+    color: var(--logoLetra);
+    font-weight: bold;
+}
+
+.form-floating .alert {
+    height: 3em;
+}
+
+.feature-icon .img-fluid {
+    width: auto;
+    height: 4em;
+}
+
+.input-group #input-add-id,
+.input-group .btn-primary {
+    border: 0;
+    background-color: var(--logoBarra);
+}
+
+.input-group .form-control,
+.input-group button:hover,
+.input-group button:focus {
+    box-shadow: none;
+}
+
+/* Exibir Catálogos*/
+.icon {
+    display: inline-flex;
+    align-self: center;
+}
+
+.icon svg, .icon img {
+    height: 1em;
+    width: 1em;
+    fill: currentColor;
+}
+
+.icon.baseline svg, .icon img {
+    top: .125em;
+    position: relative;
+}
+
+
+

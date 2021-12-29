@@ -1,1 +1,1 @@
-from .form_cadastro import *
+from .form_cadastro import FormConsultaCadastro
