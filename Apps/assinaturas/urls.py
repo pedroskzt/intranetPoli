@@ -15,14 +15,15 @@ Including another URLconf
 """
 
 from django.urls import path
-from Apps.assinaturas.views import *
+
+from Apps.assinaturas.views.assinaturas_email import assinaturas_email
+from Apps.assinaturas.views.assinaturas_email import criar_assinatura
+from Apps.assinaturas.views.assinaturas_email import visualizar_assinatura
+from Apps.assinaturas.views.assinaturas_email import tutoriais
 
 urlpatterns = [
-    path('', index, name='index_assinatura'),
-    path('criar/assinatura', criar_assinatura, name='criar_assinatura'),
-    path('visualizar/assinatura', visualizar_assinatura, name='visualizar_assinatura'),
-    path('pesquisar/assinatura/', pesquisar_assinatura, name='pesquisar_assinatura'),
-    path('guia/zimbra', guia_zimbra, name='guia_zimbra'),
-    path('guia/thunderbird', guia_thunderbird, name='guia_thunderbird'),
-    path('guia/outlook', guia_outlook, name='guia_outlook')
+    path('', assinaturas_email, name='assinaturas_email'),
+    path('criar', criar_assinatura, name='criar_assinatura'),
+    path('visualizar', visualizar_assinatura, name='visualizar_assinatura'),
+    path('tutoriais/<str:programa_email>', tutoriais, name='tutoriais'),
 ]

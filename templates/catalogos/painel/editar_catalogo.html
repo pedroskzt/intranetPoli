@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block head %}
+    <link href="{% static 'catalogos/css/gerenciar_catalogos.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'gerenciar_catalogos' %}">Gerenciar Catálogos</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Editar Catálogo</li>
+{% endblock %}
+
+{% block content %}
+    <h1>Editar Catálogo</h1>
+    <div class="mb-4" id="editar_catalogo">
+        <form action="{% url 'editar_catalogo' catalogo_id %}" method="post" enctype="multipart/form-data"
+              class="needs-validation" novalidate id="form_editar_catalogo">
+            {% csrf_token %}
+            <div class="row">
+                <div class="row mb-4">
+                    <div class="col card card-custom">
+                        <h6 class="mt-2">Dados do Catálogo</h6>
+                        <div class="form-floating mt-2 mb-3">
+                            {% if forms.titulo.errors %}
+                                {{ forms.titulo|add_class:'form-control is-invalid' }}
+                            {% else %}
+                                {{ forms.titulo|add_class:'form-control' }}
+                            {% endif %}
+                            <label for="{{ forms.titulo.id_for_label }}"
+                                   class="form-label">{{ forms.titulo.label }}</label>
+                            <div class="invalid-feedback">
+                                {{ forms.titulo.errors }}
+                            </div>
+                        </div> <!-- Título -->
+                        <div class="form-floating mb-2">
+                            {% if forms.url.errors %}
+                                {{ forms.url|add_class:'form-control is-invalid' }}
+                            {% else %}
+                                {{ forms.url|add_class:'form-control' }}
+                            {% endif %}
+                            <label for="{{ forms.url.id_for_label }}" class="form-label">{{ forms.url.label }}</label>
+                            <div class="invalid-feedback">
+                                {{ forms.url.errors }}
+                            </div>
+                        </div> <!-- URL -->
+                    </div>
+                    <div class="col card card-custom ms-2">
+                        <h6 class="mt-2">Logo/Arte</h6>
+                        <div class="form-group mb-2">
+                            <img src="{{ media_url }}{{ forms.logo.value }}" alt="">
+                            {% if forms.logo.errors %}
+                                {{ forms.logo|add_class:'form-control is-invalid' }}
+                            {% else %}
+                                {{ forms.logo|add_class:'form-control' }}
+                            {% endif %}
+                            <div class="invalid-feedback">
+                                {{ forms.logo.errors }}
+                            </div>
+                        </div> <!-- LOGO -->
+                    </div>
+                    <div class="col card card-custom ms-2">
+                        <h6 class="mt-2">Configurações de exibição</h6>
+                        <div class="form-check form-switch">
+                            {{ forms.exibir|add_class:'form-check-input' }}
+                            <label for="{{ forms.exibir.id_for_label }}"
+                                   class="form-check-label">{{ forms.exibir.label }}</label>
+                        </div> <!-- Exibir -->
+                    </div>
+                </div>
+
+            </div>
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{% url 'gerenciar_catalogos' %}" class="btn btn-info">Voltar</a>
+                <button type="submit" class="btn btn-success">Salvar</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

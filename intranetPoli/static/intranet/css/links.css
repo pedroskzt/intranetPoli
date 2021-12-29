@@ -18,11 +18,12 @@
 }
 
 .feature-icon {
-  width: 4rem;
+    width: 4rem;
 }
+
 .feature-icon .img-fluid {
-  width: auto;
-  height: 4em;
+    width: auto;
+    height: 4em;
 }
 
 .input-group #input-add-id,
@@ -47,12 +48,16 @@
     position: relative;
 }
 
-.input-group .form-control,
-.input-group button:hover,
-.input-group button:focus{
-  box-shadow: none;
+#dropdownAdicionarButton {
+    min-width: 10rem;
 }
 
-.input-group .btn.btn-primary{
+.input-group .form-control,
+.input-group button:hover,
+.input-group button:focus {
+    box-shadow: none;
+}
+
+.input-group .btn.btn-primary {
     background-color: var(--logoLetra);
 }

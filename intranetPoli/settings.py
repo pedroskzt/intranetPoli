@@ -23,16 +23,19 @@ with open(os.path.join(BASE_DIR, 'secret.json')) as secret_file:
     _secrets = json.load(secret_file)
 
 
-def get_secret(configuracao, banco=None, secrets=_secrets):
+def get_secret(configuracao, grupo=None, banco=None, secrets=_secrets):
     """
-    Obtêm a configuração secreta ou eleva um "ImproperlyConfigured" erro
+    Obtêm a configuração secreta ou eleva um "ImproperlyConfigured" error
 
     :param configuracao:
     :param secrets:
     :return:
     """
     try:
-        return secrets[configuracao.upper()] if banco is None else secrets['DB'][banco.upper()][configuracao.upper()]
+        if banco:
+            return secrets[grupo.upper()][banco.upper()][configuracao.upper()]
+        else:
+            return secrets[configuracao.upper()] if grupo is None else secrets[grupo.upper()][configuracao.upper()]
     except KeyError:
         msg = f"Não existe a configuração: '{configuracao}'"
         raise ImproperlyConfigured(msg)
@@ -57,6 +60,8 @@ INSTALLED_APPS = [
     'Apps.assinaturas',
     'Apps.catalogos',
     'Apps.resultadoContabil',
+    'Apps.controleAcesso',
+    'Apps.liberarDesconto',
     'widget_tweaks',
     'simple_history',
     'django.contrib.humanize',
@@ -106,17 +111,17 @@ WSGI_APPLICATION = 'intranetPoli.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
-        'NAME': get_secret('DB_NAME', banco='default'),
-        'USER': get_secret('DB_USER', banco='default'),
-        'PASSWORD': get_secret('DB_PASSWORD', banco='default'),
+        'NAME': get_secret('DB_NAME', grupo='db', banco='default'),
+        'USER': get_secret('DB_USER', grupo='db', banco='default'),
+        'PASSWORD': get_secret('DB_PASSWORD', grupo='db', banco='default'),
         'HOST': '',
         'PORT': '',
     },
     'BI': {
         'ENGINE': 'django.db.backends.oracle',
-        'NAME': get_secret('DB_NAME', banco='bi'),
-        'USER': get_secret('DB_USER', banco='bi'),
-        'PASSWORD': get_secret('DB_PASSWORD', banco='bi'),
+        'NAME': get_secret('DB_NAME', grupo='db', banco='bi'),
+        'USER': get_secret('DB_USER', grupo='db', banco='bi'),
+        'PASSWORD': get_secret('DB_PASSWORD', grupo='db', banco='bi'),
         'HOST': '',
         'PORT': '',
     }
@@ -176,6 +181,15 @@ MESSAGE_TAGS = {
 
 # LOGIN
 LOGIN_URL = 'login'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = get_secret(configuracao='email_host', grupo='email')
+EMAIL_PORT = get_secret(configuracao='email_port', grupo='email')
+EMAIL_USE_TLS = True if get_secret(configuracao='email_use_tls', grupo='email') == 'True' else False
+EMAIL_HOST_USER = get_secret(configuracao='email_host_user', grupo='email')
+EMAIL_HOST_PASSWORD = get_secret(configuracao='email_host_password', grupo='email')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 
 # LOGGING
 if get_secret("LOGGING") == 'True':

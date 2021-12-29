@@ -1,1 +1,1 @@
-from Apps.subsTribut.models.tributos import *
+from .tributos import Tributos

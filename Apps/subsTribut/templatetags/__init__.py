@@ -1,1 +1,1 @@
-from .formatarPorcentagem import *
+from .formatarPorcentagem import formatar_porcentagem

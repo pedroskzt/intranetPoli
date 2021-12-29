@@ -1,24 +1,23 @@
 import os
 
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
 from Apps.intranet.forms.form_links import NovoLinkForms, AtualizaLinkForms
 from Apps.intranet.models.links import Links
+from intranetPoli.decorators import verificar_permissoes
 from intranetPoli.settings import MEDIA_URL
 
 
-def _group_cpd_check(user):
-    return user.has_perm('intranet.gerenciar_intranet') and user.is_authenticated
-
-
-@user_passes_test(_group_cpd_check, login_url='pagina_inicial', redirect_field_name=None)
-def painel_intranet(request):
+@login_required
+@verificar_permissoes(permissoes_exigidas=['intranet.view_links'])
+def gerenciar_links(request):
     links = Links.objects.all()
-    return render(request, 'intranet/painel/painel_intranet.html', context={'links': links})
+    return render(request, 'intranet/painel/gerenciar_links.html', context={'links': links})
 
 
 @login_required
+@verificar_permissoes(['intranet.add_links'])
 def adicionar_link(request):
     if request.method == 'POST':
         form = NovoLinkForms(request.POST, request.FILES)
@@ -27,18 +26,18 @@ def adicionar_link(request):
             link.usuario_criacao = request.user
             link.usuario_ultima_alteracao = request.user
             link.save()
-            return redirect('painel_intranet')
+            return redirect('gerenciar_links')
     else:
         form = NovoLinkForms()
     return render(request, 'intranet/painel/adicionar_link.html', context={'forms': form})
 
 
 @login_required
+@verificar_permissoes(['intranet.change_links'])
 def editar_link(request, link_id):
     if request.method == 'GET':
         link = get_object_or_404(Links, pk=link_id)
         form = AtualizaLinkForms(instance=link)
-
     elif request.method == 'POST':
         link = get_object_or_404(Links, pk=link_id)
         form = AtualizaLinkForms(request.POST, request.FILES, instance=link)
@@ -46,7 +45,7 @@ def editar_link(request, link_id):
             link = form.save(commit=False)
             link.usuario_ultima_alteracao = request.user
             link.save()
-            return redirect('painel_intranet')
+            return redirect('gerenciar_links')
     contexto = {
         'forms': form,
         'link_id': link_id,
@@ -56,8 +55,9 @@ def editar_link(request, link_id):
 
 
 @login_required
+@verificar_permissoes(['intranet.delete_links'])
 def excluir_link(request, link_id):
     link = get_object_or_404(Links, pk=link_id)
     os.remove(link.logo.path)
     link.delete()
-    return redirect('painel_intranet')
+    return redirect('gerenciar_links')

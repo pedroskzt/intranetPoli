@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block navbar %}
+    {% include 'assinatura/partials/_menus.html' %}
+{% endblock %}
+
+{% block head %}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link href="{% static 'assinatura/css/assinaturas.css' %}" rel="stylesheet" type="text/css">
+    {% block extrahead %}
+    {% endblock %}
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active" aria-current="page">Assinatura de Email</li>
+{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between">
+        <div class="w-25">
+        </div>
+        <div class="text-center">
+            <h1>Bem Vindo.</h1>
+            <p class="lead">Crie sua assinatura acima e depois siga o tutorial de instalação para saber como instalar sua
+                assinatura. </p>
+            <p class="lead">Caso já tenha criado uma vez, não precisa criar outra! Basta pesquisar no campo de pesquisa
+                acima!</p>
+        </div>
+        <div class="w-25">
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    {% block extra_scripts %}
+    {% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            const url_ajax = $('#pesquisar_assinaturas_id').attr('action')
+            $('#pesquisar_assinaturas_id').select2({
+                minimumInputLength: 2,
+                theme: 'classic',
+                selectionCssClass: 'custom-select2',
+                dropdownCssClass: 'custom-select2',
+                width: 'auto',
+            })
+        })
+        $('#pesquisar_assinaturas_id').on("select2:open", () => {
+            document.querySelector(".select2-container--open .select2-search__field").focus()
+        })
+    </script>
+
+{% endblock %}

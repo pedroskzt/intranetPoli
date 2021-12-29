@@ -1,0 +1,316 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <link href="{% static 'controleAcesso/css/usuario.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active" aria-current="page">Gerenciar Grupos e Permissões</li>
+{% endblock %}
+
+{% block content %}
+    <h1>Gerenciar Grupos e Permissões</h1>
+    {% include 'partials/_alertas.html' %}
+    <div class="mb-4" id="grupos_e_permissoes">
+        <form action="{% url 'gerenciar_permissoes' %}" method="post" class="needs-validation" novalidate
+              id="gerenciar_permissoes_grupo_id">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col card card-custom">
+                    <div class="d-flex justify-content-between mb-2 mt-2">
+                        <h6 class="mt-2">Grupos</h6>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#criar_grupo_id" id="criar_grupo_button_id">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 viewBox="0 0 16 16">
+                                <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"></path>
+                            </svg>
+                            Criar Novo Grupo
+                        </button>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="selecionar_grupo_id" aria-label="Grupos"
+                                action="{% url 'ajax_permissoes_grupo' %}" name="selecionar_grupo">
+                            <option value="-1" {% if not id_grupo %}selected{% endif %}>Selecione um Grupo</option>
+                            {% for grupo in grupos %}
+                                {% if id_grupo == grupo.id %}
+                                    <option value="{{ grupo.id }}" selected>{{ grupo.name }}</option>
+                                {% else %}
+                                    <option value="{{ grupo.id }}">{{ grupo.name }}</option>
+                                {% endif %}
+                            {% endfor %}
+
+                        </select>
+                        <label for="selecionar_grupo_id">Grupos</label>
+                    </div>  <!-- Selecionar Grupo-->
+                </div><!-- Grupos -->
+                <div class="col card card-custom ms-2">
+                    <div class="d-flex justify-content-between mb-2 mt-2">
+                        <h6 class="mt-2">Permissões</h6>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#criar_permissao_id" id="criar_permissao_button_id"
+                                action="{% url 'ajax_content_type' %}" disabled>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 viewBox="0 0 16 16">
+                                <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"></path>
+                            </svg>
+                            Criar Nova Permissão
+                        </button>
+                    </div>
+                    <select class="form-select mb-2" id="selecionar_permissoes_id" aria-label="Permissões"
+                            action="{% url 'ajax_permissoes_grupo' %}" multiple name="selecionar_permissoes">
+                    </select>
+
+                </div><!-- Permissões do Grupo -->
+            </div>
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{% url 'gerenciar_usuarios' %}" class="btn btn-info">Voltar</a>
+                <a href="{% url 'gerenciar_permissoes' %}" class="btn btn-warning">Limpar</a>
+                <button type="submit" class="btn btn-success" data-bs-toggle="tooltip">Salvar</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Modal cadastro de nova Grupo -->
+    <div class="modal fade" id="criar_grupo_id" tabindex="-1" aria-labelledby="criar_grupo_label"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="criar_grupo_label">Criar Novo Grupo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'criar_grupo' %}" method="post" id="form_criar_grupo_id"
+                          class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        <div class="form-floating mt-2">
+                            <input class="form-control" type="text" name="grupo_nome" id="grupo_nome_id"
+                                   placeholder="Nome do Grupo" required>
+                            <label for="grupo_nome_id">Nome do Grupo</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="reset" class="btn btn-warning" form="form_criar_grupo_id">Limpar</button>
+                    <button type="submit" class="btn btn-success" form="form_criar_grupo_id"
+                            id="criar_grupo_button_id">Criar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal cadastro de nova Permissão -->
+    <div class="modal fade" id="criar_permissao_id" tabindex="-1" aria-labelledby="criar_permissao_label"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="criar_permissao_label">Criar Nova Permissão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'criar_permissao' %}" method="post" id="form_criar_permissao_id"
+                          class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        <input type="hidden" id="id_grupo_id" name="id_grupo" value="1">
+                        <div class="form-floating">
+                            <select class="form-select" id="content_type_select_id"
+                                    aria-label="Content Type Select" name="modelo_selecionado"
+                                    required>
+
+                                <option value="-1" selected>Selecione o Modelo</option>
+                            </select>
+                            <label for="content_type_select_id">Selecionar Modelo</label>
+                        </div>
+                        <div class="form-floating mt-2">
+                            <input class="form-control" type="text" name="permissao_nome" id="permissao_nome_id"
+                                   placeholder="Nome da Permissão" required>
+                            <label for="permissao_nome_id">Nome da Permissão</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="reset" class="btn btn-warning" form="form_criar_permissao_id">Limpar</button>
+                    <button type="submit" class="btn btn-success" form="form_criar_permissao_id"
+                            id="criar_permissao_button_id">Criar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        function hideSelected(option) {
+            /* Esconde as opções do select de permissões que já tiverem sido selecionadas*/
+            if (option.selected === true) {
+                return;
+            }
+            return option.text;
+        };
+
+        const selecionar_grupos = function () {
+            if ($(this).val() == -1) {
+                $('#selecionar_permissoes_id').empty()
+            } else {
+                let grupo_selecionado = {
+                    'grupo_id': $(this).val()
+                }
+                $.ajax({
+                    url: $(this).attr('action'),
+                    data: grupo_selecionado,
+                    dataType: 'json',
+                    success: function (data) {
+                        const permissoes_select = $('#selecionar_permissoes_id')
+                        permissoes_select.empty()
+                        for (permissao of data['permissoes']) {
+                            permissoes_select.append(new Option(permissao.nome, permissao.id, false, data['permissoes_grupo'].includes(permissao.id)))
+                        }
+                        $('#id_grupo_id').val(grupo_selecionado.grupo_id)
+                        $('#criar_permissao_button_id').removeAttr('disabled')
+
+                    }
+                })
+            }
+
+
+        };
+        const select_grupos = $('#selecionar_grupo_id');
+
+        $(document).ready(function () {
+            $('#selecionar_permissoes_id').select2({
+                theme: 'classic',
+                templateResult: hideSelected
+
+            })
+            $('.select2-search__field').addClass("rounded")
+        })
+
+        select_grupos.change(selecionar_grupos)
+
+        $(document).ready(function () {
+            if (select_grupos.val() != -1) {
+                select_grupos.trigger('change')
+            }
+        })
+
+
+    </script> <!-- Ajax consulta permissões do grupo -->
+
+    <script>
+        $('#criar_permissao_button_id').on('click', function () {
+            if ($(this).val() == -1) {
+                $('#content_type_select_id').empty()
+            } else {
+                $.ajax({
+                    url: $(this).attr('action'),
+                    dataType: 'json',
+                    success: function (data) {
+                        const content_type_select = $('#content_type_select_id')
+                        content_type_select.empty()
+                        content_type_select.append(new Option('Selecione o Modelo', '-1', false, true))
+                        for (content_type of data['content_types']) {
+                            content_type_select.append(new Option(content_type.nome, content_type.content_type_id, false, false))
+                        }
+                    }
+                })
+            }
+        })
+    </script> <!-- Ajax consulta content type para cadastro de permissao -->
+
+    <script>
+        $('button[type="reset"]').on('click', function (event) {
+            const form = $('#' + $(this).attr('form'))
+            const form_fields = $('#' + form[0].id + ' :input')
+            form_fields.each(function () {
+                if (this.type !== 'hidden') {
+                    $('#' + this.id).removeClass('is-invalid')
+                }
+
+            })
+        })
+        $('#criar_grupo_button_id').on('click', function (event) {
+            event.preventDefault()
+            const form = $('#' + $(this).attr('form'))
+            const form_fields = $('#' + form[0].id + ' :input')
+            const form_values = form_fields.serializeArray().reduce(function (obj, item) {
+                obj[item.name] = item.value
+                return obj
+            }, {})
+            const valores_de_erro = {
+                'grupo_nome': '',
+            }
+            let encontrado_erro = 0
+
+            form_fields.each(function () {
+                if (this.type !== 'hidden') {
+                    if (form_values[this.name] === valores_de_erro[this.name]) {
+                        $('#' + this.id).addClass('is-invalid')
+                        encontrado_erro++
+                    } else {
+                        $('#' + this.id).removeClass('is-invalid')
+                        encontrado_erro = encontrado_erro === 0 ? encontrado_erro : encontrado_erro--
+                    }
+                }
+            })
+            if (encontrado_erro === 0) {
+                form.submit()
+            }
+        })
+    </script> <!-- Ajax criar novo grupo -->
+
+    <script>
+        $('button[type="reset"]').on('click', function (event) {
+            const form = $('#' + $(this).attr('form'))
+            const form_fields = $('#' + form[0].id + ' :input')
+            form_fields.each(function () {
+                if (this.type !== 'hidden') {
+                    $('#' + this.id).removeClass('is-invalid')
+                }
+
+            })
+        })
+        $('#criar_permissao_button_id').on('click', function (event) {
+            event.preventDefault()
+            const form = $('#' + $(this).attr('form'))
+            const form_fields = $('#' + form[0].id + ' :input')
+            const form_values = form_fields.serializeArray().reduce(function (obj, item) {
+                obj[item.name] = item.value
+                return obj
+            }, {})
+            const valores_de_erro = {
+                'modelo_selecionado': '-1',
+                'permissao_nome': '',
+            }
+            let encontrado_erro = 0
+
+            form_fields.each(function () {
+                if (this.type !== 'hidden') {
+                    if (form_values[this.name] === valores_de_erro[this.name]) {
+                        $('#' + this.id).addClass('is-invalid')
+                        encontrado_erro++
+                    } else {
+                        $('#' + this.id).removeClass('is-invalid')
+                        encontrado_erro = encontrado_erro === 0 ? encontrado_erro : encontrado_erro--
+                    }
+                }
+            })
+            if (encontrado_erro === 0) {
+                form.submit()
+            }
+
+
+        })
+    </script> <!-- Ajax criar nova permissão -->
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+{% endblock %}
+
+
