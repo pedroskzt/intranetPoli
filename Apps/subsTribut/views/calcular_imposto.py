@@ -64,11 +64,11 @@ class CalcularView(View):
         if _campo_vazio(request.GET.get('numr_negociacao')) is not True:
             contexto['numr_negociacao'] = request.GET.get('numr_negociacao')
             contexto['pol_intra_nego_vw'] = _get_pol_intra_nego_vw(contexto['numr_negociacao'])
-            if contexto['pol_intra_nego_vw']['NOME_UF_EMPRESA'] == 'DF':
-                messages.error(request, 'Vendas com origem em Brasília, o imposto é calculado direto na nota!')
-                contexto['numr_negociacao'] = None
-            elif _negociacao_nao_encontrada(contexto['pol_intra_nego_vw']):
+            if _negociacao_nao_encontrada(contexto['pol_intra_nego_vw']):
                 messages.error(request, 'Número de negociação não encontrado. Verifique.')
+                contexto['numr_negociacao'] = None
+            elif contexto['pol_intra_nego_vw']['NOME_UF_EMPRESA'] == 'DF':
+                messages.error(request, 'Vendas com origem em Brasília, o imposto é calculado direto na nota!')
                 contexto['numr_negociacao'] = None
             else:
                 contexto['pol_intra_item_nego_vw'] = _get_pol_intra_item_nego_vw(contexto['numr_negociacao'])
