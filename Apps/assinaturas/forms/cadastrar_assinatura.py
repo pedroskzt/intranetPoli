@@ -12,7 +12,7 @@ alfanumerico_regex = RegexValidator(regex='^[0-9A-Za-zÀ-ÖØ-öø-ÿ .]*$', mes
 class AssinaturaForms(forms.ModelForm):
     class Meta:
         model = Assinatura
-        fields = '__all__'
+        exclude = ('codigo_usuario',)
         labels = {'fone': 'Telefone'}
         widgets = {
             'nome': forms.TextInput(attrs={'placeholder': 'Nome'}),
