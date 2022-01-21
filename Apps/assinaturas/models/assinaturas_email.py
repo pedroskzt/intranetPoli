@@ -12,6 +12,7 @@ class Assinatura(models.Model):
     class Meta:
         verbose_name = 'Assinatura de Email'
         verbose_name_plural = 'Assinaturas de Email'
+    codigo_usuario = models.IntegerField(unique=True, blank=True, null=True)
     nome = models.CharField(max_length=100, unique=True, validators=[alphanumeric_regex])
     departamento = models.CharField(max_length=100, validators=[alphanumeric_regex])
     fone = models.CharField(max_length=17, validators=[phone_regex])
