@@ -13,7 +13,7 @@ def verificar_permissoes(permissoes_exigidas=[]):
     """
     def decorator(view_func):
         def wrapper_func(request, *args, **kwargs):
-            if request.user.groups.exists() and request.user.has_perms(permissoes_exigidas):
+            if (request.user.groups.exists() or request.user.is_superuser) and request.user.has_perms(permissoes_exigidas):
                 return view_func(request, *args, **kwargs)
             else:
                 raise PermissionDenied(f'Permissões exigidas: {permissoes_exigidas}')
