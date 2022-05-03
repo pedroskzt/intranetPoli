@@ -1,3 +1,4 @@
+from django.contrib.auth.models import Permission
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -9,6 +10,7 @@ class Links(models.Model):
         permissions = [
             ("gerenciar_intranet", "Pode gerenciar a Intranet")
         ]
+
     titulo = models.CharField(max_length=30, unique=True)
     descricao = models.TextField(max_length=200)
     logo = models.ImageField(upload_to='logos')
@@ -16,6 +18,9 @@ class Links(models.Model):
     exibir = models.BooleanField(default=False)
     requer_acesso = models.BooleanField(default=False)
     intranet = models.BooleanField(default=False)
+
+    # Permissões para exibição
+    permissoes = models.ManyToManyField(Permission, verbose_name='permissoes', blank=True)
 
     # Log de criação
     data_criacao = models.DateTimeField(auto_now_add=True)
