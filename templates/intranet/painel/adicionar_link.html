@@ -4,6 +4,7 @@
 
 {% block head %}
     <link href="{% static 'intranet/css/links.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 {% endblock %}
 
 {% block breadcrumb %}
@@ -22,65 +23,70 @@
                         <div class="row">
                             <div class="col-7">
                                 <div class="form-floating mt-2 mb-3">
-                                    {{ forms.titulo|add_class:'form-control' }}
-                                    <label for="{{ forms.titulo.id_for_label }}"
-                                           class="form-label">{{ forms.titulo.label }}</label>
-                                    {% for erro in forms.titulo.errors %}
+                                    {{ form.titulo|add_class:'form-control' }}
+                                    <label for="{{ form.titulo.id_for_label }}"
+                                           class="form-label">{{ form.titulo.label }}</label>
+                                    {% for erro in form.titulo.errors %}
                                         <div class="alert alert-danger" role="alert">
-                                            {{ forms.titulo.errors }}
+                                            {{ form.titulo.errors }}
                                         </div>
                                     {% endfor %}
                                 </div> <!-- Título -->
                             </div>
                             <div class="col-auto d-flex flex-column align-self-center">
                                 <div class="form-check form-switch">
-                                    {{ forms.exibir|add_class:'form-check-input' }}
-                                    <label for="{{ forms.exibir.id_for_label }}"
-                                           class="form-check-label">{{ forms.exibir.label }}</label>
+                                    {{ form.exibir|add_class:'form-check-input' }}
+                                    <label for="{{ form.exibir.id_for_label }}"
+                                           class="form-check-label">{{ form.exibir.label }}</label>
                                 </div> <!-- Exibir -->
                                 <div class="form-check form-switch">
-                                    {{ forms.requer_acesso|add_class:'form-check-input' }}
-                                    <label for="{{ forms.requer_acesso.id_for_label }}"
-                                           class="form-check-label">{{ forms.requer_acesso.label }}</label>
+                                    {{ form.requer_acesso|add_class:'form-check-input' }}
+                                    <label for="{{ form.requer_acesso.id_for_label }}"
+                                           class="form-check-label">{{ form.requer_acesso.label }}</label>
                                 </div> <!-- Requer Acesso -->
                                 <div class="form-check form-switch">
-                                    {{ forms.intranet|add_class:'form-check-input' }}
-                                    <label for="{{ forms.intranet.id_for_label }}"
-                                           class="form-check-label">{{ forms.intranet.label }}</label>
+                                    {{ form.intranet|add_class:'form-check-input' }}
+                                    <label for="{{ form.intranet.id_for_label }}"
+                                           class="form-check-label">{{ form.intranet.label }}</label>
                                 </div> <!-- Intranet -->
                             </div>
                         </div>
 
                         <div class="form-floating mb-2">
-                            {{ forms.url|add_class:'form-control' }}
-                            <label for="{{ forms.url.id_for_label }}" class="form-label">{{ forms.url.label }}</label>
-                            {% for erro in forms.url.errors %}
+                            {{ form.url|add_class:'form-control' }}
+                            <label for="{{ form.url.id_for_label }}" class="form-label">{{ form.url.label }}</label>
+                            {% for erro in form.url.errors %}
                                 <div class="alert alert-danger" role="alert">
-                                    {{ forms.url.errors }}
+                                    {{ form.url.errors }}
                                 </div>
                             {% endfor %}
                         </div> <!-- URL -->
                     </div>
                     <div class="col border rounded">
                         <div class="form-floating mt-2 mb-2">
-                            {{ forms.descricao|add_class:'form-control' }}
-                            <label for="{{ forms.descricao.id_for_label }}"
-                                   class="form-label">{{ forms.descricao.label }}</label>
-                            {% for erro in forms.descricao.errors %}
+                            {{ form.descricao|add_class:'form-control' }}
+                            <label for="{{ form.descricao.id_for_label }}"
+                                   class="form-label">{{ form.descricao.label }}</label>
+                            {% for erro in form.descricao.errors %}
                                 <div class="alert alert-danger" role="alert">
-                                    {{ forms.descricao.errors }}
+                                    {{ form.descricao.errors }}
                                 </div>
                             {% endfor %}
                         </div> <!-- Descrição -->
+                        <div>
+                            <label for="{{ form.permissoes.id_for_label }}"
+                                   class="form-label">{{ form.permissoes.label }}</label>
+                            {{ form.permissoes|add_class:'form-control' }}
+                        </div><!-- Permissões -->
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group border rounded">
-                        <label for="{{ forms.logo.id_for_label }}" class="form-label">{{ forms.logo.label }}</label>
-                        {{ forms.logo|add_class:'form-control mb-2' }}
-                        {% for erro in forms.logo.errors %}
+                        <label for="{{ form.logo.id_for_label }}" class="form-label">{{ form.logo.label }}</label>
+                        {{ form.logo|add_class:'form-control mb-2' }}
+                        {% for erro in form.logo.errors %}
                             <div class="alert alert-danger" role="alert">
-                                {{ forms.logo.errors }}
+                                {{ form.logo.errors }}
                             </div>
                         {% endfor %}
                     </div> <!-- LOGO -->
@@ -93,4 +99,9 @@
             </div>
         </form>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{% static 'intranet/js/selecionar_permissoes_links.js' %}"></script>
 {% endblock %}
