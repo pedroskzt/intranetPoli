@@ -22,7 +22,7 @@
                     <div class="d-flex justify-content-between mb-2 mt-2">
                         <h6 class="mt-2">Grupos</h6>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#criar_grupo_id" id="criar_grupo_button_id">
+                                data-bs-target="#criar_grupo_id" id="modal_criar_grupo_button_id">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                  viewBox="0 0 16 16">
                                 <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"></path>
@@ -50,7 +50,7 @@
                     <div class="d-flex justify-content-between mb-2 mt-2">
                         <h6 class="mt-2">Permissões</h6>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#criar_permissao_id" id="criar_permissao_button_id"
+                                data-bs-target="#criar_permissao_id" id="modal_criar_permissao_button_id"
                                 action="{% url 'ajax_content_type' %}" disabled>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                  viewBox="0 0 16 16">
@@ -88,7 +88,7 @@
                         {% csrf_token %}
                         <div class="form-floating mt-2">
                             <input class="form-control" type="text" name="grupo_nome" id="grupo_nome_id"
-                                   placeholder="Nome do Grupo" required>
+                                   placeholder="Nome do Grupo" required autofocus>
                             <label for="grupo_nome_id">Nome do Grupo</label>
                         </div>
                     </form>
@@ -159,6 +159,7 @@
         const selecionar_grupos = function () {
             if ($(this).val() == -1) {
                 $('#selecionar_permissoes_id').empty()
+                $('#modal_criar_permissao_button_id').prop('disabled', true)
             } else {
                 let grupo_selecionado = {
                     'grupo_id': $(this).val()
@@ -174,7 +175,7 @@
                             permissoes_select.append(new Option(permissao.nome, permissao.id, false, data['permissoes_grupo'].includes(permissao.id)))
                         }
                         $('#id_grupo_id').val(grupo_selecionado.grupo_id)
-                        $('#criar_permissao_button_id').removeAttr('disabled')
+                        $('#modal_criar_permissao_button_id').removeAttr('disabled')
 
                     }
                 })
@@ -205,7 +206,7 @@
     </script> <!-- Ajax consulta permissões do grupo -->
 
     <script>
-        $('#criar_permissao_button_id').on('click', function () {
+        $('#modal_criar_permissao_button_id').on('click', function () {
             if ($(this).val() == -1) {
                 $('#content_type_select_id').empty()
             } else {
@@ -222,8 +223,8 @@
                     }
                 })
             }
-        })
-    </script> <!-- Ajax consulta content type para cadastro de permissao -->
+        }) <!-- Ajax consulta content type para cadastro de permissao -->
+    </script>
 
     <script>
         $('button[type="reset"]').on('click', function (event) {
@@ -312,5 +313,3 @@
 
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 {% endblock %}
-
-
