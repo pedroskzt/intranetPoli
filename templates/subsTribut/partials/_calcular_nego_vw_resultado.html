@@ -149,7 +149,7 @@
                         <td>R$ {{ item.VALR_FRETE }}</td>
                         <td>R$ {{ item.VALR_DESPESAS }}</td>
                         {% if pol_intra_nego_vw.VALR_TOTAL_IMPOSTO %}
-                            {% if pol_intra_nego_vw.INDR_CONSUMIDOR_FINAL and pol_intra_nego_vw.NUMR_INSC_ESTADUAL is None %}
+                            {% if pol_intra_nego_vw.INDR_CONSUMIDOR_FINAL and pol_intra_nego_vw.INDR_CONTRIBUINTE == 0 %}
                                 {% if user.is_authenticated %}
                                     <td role="button" data-bs-toggle="modal"
                                         data-bs-target="#modal-cons-final-{{ forloop.counter }}">
