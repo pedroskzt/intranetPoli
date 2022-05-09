@@ -26,18 +26,24 @@ def adicionar_link(request):
             link.usuario_criacao = request.user
             link.usuario_ultima_alteracao = request.user
             link.save()
+            form.save_m2m()
             return redirect('gerenciar_links')
     else:
         form = NovoLinkForms()
-    return render(request, 'intranet/painel/adicionar_link.html', context={'forms': form})
+    return render(request, 'intranet/painel/adicionar_link.html', context={'form': form})
 
 
 @login_required
 @verificar_permissoes(['intranet.change_links'])
 def editar_link(request, link_id):
+    contexto = {
+        'link_id': link_id,
+        'media_url': MEDIA_URL
+    }
     if request.method == 'GET':
         link = get_object_or_404(Links, pk=link_id)
         form = AtualizaLinkForms(instance=link)
+
     elif request.method == 'POST':
         link = get_object_or_404(Links, pk=link_id)
         form = AtualizaLinkForms(request.POST, request.FILES, instance=link)
@@ -45,12 +51,10 @@ def editar_link(request, link_id):
             link = form.save(commit=False)
             link.usuario_ultima_alteracao = request.user
             link.save()
+            form.save_m2m()
             return redirect('gerenciar_links')
-    contexto = {
-        'forms': form,
-        'link_id': link_id,
-        'media_url': MEDIA_URL
-    }
+    contexto['form'] = form
+
     return render(request, 'intranet/painel/editar_link.html', context=contexto)
 
 

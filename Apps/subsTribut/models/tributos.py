@@ -20,8 +20,6 @@ class Tributos(models.Model):
     mva = models.DecimalField(max_digits=19, decimal_places=4)
     mvaimp = models.DecimalField(max_digits=19, decimal_places=4)
     mvaaliq = models.DecimalField(max_digits=19, decimal_places=4)
-    basered = models.DecimalField(max_digits=19, decimal_places=4)
-    ssimples = models.DecimalField(max_digits=19, decimal_places=4)
     valr_fecop = models.DecimalField(max_digits=19, decimal_places=4, default=0)
     history = HistoricalRecords()
 

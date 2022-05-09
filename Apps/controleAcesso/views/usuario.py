@@ -1,3 +1,7 @@
+import json
+import os
+
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
@@ -90,15 +94,20 @@ def recuperar_senha(request):
             usuario = User.objects.filter(email=email)
             if usuario.exists():
                 usuario = usuario.get()
-                assunto = "Solicitação de recuperação de senha"
+                config_email = ''
+                with open(os.path.join(settings.STATIC_ROOT, 'controleAcesso', 'email', 'config.json'), 'r',
+                          encoding='UTF-8') as fp:
+                    config_email = json.load(fp)
+
+                assunto = config_email['ASSUNTO']
                 corpo_email = {
                     "email": usuario.email,
-                    "domain": "localhost",
-                    "site_name": "Intranet Polipeças",
+                    "domain": config_email['DOMAIN'],
+                    "site_name": config_email['SITE_NAME'],
                     "uid": urlsafe_base64_encode(force_bytes(usuario.pk)),
                     "user": usuario,
                     "token": default_token_generator.make_token(usuario),
-                    'protocol': 'http',
+                    'protocol': config_email['PROTOCOL'],
                 }
                 email = render_to_string("controleAcesso/usuarios/recuperar_senha.txt", corpo_email)
                 try:
