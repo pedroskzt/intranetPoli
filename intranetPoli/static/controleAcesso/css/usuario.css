@@ -1,12 +1,15 @@
-#usuario .card {
+#usuario .card,
+#editar_usuario .card {
     box-shadow: inset 0 0 0 rgba(0, 0, 0, .1), 0 0 2em rgba(0, 0, 0, .3);
 }
 
-#usuario .required {
+#usuario .required,
+#editar_usuario .required {
     color: red;
 }
 
-#usuario .invalid-feedback ul {
+#usuario .invalid-feedback ul,
+#editar_usuario .invalid-feedback ul {
     list-style-type: none !important;
     padding-left: 0.5rem;
 }
@@ -40,10 +43,6 @@
 .icon.baseline svg, .icon img {
     top: .125em;
     position: relative;
-}
-
-#dropdownAdicionarButton {
-    min-width: 10rem;
 }
 
 #lista_usuarios .btn.btn-light {

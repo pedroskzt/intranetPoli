@@ -24,15 +24,9 @@ def login(request):
         redirecionamento = request.POST.get('next')
         if resolve(redirecionamento).url_name == 'login' or resolve(redirecionamento).url_name == 'logout':
             redirecionamento = '/'
-        contexto['next'] = redirecionamento
+
         usuario = request.POST['usuario']
         senha = request.POST['senha']
-
-        if 'voltar-btn' in request.POST:
-            if request.user.is_authenticated:
-                return redirect(redirecionamento) if redirecionamento else redirect('pagina_inicial')
-            else:
-                return redirect('pagina_inicial')
 
         if _campo_vazio(usuario):
             contexto['validacao']['form_error'] = True

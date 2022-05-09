@@ -20,9 +20,13 @@
 }
 
 #changelist-form table input {
-    width: 40px !important;
+    width: 60% !important;
 }
 
 #changelist-form .results {
     margin-right: 270px;
+}
+
+#changelist-filter {
+    z-index: 998 !important;
 }

@@ -94,7 +94,7 @@ class CalcularView(View):
         Realiza o calculo do ST para cada item da negociação, e adiciona no dicionario de itens o valor
         de ST para cada ITEM. Também adiciona no dicionario de negociação, o valor total de ST da negociação.
 
-        Condição: Consumidor final e Não possui Inscrição Estadual
+        Condição: Consumidor final e Não Contribuinte
             Calculo: DIFAL
         Condição: Não é Consumidor final
             Calculo: ST
@@ -124,9 +124,9 @@ class CalcularView(View):
                     item['VALR_DESPESAS'])
                 item['valor_ICMS'] = item['valor_base_ICMS'] * item['aliquota_ICMS']
                 item['valor_base_ST'] = (item['valor_base_ICMS'] * item['mva']) + item['valor_base_ICMS']
-                if negociacao['INDR_CONSUMIDOR_FINAL'] and negociacao['NUMR_INSC_ESTADUAL'] is None:
+                if negociacao['INDR_CONSUMIDOR_FINAL'] and negociacao['INDR_CONTRIBUINTE'] == 0:
                     '''
-                    Condição: Consumidor final e Não possui Inscrição Estadual
+                    Condição: Consumidor final e Não Contribuinte
                     Calculo: DIFAL
                     '''
 
@@ -154,6 +154,8 @@ class CalcularView(View):
                     item['VALR_IMPOSTO'] = valor_ST
 
                     negociacao['VALR_TOTAL_IMPOSTO'] += valor_ST
+                    for i in item:
+                        print(f'{i}: {item[i]}')
         else:
             for item in itens:
                 item['valor_item_bruto'] = float((item['VALR_ITEM'] - item['VALR_DESC_UNITARIO']) * item['QTDE_ITENS'])
