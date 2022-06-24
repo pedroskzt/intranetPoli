@@ -59,7 +59,8 @@ class CalcularView(View):
     model_class = Tributos
 
     def get(self, request):
-        contexto = {'numr_negociacao': None}
+        contexto = {"title": 'ST',
+                    'numr_negociacao': None}
 
         if _campo_vazio(request.GET.get('numr_negociacao')) is not True:
             contexto['numr_negociacao'] = request.GET.get('numr_negociacao')
@@ -85,7 +86,8 @@ class CalcularView(View):
         if form.is_valid():
             pass
             # form.save()
-        contexto = {"form": form}
+        contexto = {"title": 'ST',
+                    "form": form}
 
         return render(request, self.template_name, context=contexto)
 
@@ -154,8 +156,8 @@ class CalcularView(View):
                     item['VALR_IMPOSTO'] = valor_ST
 
                     negociacao['VALR_TOTAL_IMPOSTO'] += valor_ST
-                    for i in item:
-                        print(f'{i}: {item[i]}')
+                    # for i in item:
+                    #     print(f'{i}: {item[i]}')
         else:
             for item in itens:
                 item['valor_item_bruto'] = float((item['VALR_ITEM'] - item['VALR_DESC_UNITARIO']) * item['QTDE_ITENS'])

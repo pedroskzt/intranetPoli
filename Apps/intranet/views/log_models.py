@@ -18,7 +18,7 @@ MODELOS = {}
 @login_required
 @verificar_permissoes(permissoes_exigidas=['subsTribut.view_tributos', 'subsTribut.view_historicaltributos'])
 def log_models(request, model, tabela, changelist):
-    contexto = {}
+    contexto = {"title": 'Log ST'}
     if request.method == 'GET':
         contexto['breadcrumb'] = {'modelo': model,
                                   'tabela': tabela,

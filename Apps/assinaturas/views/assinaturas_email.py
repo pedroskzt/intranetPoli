@@ -6,7 +6,7 @@ from Apps.assinaturas.models.assinaturas_email import Assinatura
 
 def assinaturas_email(request):
     assinaturas = [{"id": assinatura.id, "nome": assinatura.nome} for assinatura in Assinatura.objects.all()]
-    contexto = {"assinaturas": assinaturas}
+    contexto = {"title": 'Assinaturas'}
 
     return render(request, 'assinatura/assinaturas_email.html', context=contexto)
 
@@ -14,9 +14,9 @@ def assinaturas_email(request):
 def criar_assinatura(request):
     form = AssinaturaForms()
     assinaturas = [{"id": assinatura.id, "nome": assinatura.nome} for assinatura in Assinatura.objects.all()]
-    contexto = {"siteAssinatura": {"pagina_criar": 'active'},
-                "form": form,
-                "assinaturas": assinaturas}
+    contexto = {"title": 'Assinaturas',
+                "siteAssinatura": {"pagina_criar": 'active'},
+                "form": form}
 
     if request.method == 'POST':
         form = AssinaturaForms(request.POST)
@@ -34,8 +34,8 @@ def visualizar_assinatura(request):
     assinaturas = [{"id": assinatura.id, "nome": assinatura.nome} for assinatura in Assinatura.objects.all()]
     query = Assinatura.objects.filter(pk=request.GET['buscar'])
     if query.exists():
-        contexto = {'assinatura': query.get(),
-                    "assinaturas": assinaturas}
+        contexto = {"title": 'Assinaturas',
+                    'assinatura': query.get()}
         return render(request, 'assinatura/visualizar_assinatura.html', contexto)
     else:
         return redirect('assinaturas_email')
@@ -43,7 +43,7 @@ def visualizar_assinatura(request):
 
 def tutoriais(request, programa_email):
     assinaturas = [{"id": assinatura.id, "nome": assinatura.nome} for assinatura in Assinatura.objects.all()]
-    contexto = {"pagina_tutoriais": 'active',
-                "programa_email": programa_email,
-                "assinaturas": assinaturas}
+    contexto = {"title": 'Assinaturas',
+                "pagina_tutoriais": 'active',
+                "programa_email": programa_email}
     return render(request, f"assinatura/guias/{programa_email}.html", context=contexto)
