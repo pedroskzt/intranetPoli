@@ -51,14 +51,16 @@ def _query_recalcular_bi(mes, ano):
 @login_required
 @verificar_permissoes(permissoes_exigidas=['controleAcesso.pode_cadastrar_irpj'])
 def consulta_cadastro_imposto(request):
+    contexto = {'title': 'IRPJ'}
     form = FormConsultaCadastro()
-    return render(request, 'resultadoContabil/resultadoContabil.html', context={'form': form})
+    contexto['form'] = form
+    return render(request, 'resultadoContabil/resultadoContabil.html', context=contexto)
 
 
 @login_required
 @verificar_permissoes(permissoes_exigidas=['controleAcesso.pode_cadastrar_irpj'])
 def cadastro(request):
-    contexto = {}
+    contexto = {"title": 'IRPJ'}
     if request.method == 'POST':
         form = FormConsultaCadastro(request.POST)
         contexto['form'] = form

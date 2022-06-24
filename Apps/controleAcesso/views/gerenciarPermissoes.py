@@ -10,7 +10,8 @@ from intranetPoli.decorators import verificar_permissoes
 @login_required
 @verificar_permissoes(permissoes_exigidas=['controleAcesso.view_controleacesso'])
 def gerenciar_permissoes(request):
-    contexto = {'grupos': Group.objects.all()}
+    contexto = {"title": 'Gerenciar Permissões',
+                'grupos': Group.objects.all()}
     if request.method == 'POST':
         if request.user.has_perm('controleAcesso.change_controleacesso'):
             grupo = get_object_or_404(Group, pk=request.POST['selecionar_grupo'])
@@ -57,7 +58,8 @@ def ajax_content_type(request):
 
 @login_required
 def criar_permissao(request):
-    contexto = {'grupos': Group.objects.all()}
+    contexto = {"title": 'Gerenciar Permissões',
+               'grupos': Group.objects.all()}
     if request.method == 'POST' and request.user.has_perm('controleAcesso.add_controleacesso'):
         contexto['id_grupo'] = int(request.POST['id_grupo'])
         content_type = ContentType.objects.get(pk=request.POST['modelo_selecionado'])
@@ -85,7 +87,7 @@ def criar_permissao(request):
 
 @login_required
 def criar_grupo(request):
-    contexto = {}
+    contexto = {"title": 'Gerenciar Permissões'}
     if request.method == 'POST' and request.user.has_perm('controleAcesso.add_controleacesso'):
         if Group.objects.filter(name=request.POST['grupo_nome']).exists():
             messages.error(request,

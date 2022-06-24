@@ -13,12 +13,15 @@ from intranetPoli.settings import MEDIA_URL
 @verificar_permissoes(permissoes_exigidas=['intranet.view_links'])
 def gerenciar_links(request):
     links = Links.objects.all()
-    return render(request, 'intranet/painel/gerenciar_links.html', context={'links': links})
+    contexto = {'title': 'Links',
+                'links': links}
+    return render(request, 'intranet/painel/gerenciar_links.html', context=contexto)
 
 
 @login_required
 @verificar_permissoes(['intranet.add_links'])
 def adicionar_link(request):
+    contexto = {"title": 'Adicionar Link'}
     if request.method == 'POST':
         form = NovoLinkForms(request.POST, request.FILES)
         if request.user.is_authenticated and form.is_valid():
@@ -30,16 +33,18 @@ def adicionar_link(request):
             return redirect('gerenciar_links')
     else:
         form = NovoLinkForms()
-    return render(request, 'intranet/painel/adicionar_link.html', context={'form': form})
+    contexto['form'] = form
+    return render(request, 'intranet/painel/adicionar_link.html', context=contexto)
 
 
 @login_required
 @verificar_permissoes(['intranet.change_links'])
 def editar_link(request, link_id):
-    contexto = {
-        'link_id': link_id,
-        'media_url': MEDIA_URL
-    }
+    contexto = {"title": 'Editar Link',
+                'link_id': link_id,
+                'media_url': MEDIA_URL,
+
+                }
     if request.method == 'GET':
         link = get_object_or_404(Links, pk=link_id)
         form = AtualizaLinkForms(instance=link)

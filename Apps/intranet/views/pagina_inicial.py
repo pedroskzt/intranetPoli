@@ -20,6 +20,7 @@ def _query_select_links(pesquisar):
 
 
 def pagina_inicial(request):
+    contexto = {"title": 'Editar Link'}
     if request.user.is_authenticated:
         links = []
         for link in Links.objects.filter(exibir=True):
@@ -31,7 +32,8 @@ def pagina_inicial(request):
                 links.append(link)
     else:
         links = Links.objects.filter(exibir=True, requer_acesso=False)
-    return render(request, 'intranet/pagina_inicial.html', context={'links': links})
+    contexto['links'] = links
+    return render(request, 'intranet/pagina_inicial.html', context=contexto)
 
 
 def ajax_pesquisar_links(request):
