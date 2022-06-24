@@ -12,13 +12,16 @@ from intranetPoli.settings import MEDIA_URL
 @login_required
 @verificar_permissoes(permissoes_exigidas=['catalogos.view_catalogos'])
 def gerenciar_catalogos(request):
+    contexto = {"title": 'Catálogos'}
     catalogos = Catalogos.objects.all()
-    return render(request, 'catalogos/painel/gerenciar_catalogos.html', context={'catalogos': catalogos})
+    contexto['catalogos'] = catalogos
+    return render(request, 'catalogos/painel/gerenciar_catalogos.html', context=contexto)
 
 
 @login_required
 @verificar_permissoes(['catalogos.add_catalogos'])
 def adicionar_catalogo(request):
+    contexto = {"title": 'Adicionar Catálogo'}
     if request.method == 'POST':
         form = NovoCatalogoForms(request.POST, request.FILES)
         if request.user.is_authenticated and form.is_valid():
@@ -29,7 +32,8 @@ def adicionar_catalogo(request):
             return redirect('gerenciar_catalogos')
     else:
         form = NovoCatalogoForms()
-    return render(request, 'catalogos/painel/adicionar_catalogo.html', context={'forms': form})
+    contexto['forms'] = form
+    return render(request, 'catalogos/painel/adicionar_catalogo.html', context=contexto)
 
 
 @login_required
@@ -46,11 +50,11 @@ def editar_catalogo(request, catalogo_id):
             catalogo.usuario_ultima_alteracao = request.user
             catalogo.save()
             return redirect('gerenciar_catalogos')
-    contexto = {
-        'forms': form,
-        'catalogo_id': catalogo_id,
-        'media_url': MEDIA_URL
-    }
+    contexto = {"title": 'Editar Catálogo',
+                'forms': form,
+                'catalogo_id': catalogo_id,
+                'media_url': MEDIA_URL
+                }
     return render(request, 'catalogos/painel/editar_catalogo.html', context=contexto)
 
 

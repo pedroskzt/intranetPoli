@@ -38,6 +38,7 @@ def adicionar_usuario(request):
     :return:
     """
     form = NovoUsuarioForms()
+    contexto = {"title": 'Adicionar Usuário'}
     if request.method == 'POST':
         form = NovoUsuarioForms(request.POST)
         if form.is_valid():
@@ -50,8 +51,8 @@ def adicionar_usuario(request):
             new_user.groups.set(Group.objects.filter(pk__in=form.cleaned_data['groups']))
             new_user.save()
             return redirect('gerenciar_usuarios')
-
-    return render(request, 'controleAcesso/usuarios/adicionar_usuario.html', context={'form': form})
+    contexto['form'] = form
+    return render(request, 'controleAcesso/usuarios/adicionar_usuario.html', context=contexto)
 
 
 @login_required
@@ -136,7 +137,8 @@ def gerenciar_usuarios(request):
         nome = usuario.get_full_name()
         nome = usuario.username if nome == '' else nome
         lista_usuarios.append({'id': usuario_id, 'nome': nome})
-    contexto = {'lista_usuarios': lista_usuarios}
+    contexto = {"title": 'Gerenciar Usuários',
+                'lista_usuarios': lista_usuarios}
     return render(request, 'controleAcesso/usuarios/gerenciar_usuarios.html', context=contexto)
 
 
@@ -154,7 +156,8 @@ def editar_usuario(request, usuario_id):
     """
     if request.user.has_perm('auth.change_user') or request.user.id == usuario_id:
         usuario = get_object_or_404(User, pk=usuario_id)
-        contexto = {'usuario_id': usuario_id,
+        contexto = {"title": 'Editar Usuários',
+                    'usuario_id': usuario_id,
                     'form': AtualizaUsuarioForms(request.user, instance=usuario)}
         if request.method == 'POST':
             form = AtualizaUsuarioForms(request.user, request.POST, instance=usuario)

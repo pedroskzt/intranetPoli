@@ -48,3 +48,16 @@
         </div>
     </div>
 {% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            $('body').keypress(function (evt) {
+                if (evt.keyCode == 13){
+                    evt.preventDefault()
+                    $('#login-button-id').trigger("click")
+                }
+            })
+        })
+    </script>
+{% endblock %}

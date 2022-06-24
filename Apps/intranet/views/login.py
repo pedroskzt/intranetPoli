@@ -15,7 +15,8 @@ def login(request):
     :return:
     """
 
-    contexto = {'validacao': {'form_error': False,
+    contexto = {"title": 'Login',
+                'validacao': {'form_error': False,
                               'usuario': {'tag': '', 'mensagem': 'Campo Usuário não pode ser vazio.'},
                               'senha': {'tag': '', 'mensagem': 'Campo Senha não pode ser vazio'}},
                 'next': request.GET.get('next')}
@@ -24,7 +25,7 @@ def login(request):
         redirecionamento = request.POST.get('next')
         if resolve(redirecionamento).url_name == 'login' or resolve(redirecionamento).url_name == 'logout':
             redirecionamento = '/'
-
+        contexto['next'] = redirecionamento
         usuario = request.POST['usuario']
         senha = request.POST['senha']
 
@@ -47,10 +48,9 @@ def login(request):
             contexto['validacao']['form_error'] = True
             contexto['validacao']['usuario']['tag'] = 'is-invalid'
             contexto['validacao']['usuario']['mensagem'] = 'Usuário ou Senha incorretos.'
-
         contexto['form'] = {'usuario': usuario}
-
     return render(request, 'intranet/login.html', context=contexto)
+
 
 @login_required
 def logout(request):
