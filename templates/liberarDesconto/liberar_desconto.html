@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block head %}
+    <meta http-equiv="refresh" content="120" >
 {% endblock %}
 
 {% block breadcrumb %}
@@ -19,7 +20,7 @@
                 <div class="col card card-custom">
                     <div class="d-flex justify-content-between mb-2 mt-2">
                         <a href="{% url 'liberar_desconto' %}" class="btn btn-warning">Atualizar Página</a>
-                        <button type="button" class="btn btn-primary" id="voltar_padrao_desconto_id">Voltar para Padrão
+                        <button type="submit" class="btn btn-primary" id="voltar_padrao_desconto_id" name="voltar_padrao_desconto">Voltar para Padrão
                         </button>
                     </div>
                     <div class="table-responsive">
@@ -79,13 +80,6 @@
 
 {% block scripts %}
     <script>
-        /* Voltar todos os campos para os valores padrão. */
-        $('#voltar_padrao_desconto_id').on('click', function () {
-            $("input[name*='desconto']").val({{ padrao.valor_desconto_padrao }})
-            $("select[name*='autorizado']").val({{ padrao.id_autorizacao_padrao }})
-        })
-    </script>
-    <script>
         $('#form_liberar_desconto_id').on('submit', function (event) {
             for (input of $("input[name*='desconto']")) {
                 elmt = $('input[name=' + input.name + ']')
@@ -102,6 +96,16 @@
         /* Spinner botão "Salvar" para aguardar update no banco */
         $('#button_salvar_id').one('click', function (event) {
             $(this).html('<span id="spinner_id" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Salvando')
+        })
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('body').keypress(function (evt) {
+                if (evt.keyCode == 13){
+                    evt.preventDefault()
+                    $('#button_salvar_id').trigger("click")
+                }
+            })
         })
     </script>
 {% endblock %}
