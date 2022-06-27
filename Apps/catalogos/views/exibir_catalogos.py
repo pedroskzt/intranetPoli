@@ -22,7 +22,7 @@ def exibir_catalogos(request):
     contexto = {"title": 'Catálogos'}
     catalogos = Catalogos.objects.filter(exibir=True)
     contexto['catalogos'] = catalogos
-    return render(request, 'catalogos/catalogos.html', context=catalogos)
+    return render(request, 'catalogos/catalogos.html', context=contexto)
 
 
 def ajax_pesquisar_catalogos(request):

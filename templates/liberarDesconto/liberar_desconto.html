@@ -2,7 +2,8 @@
 {% load static %}
 
 {% block head %}
-    <meta http-equiv="refresh" content="120" >
+    <meta http-equiv="refresh" content="120">
+    <link href="{% static 'liberarDesconto/css/liberarDesconto.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block breadcrumb %}
@@ -19,8 +20,12 @@
             <div class="row">
                 <div class="col card card-custom">
                     <div class="d-flex justify-content-between mb-2 mt-2">
-                        <a href="{% url 'liberar_desconto' %}" class="btn btn-warning">Atualizar Página</a>
-                        <button type="submit" class="btn btn-primary" id="voltar_padrao_desconto_id" name="voltar_padrao_desconto">Voltar para Padrão
+                        <div class="input-group">
+                            <a href="{% url 'liberar_desconto' %}" class="btn btn-warning">Atualizar Página</a>
+                            <span class="input-group-text" id="update_timer_id"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="voltar_padrao_desconto_id"
+                                name="voltar_padrao_desconto">Voltar para Padrão
                         </button>
                     </div>
                     <div class="table-responsive">
@@ -71,7 +76,10 @@
             </div>
             <div class="d-flex justify-content-between mt-4">
                 <a href="{% url 'pagina_inicial' %}" class="btn btn-info">Voltar</a>
-                <a href="{% url 'liberar_desconto' %}" class="btn btn-warning">Atualizar Página</a>
+                <div class="input-group">
+                    <a href="{% url 'liberar_desconto' %}" class="btn btn-warning">Atualizar Página</a>
+                    <span class="input-group-text" id="update_timer_id2"></span>
+                </div>
                 <button type="submit" class="btn btn-success" id="button_salvar_id">Salvar</button>
             </div>
         </form>
@@ -99,13 +107,28 @@
         })
     </script>
     <script>
+        let tempo = 120000
         $(document).ready(function () {
             $('body').keypress(function (evt) {
-                if (evt.keyCode == 13){
+                if (evt.keyCode == 13) {
                     evt.preventDefault()
                     $('#button_salvar_id').trigger("click")
                 }
             })
+
+            $('meta[http-equiv]').prop('content', tempo / 1000)
+            $('#update_timer_id').html(tempo / 1000)
+            $('#update_timer_id2').html(tempo / 1000)
+            setInterval(function () {
+                tempo -= 1000
+                if (tempo <= 0) {
+                    $('#update_timer_id').html(0)
+                    $('#update_timer_id2').html(0)
+                } else {
+                    $('#update_timer_id').html(tempo / 1000)
+                    $('#update_timer_id2').html(tempo / 1000)
+                }
+            }, 1000)
         })
     </script>
 {% endblock %}
