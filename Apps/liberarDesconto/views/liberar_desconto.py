@@ -153,8 +153,7 @@ def liberar_desconto(request):
             else:
                 messages.error(request, f"Falha ao alterar os descontos<ul>{mensagem_erro}</ul", extra_tags='safe')
         else:
-            mensagem_erro = f"Nenhum desconto com valor diferente do padrão " \
-                            f"({contexto['padrao']['valor_desconto_padrao']}%) foi digitado!"
+            mensagem_erro = f"Nenhum desconto com valor diferente do anterior foi digitado!"
             messages.error(request, mensagem_erro, extra_tags='safe')
     for filial in contexto['desconto_filiais']:
         filial['alterado_por'] = 'PL/SQL'

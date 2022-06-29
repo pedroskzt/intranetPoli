@@ -6,7 +6,8 @@ from Apps.assinaturas.models.assinaturas_email import Assinatura
 
 def assinaturas_email(request):
     assinaturas = [{"id": assinatura.id, "nome": assinatura.nome} for assinatura in Assinatura.objects.all()]
-    contexto = {"title": 'Assinaturas'}
+    contexto = {"title": 'Assinaturas',
+                "assinaturas": assinaturas}
 
     return render(request, 'assinatura/assinaturas_email.html', context=contexto)
 
@@ -16,7 +17,8 @@ def criar_assinatura(request):
     assinaturas = [{"id": assinatura.id, "nome": assinatura.nome} for assinatura in Assinatura.objects.all()]
     contexto = {"title": 'Assinaturas',
                 "siteAssinatura": {"pagina_criar": 'active'},
-                "form": form}
+                "form": form,
+                "assinaturas": assinaturas}
 
     if request.method == 'POST':
         form = AssinaturaForms(request.POST)
@@ -35,7 +37,8 @@ def visualizar_assinatura(request):
     query = Assinatura.objects.filter(pk=request.GET['buscar'])
     if query.exists():
         contexto = {"title": 'Assinaturas',
-                    'assinatura': query.get()}
+                    'assinatura': query.get(),
+                    "assinaturas": assinaturas}
         return render(request, 'assinatura/visualizar_assinatura.html', contexto)
     else:
         return redirect('assinaturas_email')
@@ -45,5 +48,6 @@ def tutoriais(request, programa_email):
     assinaturas = [{"id": assinatura.id, "nome": assinatura.nome} for assinatura in Assinatura.objects.all()]
     contexto = {"title": 'Assinaturas',
                 "pagina_tutoriais": 'active',
-                "programa_email": programa_email}
+                "programa_email": programa_email,
+                "assinaturas": assinaturas}
     return render(request, f"assinatura/guias/{programa_email}.html", context=contexto)
