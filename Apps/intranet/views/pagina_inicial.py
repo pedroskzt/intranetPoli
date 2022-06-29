@@ -20,7 +20,7 @@ def _query_select_links(pesquisar):
 
 
 def pagina_inicial(request):
-    contexto = {"title": 'Editar Link'}
+    contexto = {"title": 'Links'}
     if request.user.is_authenticated:
         links = []
         for link in Links.objects.filter(exibir=True):
