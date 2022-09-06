@@ -17,6 +17,7 @@ class Assinatura(models.Model):
     departamento = models.CharField(max_length=100, validators=[alphanumeric_regex])
     fone = models.CharField(max_length=17, validators=[phone_regex])
     ramal = models.CharField(max_length=4)
+    empresa = models.CharField(max_length=100, default="")
 
     def __str__(self):
         return self.nome
