@@ -1,1 +1,2 @@
-from .cadastrar_assinatura import AssinaturaForms
+from .form_assinaturas import CriaAssinaturaForms
+from .form_assinaturas import EditarAssinaturaForms
