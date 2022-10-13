@@ -14,29 +14,21 @@
                     <td style="color:#26a6ff">
                         <strong>{{ assinatura.nome }}</strong><br>
                         {{ assinatura.departamento }}<br>
+                        {{ assinatura.empresa }}<br>
                         {{ assinatura.fone }} - Ramal: {{ assinatura.ramal }}<br>
                         <a href="https://www.polipecas.com.br" target="_blank"
-                           style="color:#000388">www.polipecas.com.br</a><br>
+                           style="color:#26a6ff">www.polipecas.com.br</a><br>
                         <small>Esta mensagem é confidencial e privilegiada. Caso Você não seja o destinatário, não está
                             autorizado a reproduzir ou divulgar a terceiros o conteúdo e deve apaga-lá.</small><br><br>
                         <a href="https://www.polipecas.com.br" target="_blank">
                             <img src="https://www.polipecas.com.br/images/logo/logo-email.png" alt="Logo.png"
                                  moz-do-not-send="false" border="0">
-                        </a>
+                        </a><br><br>
+                        Acesse nosso site, na opção <strong>Portal do Cliente</strong>, baixe
+                        suas notas fiscais, boletos, solicite renegociação de dividas entre outras opções.<br>
                     </td>
                 </tr>
             </table>
-            <div id="portal_cliente_id" style="display: none">
-                <h3>Portal do Cliente Polipeças:</h3>
-                Acesse nosso site, na opção <strong>Portal do Cliente</strong> siga o tutorial para se cadastrar e baixe
-                suas notas fiscais, boletos, solicite renegociação de dividas entre outras opções.
-                <br>
-                <a href="https://www.polipecas.com.br" target="_blank">
-                    <button style="color: #ffffff; background: #26a6ff; border-radius: 4px; cursor: pointer;">Clique e
-                        realize seu primeiro acesso.
-                    </button>
-                </a>
-            </div>
         </div>
         <div class="row">
             <div class="form-check col">
@@ -44,7 +36,7 @@
                 <label class="form-check-label" for="portal_cliente_id">
                     Adicionar recado sobre Portal do Cliente
                 </label>
-            </div>
+            </div> <!-- Portal do Cliente -->
             <div class="col">
                 <label class="form-label">Outlook?</label>
                 <div class="form-check">
@@ -61,16 +53,23 @@
                         Não
                     </label>
                 </div>
-            </div>
-
+            </div> <!-- Outlook - Sim ou Não? -->
         </div>
-
-
     </div>
 
-    <div class="mt-5 mb-4">
+    <div class="d-flex justify-content-between mt-5 mb-4">
         <a class="btn btn-primary" href="#" id="donwload-link" onclick="myFunction()">Baixar Assinatura</a>
+        {% if user.is_authenticated %}
+            <a class="btn btn-success" href="{% url 'editar_assinatura' assinatura.id %}">Editar</a>
+        {% endif %}
+        <a href="{% url 'assinaturas_email' %}" class="btn btn-info">Voltar</a>
     </div>
+    {#    <div class="mt-5 mb-4">#}
+    {#        <a class="btn btn-primary" href="#" id="donwload-link" onclick="myFunction()">Baixar Assinatura</a>#}
+    {#        <div class="row">#}
+    {#            <a class="btn btn-info" href="{% url 'editar_assinatura' assinatura.id %}">Editar</a>#}
+    {#        </div>#}
+    {#    </div>#}
 
 {% endblock %}
 
