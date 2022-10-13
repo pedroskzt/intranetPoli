@@ -65,6 +65,9 @@ def editar_assinatura(request, assinatura_id):
         if request.user.is_authenticated and form.is_valid():
             form.save()
             messages.success(request, f'Assinatura {assinatura.nome} editada com sucesso!')
+            contexto['title'] = 'Assinatura'
+            contexto['assinatura'] = get_object_or_404(Assinatura, pk=assinatura_id)
+            return render(request, 'assinatura/visualizar_assinatura.html', context=contexto)
 
     contexto['form'] = form
 
